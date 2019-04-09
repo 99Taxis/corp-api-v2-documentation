@@ -364,10 +364,10 @@ curl -X GET PUT URL -H 'x-api-key: key-abc-123'
   `GET`
   
 *  **Parâmetros via query**
-    
-       | Atributo     | Tipo do dado     | Descrição                      | Obrigatório | Valor padrão | Exemplo    |
-       |--------------|------------------|--------------------------------|-------------|--------------|------------|
-       | id           | numérico         | Identificador do colaborador   | sim         | -            | 20         |
+
+    | Atributo     | Tipo do dado     | Descrição                      | Obrigatório | Valor padrão | Exemplo    |
+    |--------------|------------------|--------------------------------|-------------|--------------|------------|
+    | id           | numérico         | Identificador do colaborador   | sim         | -            | 20         |
     
 
 
