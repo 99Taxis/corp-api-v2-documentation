@@ -38,7 +38,6 @@ curl -X GET PUT URL -H 'x-api-key: key-abc-123'
   
 *  **Parâmetros via query**
 
-
     | Atributo   | Tipo do dado   | Descrição                                  | Obrigatório | Valor padrão | Exemplo     |
     |------------|----------------|------------------------------------------- |-------------|--------------|-------------|
     | search     | alfanumérico   | Busca pelo nome do colaborador             | não         | -            | José Santos |
@@ -53,32 +52,30 @@ curl -X GET PUT URL -H 'x-api-key: key-abc-123'
   
     ```json
     {
-        "name": "José Santos",
-        "phone": {
-          "number": "11999999999",
-          "country": "BRA"
-        },
-        "email": "jose.santos@empresa.com.br",
-        "companyId": 1234,
-        "company": {
-          "id": "47a3083b-5d03-4e05-ad9d-9fd6fddd613e",
-          "name": "99"
-        },
-        "nationalId": "98765432100",
-        "supervisorlId": 167,
-        "pin": "053",
-        "enabled": true,
-        "externalId": 0,
-        "categories": [
-          "regular-taxi",
-          "top99",
-          "turbo-taxi",
-          "pop99"
-        ],
-        "id": 125
-      }
-    
-    
+      "name": "José Santos",
+      "phone": {
+        "number": "11999999999",
+        "country": "BRA"
+      },
+      "email": "jose.santos@empresa.com.br",
+      "companyId": 1234,
+      "company": {
+        "id": "47a3083b-5d03-4e05-ad9d-9fd6fddd613e",
+        "name": "99"
+      },
+      "nationalId": "98765432100",
+      "supervisorlId": 167,
+      "pin": "053",
+      "enabled": true,
+      "externalId": 0,
+      "categories": [
+        "regular-taxi",
+        "top99",
+        "turbo-taxi",
+        "pop99"
+      ],
+      "id": 125
+    }
     ``` 
 -----
 
@@ -93,7 +90,6 @@ curl -X GET PUT URL -H 'x-api-key: key-abc-123'
   `POST`
   
 *  **Parâmetros via body**
-
 
     | Atributo               | Tipo do dado              | Descrição                                                                                                | Obrigatório | Valor padrão | Exemplo                    |
     |------------------------|---------------------------|----------------------------------------------------------------------------------------------------------|-------------|--------------|-------------               |
@@ -182,7 +178,6 @@ curl -X GET PUT URL -H 'x-api-key: key-abc-123'
   
 *  **Parâmetros via url**
 
-
    | Atributo     | Tipo do dado     | Descrição                                    | Obrigatório     | Valor padrão     | Exemplo        |
    |----------    |--------------    |------------------------------------------    |-------------    |--------------    |------------    |
    | id           | numérico         | Identificador do colaborador                 | sim             | -                | 125            |
@@ -194,27 +189,27 @@ curl -X GET PUT URL -H 'x-api-key: key-abc-123'
   
     ```json
     {
-        "name": "José Santos",
-        "phone": {
-          "number": "11999999999",
-          "country": "BRA"
-        },
-        "email": "jose.santos@empresa.com.br",
-        "company": {
-          "id": "47a3083b-5d03-4e05-ad9d-9fd6fddd613e",
-          "name": "99"
-        },
-        "nationalId": "98765432100",
-        "supervisorId": 167,
-        "pin": "053",
-        "enabled": true,
-        "externalId": 0,
-        "categories": [
-          "regular-taxi", 
-          "turbo-taxi", 
-          "pop99"
-        ],
-        "id": 125
+      "name": "José Santos",
+      "phone": {
+        "number": "11999999999",
+        "country": "BRA"
+      },
+      "email": "jose.santos@empresa.com.br",
+      "company": {
+        "id": "47a3083b-5d03-4e05-ad9d-9fd6fddd613e",
+        "name": "99"
+      },
+      "nationalId": "98765432100",
+      "supervisorId": 167,
+      "pin": "053",
+      "enabled": true,
+      "externalId": 0,
+      "categories": [
+        "regular-taxi",
+        "turbo-taxi",
+        "pop99"
+      ],
+      "id": 125
     }
     ```
     
@@ -231,7 +226,6 @@ curl -X GET PUT URL -H 'x-api-key: key-abc-123'
   `PUT`
   
 *  **Parâmetros via url**
-
 
    | Atributo     | Tipo do dado     | Descrição                                    | Obrigatório     | Valor padrão     | Exemplo        |
    |----------    |--------------    |------------------------------------------    |-------------    |--------------    |------------    |
@@ -257,41 +251,11 @@ curl -X GET PUT URL -H 'x-api-key: key-abc-123'
 
     ```json
     {
-        "employee": {
-            "name": "José Santos",
-            "phone": {
-                "number": "11999999999",
-                "country": "BRA"
-            },
-            "email": "jose.santos@empresa.com.br",
-            "nationalId": "98765432100",
-            "supervisorId": 256,
-            "pin": "123",
-            "externalId": 55666,
-            "categories": [
-                "pop99"
-            ],
-            "id": 125
-        },
-        "sendWelcomeEmail": false
-    }
-    ``` 
-
-
-* **Retorno**
-  
-  **Status Code:** 200
-  
-    ```json
-    {
+      "employee": {
         "name": "José Santos",
         "phone": {
           "number": "11999999999",
           "country": "BRA"
-        },
-        "company": {
-          "id": "47a3083b-5d03-4e05-ad9d-9fd6fddd613e",
-          "name": "99"
         },
         "email": "jose.santos@empresa.com.br",
         "nationalId": "98765432100",
@@ -302,6 +266,36 @@ curl -X GET PUT URL -H 'x-api-key: key-abc-123'
           "pop99"
         ],
         "id": 125
+      },
+      "sendWelcomeEmail": false
+    }
+    ``` 
+
+
+* **Retorno**
+  
+  **Status Code:** 200
+  
+    ```json
+    {
+      "name": "José Santos",
+      "phone": {
+        "number": "11999999999",
+        "country": "BRA"
+      },
+      "company": {
+        "id": "47a3083b-5d03-4e05-ad9d-9fd6fddd613e",
+        "name": "99"
+      },
+      "email": "jose.santos@empresa.com.br",
+      "nationalId": "98765432100",
+      "supervisorId": 256,
+      "pin": "123",
+      "externalId": 55666,
+      "categories": [
+        "pop99"
+      ],
+      "id": 125
     }
     ```
     
@@ -381,7 +375,7 @@ curl -X GET PUT URL -H 'x-api-key: key-abc-123'
         "id": 77045,
         "name": "IntegrationAPI"
       }
-    ]   
+    ]
     ``` 
 -----
 
@@ -481,27 +475,27 @@ curl -X GET PUT URL -H 'x-api-key: key-abc-123'
   
     ```json
     {
-        "name": "José Santos",
-        "phone": {
-          "number": "11999999999",
-          "country": "BRA"
-        },
-        "email": "jose.santos@empresa.com.br",
-        "company": {
-          "id": "47a3083b-5d03-4e05-ad9d-9fd6fddd613e",
-          "name": "99"
-        },
-        "nationalId": "98765432100",
-        "supervisorId": 167,
-        "pin": "053",
-        "enabled": true,
-        "externalId": 10,
-        "categories": [
-          "regular-taxi", 
-          "turbo-taxi", 
-          "pop99"
-        ],
-        "id": 125
+      "name": "José Santos",
+      "phone": {
+        "number": "11999999999",
+        "country": "BRA"
+      },
+      "email": "jose.santos@empresa.com.br",
+      "company": {
+        "id": "47a3083b-5d03-4e05-ad9d-9fd6fddd613e",
+        "name": "99"
+      },
+      "nationalId": "98765432100",
+      "supervisorId": 167,
+      "pin": "053",
+      "enabled": true,
+      "externalId": 10,
+      "categories": [
+        "regular-taxi",
+        "turbo-taxi",
+        "pop99"
+      ],
+      "id": 125
     }
     ```
     
@@ -542,20 +536,20 @@ curl -X GET PUT URL -H 'x-api-key: key-abc-123'
 
     ```json
     {
-        "employee": {
-            "name": "José Santos",
-            "phone": {
-                "number": "11999999999",
-                "country": "BRA"
-            },
-            "email": "jose.santos@empresa.com.br",
-            "nationalId": "98765432100",
-            "supervisorId": 256,
-            "categories": [
-                "pop99"
-            ]
+      "employee": {
+        "name": "José Santos",
+        "phone": {
+          "number": "11999999999",
+          "country": "BRA"
         },
-        "sendWelcomeEmail": false
+        "email": "jose.santos@empresa.com.br",
+        "nationalId": "98765432100",
+        "supervisorId": 256,
+        "categories": [
+          "pop99"
+        ]
+      },
+      "sendWelcomeEmail": false
     }
     ``` 
 
