@@ -2,13 +2,13 @@
 
 Documentação para uso dos endpoints da API para clientes corporativos da 99.
 
-Endereço de acesso: //TODO PUT URL
+Endereço de acesso: https://api.corp.99taxis.com/v2
 
 ## Swagger
 
 É possível realizar testes online utilizando a interface do Swagger. Para isso, acesse o endereço abaixo:
 
-//TODO PUT URL
+https://api.corp.99taxis.com/v2/docs/swagger-ui.html
 
 ## Autenticação
 
