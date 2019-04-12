@@ -63,7 +63,7 @@ curl -X GET PUT URL -H 'x-api-key: key-abc-123'
         "name": "99"
       },
       "nationalId": "98765432100",
-      "supervisorlId": 167,
+      "supervisorId": 167,
       "pin": "053",
       "enabled": true,
       "externalId": 0,
