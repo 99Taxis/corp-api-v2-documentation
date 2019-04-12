@@ -58,7 +58,6 @@ curl -X GET PUT URL -H 'x-api-key: key-abc-123'
         "country": "BRA"
       },
       "email": "jose.santos@empresa.com.br",
-      "companyId": 1234,
       "company": {
         "id": "47a3083b-5d03-4e05-ad9d-9fd6fddd613e",
         "name": "99"
