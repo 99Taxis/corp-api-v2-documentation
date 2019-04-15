@@ -579,11 +579,137 @@ curl -X GET PUT URL -H 'x-api-key: key-abc-123'
     
 -----
 
-## Desatvar um coladorador por identificador externo
+## Desativar um colaborador por identificador externo
 
 * **URL**
 
   `/employees/external-id/{externalId}`
+
+* **Method**
+
+  `DELETE`
+  
+*  **Parâmetros via url**
+
+
+   | Atributo     | Tipo do dado     | Descrição                                    | Obrigatório     | Valor padrão     | Exemplo        |
+   |----------    |--------------    |------------------------------------------    |-------------    |--------------    |------------    |
+   | externalId   | numérico         | Identificador do colaborador                 | sim             | -                | 10             |
+  
+* **Retorno**
+  
+  **Status Code:** 204
+
+-----
+
+## Busca de centros de custos do colaborador por identificador externo
+* **URL**
+
+  `/employees/external-id/{externalId}/costcenter`
+
+* **Method**
+
+  `GET`
+  
+*  **Parâmetros via url**
+
+
+   | Atributo     | Tipo do dado | Descrição                    | Obrigatório | Valor padrão | Exemplo  |
+   |--------------|--------------|------------------------------|-------------|--------------|----------|
+   | externalId   | numérico     | Identificador do colaborador | sim         | -            | 10       |
+   
+
+* **Retorno**
+  
+  **Status Code:** 200
+  
+    ```json
+    [
+      {
+        "id": 77045,
+        "name": "IntegrationAPI"
+      }
+    ]
+    ```
+    
+-----
+
+## Atualizar os dados de centro de custos do colaborador por identificador externo
+
+* **URL**
+
+  `/employees/external-id/{externalId}/costcenter`
+
+* **Method**
+
+  `PATCH`
+  
+*  **Parâmetros via url**
+
+
+   | Atributo     | Tipo do dado | Descrição                     | Obrigatório | Valor padrão | Exemplo        |
+   |--------------|--------------|-------------------------------|-------------|--------------|------------    |
+   | externalId   | numérico     | Identificador do colaborador  | sim         | -            | 125            |
+   
+  
+*  **Parâmetros via body**
+
+    | Atributo                   | Tipo do dado              | Descrição                                                                                              | Obrigatório | Valor padrão | Exemplo                    |
+    |----------------------------|---------------------------|--------------------------------------------------------------------------------------------------------|-------------|--------------|----------------------------|
+    | costCenterIDs              | conjunto de numéricos     | Ids dos centros de custos                                                                              | sim         | -            | 12, 14, 30                 |
+
+*   **Exemplo de envio**
+
+    ```json
+    {
+      "costCenterIDs": [
+        12, 14, 30
+      ]
+    }
+    ``` 
+
+
+* **Retorno**
+  
+  **Status Code:** 200
+  
+    ```json
+    [
+      12, 14, 30
+    ]
+    ```
+    
+-----
+
+## Remover centro de custo de um colaborador por identificador externo
+
+* **URL**
+
+  `/employees/external-id/{externalId}/costcenter/{costCenterId}`
+
+* **Method**
+
+  `DELETE`
+  
+*  **Parâmetros via url**
+
+
+   | Atributo     | Tipo do dado     | Descrição                                    | Obrigatório     | Valor padrão     | Exemplo        |
+   |----------    |--------------    |------------------------------------------    |-------------    |--------------    |------------    |
+   | externalId   | numérico         | Identificador do colaborador                 | sim             | -                | 10             |
+   | costCenterId | numérico         | Identificador do centro de custo             | sim             | -                | 20             |
+  
+* **Retorno**
+  
+  **Status Code:** 204
+  
+-----
+
+## Remover supervisor de um colaborador por identificador externo
+
+* **URL**
+
+  `/employees/external-id/{externalId}/supervisor`
 
 * **Method**
 
