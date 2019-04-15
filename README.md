@@ -451,6 +451,89 @@ curl -X GET PUT URL -H 'x-api-key: key-abc-123'
   
 -----
 
+## Cadastrar um colaborador por identificador externo
+
+* **URL**
+
+  `/employees/external-id/{externalId}`
+
+* **Method**
+
+  `POST`
+  
+*  **Parâmetros via url**
+
+
+   | Atributo     | Tipo do dado | Descrição                     | Obrigatório | Valor padrão | Exemplo        |
+   |--------------|--------------|-------------------------------|-------------|--------------|------------    |
+   | externalId   | numérico     | Identificador do colaborador  | sim         | -            | 125            |
+   
+  
+*  **Parâmetros via body**
+
+    | Atributo                      | Tipo do dado              | Descrição                                                                                              | Obrigatório | Valor padrão | Exemplo                    |
+    |-------------------------------|---------------------------|--------------------------------------------------------------------------------------------------------|-------------|--------------|----------------------------|
+    | employee.name                 | alfanumérico              | Nome do colaborador                                                                                    | sim         | -            | José Santos                |
+    | employee.phone.number         | alfanumérico              | Número do telefone do colaborador (somente números)                                                    | sim         | -            | 11999999999                |
+    | employee.phone.country        | alfanumérico              | Código do país atrelado ao número                                                                      | não         | BRA          | BRA                        |
+    | employee.email                | alfanumérico              | E-mail do colaborador                                                                                  | sim         | -            | jose.santos@empresa.com.br |
+    | employee.nationalId           | alfanumérico              | Documento do colaborador (CPF) (Somente números)                                                       | não         | -            | 98765432100                |
+    | employee.supervisorExternalId | numérico                  | Id do supervisor (employeeExternalId) do colaborador.                                                  | não         | -            | 256                        |
+    | employee.pin                  | alfanumérico              | Código de confirmação de corrida (deve conter 3 dígitos)                                               | não         | -            | 934                        |
+    | employee.categories           | conjunto de alfanuméricos | Categorias permitidas para uso do colaborador. Valores aceitos: regular-taxi, turbo-taxi, top99, pop99 | sim         | -            | regular-taxi, turbo-taxi   |
+    | sendWelcomeEmail              | verdadeiro/falso          | Se verdadeiro, colaborador cadastrado receberá um e-mail de boas vindas                                | não         | false        | false                      |
+
+*   **Exemplo de envio**
+
+    ```json
+    {
+      "employee": {
+        "name": "José Santos",
+        "phone": {
+          "number": "11999999999",
+          "country": "BRA"
+        },
+        "email": "jose.santos@empresa.com.br",
+        "nationalId": "98765432100",
+        "supervisorExternalId": 256,
+        "pin": "123",
+        "categories": [
+          "pop99"
+        ]
+      },
+      "sendWelcomeEmail": false
+    }
+    ``` 
+
+
+* **Retorno**
+  
+  **Status Code:** 200
+  
+    ```json
+    {
+      "name": "José Santos",
+      "phone": {
+        "number": "11999999999",
+        "country": "BRA"
+      },
+      "email": "jose@empresa.com",
+      "nationalId": "98765432100",
+      "enabled": true,
+      "supervisorId": 256,
+      "externalId": 123749,
+      "pin": "123",
+      "categories": [
+        "pop99"
+      ],
+      "id": 999999
+    }
+    ```
+    
+  > O campo retornado `supervisorId` é o id interno e não representa o `supervisorExternalId`.
+    
+-----
+
 ## Busca de colaboradores por identificador externo
 * **URL**
 
@@ -497,7 +580,6 @@ curl -X GET PUT URL -H 'x-api-key: key-abc-123'
       "id": 125
     }
     ```
-    
 -----
 
 ## Atualizar os dados de colaborador por identificador externo
@@ -520,16 +602,17 @@ curl -X GET PUT URL -H 'x-api-key: key-abc-123'
   
 *  **Parâmetros via body**
 
-    | Atributo                   | Tipo do dado              | Descrição                                                                                              | Obrigatório | Valor padrão | Exemplo                    |
-    |----------------------------|---------------------------|--------------------------------------------------------------------------------------------------------|-------------|--------------|----------------------------|
-    | employee.name              | alfanumérico              | Nome do colaborador                                                                                    | sim         | -            | José Santos                |
-    | employee.phone.number      | alfanumérico              | Número do telefone do colaborador (somente números)                                                    | sim         | -            | 11999999999                |
-    | employee.phone.country     | alfanumérico              | Código do país atrelado ao número                                                                      | não         | BRA          | BRA                        |
-    | employee.email             | alfanumérico              | E-mail do colaborador                                                                                  | sim         | -            | jose.santos@empresa.com.br |
-    | employee.nationalId        | alfanumérico              | Documento do colaborador (CPF) (Somente números)                                                       | não         | -            | 98765432100                |
-    | employee.supervisorId      | numérico                  | Id do supervisor (employeeId) do colaborador.                                                          | não         | -            | 256                        |
-    | employee.categories        | conjunto de alfanuméricos | Categorias permitidas para uso do colaborador. Valores aceitos: regular-taxi, turbo-taxi, top99, pop99 | sim         | -            | regular-taxi, turbo-taxi   |
-    | sendWelcomeEmail           | verdadeiro/falso          | Se verdadeiro, colaborador cadastrado receberá um e-mail de boas vindas                                | não         | false        | false                      |
+    | Atributo                      | Tipo do dado              | Descrição                                                                                              | Obrigatório | Valor padrão | Exemplo                    |
+    |-------------------------------|---------------------------|--------------------------------------------------------------------------------------------------------|-------------|--------------|----------------------------|
+    | employee.name                 | alfanumérico              | Nome do colaborador                                                                                    | sim         | -            | José Santos                |
+    | employee.phone.number         | alfanumérico              | Número do telefone do colaborador (somente números)                                                    | sim         | -            | 11999999999                |
+    | employee.phone.country        | alfanumérico              | Código do país atrelado ao número                                                                      | não         | BRA          | BRA                        |
+    | employee.email                | alfanumérico              | E-mail do colaborador                                                                                  | sim         | -            | jose.santos@empresa.com.br |
+    | employee.nationalId           | alfanumérico              | Documento do colaborador (CPF) (Somente números)                                                       | não         | -            | 98765432100                |
+    | employee.supervisorExternalId | numérico                  | Id do supervisor (employeeExternalId) do colaborador.                                                  | não         | -            | 256                        |
+    | employee.pin                  | alfanumérico              | Código de confirmação de corrida (deve conter 3 dígitos)                                               | não         | -            | 934                        |
+    | employee.categories           | conjunto de alfanuméricos | Categorias permitidas para uso do colaborador. Valores aceitos: regular-taxi, turbo-taxi, top99, pop99 | sim         | -            | regular-taxi, turbo-taxi   |
+    | sendWelcomeEmail              | verdadeiro/falso          | Se verdadeiro, colaborador cadastrado receberá um e-mail de boas vindas                                | não         | false        | false                      |
 
 *   **Exemplo de envio**
 
@@ -543,7 +626,8 @@ curl -X GET PUT URL -H 'x-api-key: key-abc-123'
         },
         "email": "jose.santos@empresa.com.br",
         "nationalId": "98765432100",
-        "supervisorId": 256,
+        "supervisorExternalId": 256,
+        "pin": "123",
         "categories": [
           "pop99"
         ]
@@ -576,6 +660,8 @@ curl -X GET PUT URL -H 'x-api-key: key-abc-123'
       "id": 999999
     }
     ```
+
+  > O campo retornado `supervisorId` é o id interno e não representa o `supervisorExternalId`.
     
 -----
 
