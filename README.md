@@ -455,7 +455,7 @@ curl -X GET PUT URL -H 'x-api-key: key-abc-123'
 
 * **URL**
 
-  `/employees/external-id/{externalId}`
+  `/employees/external-id`
 
 * **Method**
 
@@ -504,7 +504,7 @@ curl -X GET PUT URL -H 'x-api-key: key-abc-123'
       "sendWelcomeEmail": false
     }
     ``` 
-
+  > Se não for informar o `supervisorExternalId`, o comportamento do método será o mesmo que `POST /employees/`
 
 * **Retorno**
   
@@ -529,7 +529,7 @@ curl -X GET PUT URL -H 'x-api-key: key-abc-123'
       "id": 999999
     }
     ```
-    
+
   > O campo retornado `supervisorId` é o id interno e não representa o `supervisorExternalId`.
     
 -----
@@ -580,6 +580,7 @@ curl -X GET PUT URL -H 'x-api-key: key-abc-123'
       "id": 125
     }
     ```
+  > O campo retornado `supervisorId` é o id interno e não representa o `supervisorExternalId`.
 -----
 
 ## Atualizar os dados de colaborador por identificador externo
