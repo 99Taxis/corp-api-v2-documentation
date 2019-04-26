@@ -843,12 +843,12 @@ curl -X GET PUT URL -H 'x-api-key: key-abc-123'
     {
       "budget": {
         "enabled": true,
-        "limit": 0,
-        "period": "string",
-        "validUntil": "string"
+        "limit": 100.00,
+        "period": "date",
+        "validUntil": "2019-04-22"
       },
       "rideCredit": {
-        "credit": 0,
+        "credit": 10,
         "enabled": true
       }
     }
@@ -875,12 +875,12 @@ curl -X GET PUT URL -H 'x-api-key: key-abc-123'
 
     | Atributo                 | Tipo do dado              | Descrição                                                                                         | Obrigatório | Valor padrão | Exemplo                    |
     |--------------------------|---------------------------|---------------------------------------------------------------------------------------------------|-------------|--------------|----------------------------|
-    | budget.enabled           | verdadeiro/falso          | Se verdadeiro, politica estará ativa para o colaborador                                           | sim         | false        | false                      |
-    | budget.limit             | numérico                  | Limite de credito disponível para corridas do colaborador                                         | não         | -            | 100.00                     |
-    | budget.period            | alfanumérico              | Periodo de atividade da politica (valores: "monthly" ou "date")                                   | não         | -            | monthly                    |
-    | budget.validUntil        | alfanumérico              | Data de validade da politica                                                                      | não         | -            | 2019-04-22                 |
+    | budget.enabled           | verdadeiro/falso          | Se verdadeiro, política por orçamento estará ativa para o colaborador                                           | sim         | false        | false                      |
+    | budget.limit             | numérico                  | Limite de crédito disponível para corridas do colaborador                                         | não         | -            | 100.00                     |
+    | budget.period            | alfanumérico              | Periodo de atividade da política por orçamento (valores: "monthly" ou "date")                                   | não         | -            | monthly                    |
+    | budget.validUntil        | alfanumérico              | Data de validade da política por orçamento                                                                     | não         | -            | 2019-04-22                 |
+    | rideCredit.enabled       | verdadeiro/falso          | Se verdadeiro, a política por quantidade de corridas estará ativo para o colaborador                               | sim         | false        | false                      |
     | rideCredit.credit        | numérico                  | Quantidade de corridas autorizadas para o colaborador                                             | não         | -            | 10                         |
-    | rideCredit.enabled       | verdadeiro/falso          | Se verdadeiro, o crédito da corrida estará ativo para o colaborador                               | sim         | false        | false                      |
     
 > Os atributos `budget.limit` e `budget.period` serão obrigatórios caso `budget.enabled` seja `true`  
   O atributo `budget.validUntil` será obrigatório caso `budget.period` seja `date`  
@@ -972,12 +972,12 @@ curl -X GET PUT URL -H 'x-api-key: key-abc-123'
     {
       "budget": {
         "enabled": true,
-        "limit": 0,
-        "period": "string",
-        "validUntil": "string"
+        "limit": 100.00,
+        "period": "date",
+        "validUntil": "2019-04-22"
       },
       "rideCredit": {
-        "credit": 0,
+        "credit": 10,
         "enabled": true
       }
     }
@@ -1004,12 +1004,12 @@ curl -X GET PUT URL -H 'x-api-key: key-abc-123'
 
     | Atributo                 | Tipo do dado              | Descrição                                                                                         | Obrigatório | Valor padrão | Exemplo                    |
     |--------------------------|---------------------------|---------------------------------------------------------------------------------------------------|-------------|--------------|----------------------------|
-    | budget.enabled           | verdadeiro/falso          | Se verdadeiro, politica estará ativa para o colaborador                                           | sim         | false        | false                      |
-    | budget.limit             | numérico                  | Limite de credito disponível para corridas do colaborador                                         | não         | -            | 100.00                     |
-    | budget.period            | alfanumérico              | Periodo de atividade da politica (valores: "monthly" ou "date")                                   | não         | -            | monthly                    |
-    | budget.validUntil        | alfanumérico              | Data de validade da politica                                                                      | não         | -            | 2019-04-22                 |
+    | budget.enabled           | verdadeiro/falso          | Se verdadeiro, política por orçamento estará ativa para o colaborador                                           | sim         | false        | false                      |
+    | budget.limit             | numérico                  | Limite de crédito disponível para corridas do colaborador                                         | não         | -            | 100.00                     |
+    | budget.period            | alfanumérico              | Periodo de atividade da política por orçamento (valores: "monthly" ou "date")                                   | não         | -            | monthly                    |
+    | budget.validUntil        | alfanumérico              | Data de validade da política por orçamento                                                                     | não         | -            | 2019-04-22                 |
+    | rideCredit.enabled       | verdadeiro/falso          | Se verdadeiro, a política por quantidade de corridas estará ativo para o colaborador                               | sim         | false        | false                      |
     | rideCredit.credit        | numérico                  | Quantidade de corridas autorizadas para o colaborador                                             | não         | -            | 10                         |
-    | rideCredit.enabled       | verdadeiro/falso          | Se verdadeiro, o crédito da corrida estará ativo para o colaborador                               | sim         | false        | false                      |
     
 > Os atributos `budget.limit` e `budget.period` serão obrigatórios caso `budget.enabled` seja `true`  
   O atributo `budget.validUntil` será obrigatório caso `budget.period` seja `date`  
