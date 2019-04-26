@@ -815,6 +815,267 @@ curl -X GET PUT URL -H 'x-api-key: key-abc-123'
   
 -----
 
+## Política de uso
+
+## Busca de política de uso do colaborador
+
+* **URL**
+
+  `/employees/{employeeId}/policy`
+
+* **Method**
+
+  `GET`
+  
+*  **Parâmetros via query**
+
+    | Atributo     | Tipo do dado     | Descrição                      | Obrigatório | Valor padrão | Exemplo    |
+    |--------------|------------------|--------------------------------|-------------|--------------|------------|
+    | employeeId   | numérico         | Identificador do colaborador   | sim         | -            | 20         |
+    
+
+
+* **Retorno**
+  
+  **Status Code:** 200
+  
+    ```json
+    {
+      "budget": {
+        "enabled": true,
+        "limit": 100.00,
+        "period": "date",
+        "validUntil": "2019-04-22"
+      },
+      "rideCredit": {
+        "credit": 10,
+        "enabled": true
+      }
+    }
+    ``` 
+-----
+
+## Atualizar política de uso do colaborador
+
+* **URL**
+
+  `/employees/{employeeId}/policy`
+
+* **Method**
+
+  `PUT`
+  
+*  **Parâmetros via query**
+
+    | Atributo     | Tipo do dado     | Descrição                      | Obrigatório | Valor padrão | Exemplo    |
+    |--------------|------------------|--------------------------------|-------------|--------------|------------|
+    | employeeId   | numérico         | Identificador do colaborador   | sim         | -            | 20         |
+    
+*  **Parâmetros via body**
+
+    | Atributo                 | Tipo do dado              | Descrição                                                                                         | Obrigatório | Valor padrão | Exemplo                    |
+    |--------------------------|---------------------------|---------------------------------------------------------------------------------------------------|-------------|--------------|----------------------------|
+    | budget.enabled           | verdadeiro/falso          | Se verdadeiro, política por orçamento estará ativa para o colaborador                                           | sim         | false        | false                      |
+    | budget.limit             | numérico                  | Limite de crédito disponível para corridas do colaborador                                         | não         | -            | 100.00                     |
+    | budget.period            | alfanumérico              | Periodo de atividade da política por orçamento (valores: "monthly" ou "date")                                   | não         | -            | monthly                    |
+    | budget.validUntil        | alfanumérico              | Data de validade da política por orçamento                                                                     | não         | -            | 2019-04-22                 |
+    | rideCredit.enabled       | verdadeiro/falso          | Se verdadeiro, a política por quantidade de corridas estará ativo para o colaborador                               | sim         | false        | false                      |
+    | rideCredit.credit        | numérico                  | Quantidade de corridas autorizadas para o colaborador                                             | não         | -            | 10                         |
+    
+> Os atributos `budget.limit` e `budget.period` serão obrigatórios caso `budget.enabled` seja `true`  
+  O atributo `budget.validUntil` será obrigatório caso `budget.period` seja `date`  
+  O atributo `rideCredit.credit` será obrigatório caso `rideCredit.enabled` seja `true`
+
+
+*   **Exemplo de envio**
+
+    ```json
+      {
+        "budget": {
+          "enabled": true,
+          "limit": 100.00,
+          "period": "date",
+          "validUntil": "2019-04-22"
+        },
+        "rideCredit": {
+          "credit": 10,
+          "enabled": true
+        }
+      }
+    ``` 
+
+* **Retorno**
+  
+  **Status Code:** 200
+  
+    ```json
+    {
+      "budget": {
+        "enabled": true,
+        "limit": 100.00,
+        "period": "date",
+        "validUntil": "2019-04-22"
+      },
+      "rideCredit": {
+        "credit": 10,
+        "enabled": true
+      }
+    }
+    ``` 
+-----
+
+## Remover politica de uso do colaborador
+
+* **URL**
+
+  `/employees/{employeeId}/policy`
+
+* **Method**
+
+  `DELETE`
+  
+*  **Parâmetros via url**
+
+
+   | Atributo     | Tipo do dado     | Descrição                      | Obrigatório | Valor padrão | Exemplo        |
+   |----------    |--------------    |--------------------------------|-------------|--------------|------------    |
+   | employeeId   | numérico         | Identificador do colaborador   | sim         | -            | 20             |
+
+* **Retorno**
+  
+  **Status Code:** 204
+    
+-----
+
+## Busca de política de uso do colaborador por identificador externo 
+
+* **URL**
+
+  `/employees/external-id/{externalId}/policy`
+
+* **Method**
+
+  `GET`
+  
+*  **Parâmetros via query**
+
+    | Atributo     | Tipo do dado     | Descrição                      | Obrigatório | Valor padrão | Exemplo    |
+    |--------------|------------------|--------------------------------|-------------|--------------|------------|
+    | externalId   | numérico         | Identificador do colaborador   | sim         | -            | 20         |
+    
+
+* **Retorno**
+  
+  **Status Code:** 200
+  
+    ```json
+    {
+      "budget": {
+        "enabled": true,
+        "limit": 100.00,
+        "period": "date",
+        "validUntil": "2019-04-22"
+      },
+      "rideCredit": {
+        "credit": 10,
+        "enabled": true
+      }
+    }
+    ``` 
+-----
+
+## Atualizar política de uso do colaborador por identificador externo
+
+* **URL**
+
+  `/employees/external-id/{externalId}/policy`
+
+* **Method**
+
+  `PUT`
+  
+*  **Parâmetros via query**
+
+    | Atributo     | Tipo do dado     | Descrição                      | Obrigatório | Valor padrão | Exemplo    |
+    |--------------|------------------|--------------------------------|-------------|--------------|------------|
+    | externalId   | numérico         | Identificador do colaborador   | sim         | -            | 20         |
+    
+*  **Parâmetros via body**
+
+    | Atributo                 | Tipo do dado              | Descrição                                                                                         | Obrigatório | Valor padrão | Exemplo                    |
+    |--------------------------|---------------------------|---------------------------------------------------------------------------------------------------|-------------|--------------|----------------------------|
+    | budget.enabled           | verdadeiro/falso          | Se verdadeiro, política por orçamento estará ativa para o colaborador                                           | sim         | false        | false                      |
+    | budget.limit             | numérico                  | Limite de crédito disponível para corridas do colaborador                                         | não         | -            | 100.00                     |
+    | budget.period            | alfanumérico              | Periodo de atividade da política por orçamento (valores: "monthly" ou "date")                                   | não         | -            | monthly                    |
+    | budget.validUntil        | alfanumérico              | Data de validade da política por orçamento                                                                     | não         | -            | 2019-04-22                 |
+    | rideCredit.enabled       | verdadeiro/falso          | Se verdadeiro, a política por quantidade de corridas estará ativo para o colaborador                               | sim         | false        | false                      |
+    | rideCredit.credit        | numérico                  | Quantidade de corridas autorizadas para o colaborador                                             | não         | -            | 10                         |
+    
+> Os atributos `budget.limit` e `budget.period` serão obrigatórios caso `budget.enabled` seja `true`  
+  O atributo `budget.validUntil` será obrigatório caso `budget.period` seja `date`  
+  O atributo `rideCredit.credit` será obrigatório caso `rideCredit.enabled` seja `true`
+
+
+*   **Exemplo de envio**
+
+    ```json
+      {
+        "budget": {
+          "enabled": true,
+          "limit": 100.00,
+          "period": "date",
+          "validUntil": "2019-04-22"
+        },
+        "rideCredit": {
+          "credit": 10,
+          "enabled": true
+        }
+      }
+    ``` 
+
+* **Retorno**
+  
+  **Status Code:** 200
+  
+    ```json
+    {
+      "budget": {
+        "enabled": true,
+        "limit": 100.00,
+        "period": "date",
+        "validUntil": "2019-04-22"
+      },
+      "rideCredit": {
+        "credit": 10,
+        "enabled": true
+      }
+    }
+    ``` 
+-----
+
+## Remover politica de uso do colaborador por identificador externo
+
+* **URL**
+
+  `/employees/external-id/{externalId}/policy`
+
+* **Method**
+
+  `DELETE`
+  
+*  **Parâmetros via url**
+
+
+   | Atributo     | Tipo do dado     | Descrição                      | Obrigatório | Valor padrão | Exemplo        |
+   |----------    |--------------    |--------------------------------|-------------|--------------|------------    |
+   | externalId   | numérico         | Identificador do colaborador   | sim         | -            | 20             |
+
+* **Retorno**
+  
+  **Status Code:** 204
+
+-----
+
 ## Suporte da API
 
 Caso tenha mais dúvidas ou esteja com problemas na integração, mande um e-mail para *help-corp-api@99taxis.com*
