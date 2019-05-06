@@ -167,7 +167,92 @@ curl -X GET PUT URL -H 'x-api-key: key-abc-123'
 * **Retorno**
     
     **Status Code:** 204
+
+-----
+
+#### Busca de responsável de centro de custo por identificador
+
+* **URL**
+  
+  `/costcenters/{id}/owners`
+
+* **Método**
+
+  `GET`
+  
+*  **Parâmetros via url**
+
+      | Atributo   | Tipo do dado   | Descrição                         | Obrigatório | Valor padrão | Exemplo     |
+      |------------|----------------|-----------------------------------|-------------|--------------|-------------|
+      | id         | numérico       | Identificador do centro de custo	| sim         | -            | 20          |
+  
+
+* **Retorno**
     
+    **Status Code:** 200
+    
+    ```json
+    [{
+      "name": "José Santos",
+      "email": "jose.santos@empresa.com.br"
+    }]
+    ```
+-----
+
+#### Alteração de responsável de centro de custo por identificador
+
+* **URL**
+  
+  `/costcenters/{id}/owners`
+
+* **Método**
+
+  `PUT`
+  
+*  **Parâmetros via url**
+
+      | Atributo   | Tipo do dado   | Descrição                         | Obrigatório | Valor padrão | Exemplo     |
+      |------------|----------------|-----------------------------------|-------------|--------------|-------------|
+      | id         | numérico       | Identificador do centro de custo	| sim         | -            | 20          |
+  
+*  **Parâmetros via body**
+
+    Lista de responsáveis:
+
+    | Atributo          | Tipo do dado     | Descrição             | Obrigatório | Valor padrão | Exemplo                      |
+    |-------------------|------------------|-----------------------|-------------|--------------|------------------------------|
+    | name              | alfanumérico     | Nome do responsável   | sim         | -            | José Santos                  |
+    | email             | alfanumérico     | E-mail do responsável | sim         | -            | jose.santos@empresa.com.br   |
+
+*  **Regras**
+  
+    Se o responsável já tem uma conta, o `name` será desconsiderado.
+  
+    Se o responsável já tem uma conta e o perfil for tipo `EmployeeUser`, o perfil será mudado para `OwnerUser`
+
+    Se o responsável não tem uma conta, a mesma será criada com o `name` e o `email`
+
+
+* **Exemplo de envio**
+
+    ```json
+    [{
+      "name": "José Santos",
+      "email": "jose.santos@empresa.com.br"
+    }]
+    ```
+
+* **Retorno**
+    
+    **Status Code:** 200
+    
+    ```json
+    [{
+      "name": "José Santos",
+      "email": "jose.santos@empresa.com.br"
+    }]
+    ```
+
 -----
 
 ## Colaboradores
