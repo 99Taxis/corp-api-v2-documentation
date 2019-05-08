@@ -22,17 +22,248 @@ curl -X GET PUT URL -H 'x-api-key: key-abc-123'
 
 ## Seções
 
+- [Centro de Custo](#centro-de-custo)
 - [Colaboradores](#colaboradores)
+- [Colaboradores com Identificador Externo](#colaboradores-com-identificador-externo)
+
+## Centro de Custo
+
+#### Busca de centros de custo
+
+* **URL**
+  
+  `/costcenters`
+
+* **Método**
+
+  `GET`
+  
+*  **Parâmetros via query**
+
+      | Atributo   | Tipo do dado   | Descrição                                  | Obrigatório | Valor padrão | Exemplo     |
+      |------------|----------------|------------------------------------------- |-------------|--------------|-------------|
+      | search     | alfanumérico   | Busca pelo nome do centro de custo         | não         | -            | Atendimento |
+      | limit      | numérico       | Quantidade de registros por página         | não         | 50           | 20          |
+      | offset     | numérico       | Índice da página no sistema de paginação   | não         | 1            | 0           |
+  
+* **Retorno**
+    
+    **Status Code:** 200
+    
+    ```json
+    [
+      {
+        "id": 1,
+        "name": "Atendimento",
+        "enabled": true,
+        "company": {
+          "id": "47a3083b-5d03-4e05-ad9d-9fd6fddd613e",
+          "name": "99"
+        }
+      },
+      {
+        "id": 2,
+        "name": "Financeiro",
+        "enabled": true,
+        "company": {
+          "id": "47a3083b-5d03-4e05-ad9d-9fd6fddd613e",
+          "name": "99"
+        }
+      }
+    ]
+    ```
+-----
+
+#### Cadastro de centro de custo
+
+* **URL**
+  
+  `/costcenters`
+
+* **Método**
+
+  `POST`
+  
+*  **Parâmetros via body**
+
+    | Atributo   | Tipo do dado   | Descrição                                  | Obrigatório | Valor padrão | Exemplo     |
+    |------------|----------------|------------------------------------------- |-------------|--------------|-------------|
+    | name       | alfanumérico   | Nome do centro de custo                    | sim         | -            | Atendimento |
+  
+* **Exemplo de envio**
+
+    ```json
+    {
+      "name": "Atendimento"
+    }
+    ```
+
+* **Retorno**
+    
+    **Status Code:** 201
+    
+    ```json
+    {
+      "id": 1,
+      "name": "Atendimento",
+      "enabled": true,
+      "company": {
+        "id": "47a3083b-5d03-4e05-ad9d-9fd6fddd613e",
+        "name": "99"
+      }
+    }
+    ```
+-----
+
+#### Busca de centros de custo por identificador
+
+* **URL**
+  
+  `/costcenters/{id}`
+
+* **Método**
+
+  `GET`
+  
+*  **Parâmetros via url**
+
+      | Atributo   | Tipo do dado   | Descrição                         | Obrigatório | Valor padrão | Exemplo     |
+      |------------|----------------|-----------------------------------|-------------|--------------|-------------|
+      | id         | numérico       | Identificador do centro de custo	| sim         | -            | 20          |
+  
+* **Retorno**
+    
+    **Status Code:** 200
+    
+    ```json
+    {
+      "id": 1,
+      "name": "Atendimento",
+      "enabled": true,
+      "company": {
+        "id": "47a3083b-5d03-4e05-ad9d-9fd6fddd613e",
+        "name": "99"
+      }
+    }
+    ```
+-----
+
+#### Desativar um centro de custo
+
+* **URL**
+  
+  `/costcenters/{id}`
+
+* **Método**
+
+  `DELETE`
+  
+*  **Parâmetros via url**
+
+      | Atributo   | Tipo do dado   | Descrição                         | Obrigatório | Valor padrão | Exemplo     |
+      |------------|----------------|-----------------------------------|-------------|--------------|-------------|
+      | id         | numérico       | Identificador do centro de custo	| sim         | -            | 20          |
+  
+* **Retorno**
+    
+    **Status Code:** 204
+
+-----
+
+#### Busca de responsável de centro de custo por identificador
+
+* **URL**
+  
+  `/costcenters/{id}/owners`
+
+* **Método**
+
+  `GET`
+  
+*  **Parâmetros via url**
+
+      | Atributo   | Tipo do dado   | Descrição                         | Obrigatório | Valor padrão | Exemplo     |
+      |------------|----------------|-----------------------------------|-------------|--------------|-------------|
+      | id         | numérico       | Identificador do centro de custo	| sim         | -            | 20          |
+  
+
+* **Retorno**
+    
+    **Status Code:** 200
+    
+    ```json
+    [{
+      "name": "José Santos",
+      "email": "jose.santos@empresa.com.br"
+    }]
+    ```
+-----
+
+#### Alteração de responsável de centro de custo por identificador
+
+* **URL**
+  
+  `/costcenters/{id}/owners`
+
+* **Método**
+
+  `PUT`
+  
+*  **Parâmetros via url**
+
+      | Atributo   | Tipo do dado   | Descrição                         | Obrigatório | Valor padrão | Exemplo     |
+      |------------|----------------|-----------------------------------|-------------|--------------|-------------|
+      | id         | numérico       | Identificador do centro de custo	| sim         | -            | 20          |
+  
+*  **Parâmetros via body**
+
+    Lista de responsáveis:
+
+    | Atributo          | Tipo do dado     | Descrição             | Obrigatório | Valor padrão | Exemplo                      |
+    |-------------------|------------------|-----------------------|-------------|--------------|------------------------------|
+    | name              | alfanumérico     | Nome do responsável   | sim         | -            | José Santos                  |
+    | email             | alfanumérico     | E-mail do responsável | sim         | -            | jose.santos@empresa.com.br   |
+
+*  **Regras**
+  
+    Se o responsável já tem uma conta, o `name` será desconsiderado.
+  
+    Se o responsável já tem uma conta e o perfil for tipo `EmployeeUser`, o perfil será mudado para `OwnerUser`
+
+    Se o responsável não tem uma conta, a mesma será criada com o `name` e o `email`
+
+
+* **Exemplo de envio**
+
+    ```json
+    [{
+      "name": "José Santos",
+      "email": "jose.santos@empresa.com.br"
+    }]
+    ```
+
+* **Retorno**
+    
+    **Status Code:** 200
+    
+    ```json
+    [{
+      "name": "José Santos",
+      "email": "jose.santos@empresa.com.br"
+    }]
+    ```
+
+-----
 
 ## Colaboradores
 
-## Busca de colaboradores
+#### Busca de colaboradores
 
 * **URL**
 
   `/employees`
 
-* **Method**
+* **Método**
 
   `GET`
   
@@ -78,13 +309,13 @@ curl -X GET PUT URL -H 'x-api-key: key-abc-123'
     ``` 
 -----
 
-## Cadastro de colaborador
+#### Cadastro de colaborador
 
 * **URL**
 
   `/employees`
 
-* **Method**
+* **Método**
 
   `POST`
   
@@ -165,13 +396,247 @@ curl -X GET PUT URL -H 'x-api-key: key-abc-123'
     
 -----
 
-## Busca de colaborador por identificador
+#### Busca de centro de custo do colaborador
+
+* **URL**
+
+  `/employees/{employeeId}/costcenter`
+
+* **Método**
+
+  `GET`
+  
+*  **Parâmetros via query**
+
+    | Atributo     | Tipo do dado     | Descrição                      | Obrigatório | Valor padrão | Exemplo    |
+    |--------------|------------------|--------------------------------|-------------|--------------|------------|
+    | id           | numérico         | Identificador do colaborador   | sim         | -            | 20         |
+    
+
+
+* **Retorno**
+  
+  **Status Code:** 200
+  
+    ```json
+    [
+      {
+        "id": 77045,
+        "name": "IntegrationAPI"
+      }
+    ]
+    ``` 
+-----
+
+#### Atualizar centro de custos do colaborador
+
+* **URL**
+
+  `/employees/{employeeId}/costcenter`
+
+* **Método**
+
+  `PATCH`
+  
+*  **Parâmetros via url**
+
+   | Atributo     | Tipo do dado     | Descrição                                    | Obrigatório     | Valor padrão     | Exemplo        |
+   |----------    |--------------    |------------------------------------------    |-------------    |--------------    |------------    |
+   | employeeId   | numérico         | Identificador do colaborador                 | sim             | -                | 125            |
+   
+  
+*  **Parâmetros via body**
+
+    | Atributo                   | Tipo do dado              | Descrição                             | Obrigatório | Valor padrão | Exemplo   |
+    |----------------------------|---------------------------|---------------------------------------|-------------|--------------|-----------|
+    | costCenterIDs              | conjunto de numéricos     | Identificadores de centros de custo   | sim         | -            | 100, 200  |
+
+*   **Exemplo de envio**
+
+    ```json
+    {
+      "costCenterIDs": [
+        100,
+        200
+      ]
+    }
+    ``` 
+
+
+* **Retorno**
+  
+  **Status Code:** 200
+  
+    ```json
+    [
+      100,
+      200
+    ]
+    ```
+    
+-----
+
+#### Desassociar um centro de custo de um colaborador
+
+* **URL**
+
+  `/employees/{employeeId}/costcenter/{costCenterId}`
+
+* **Método**
+
+  `DELETE`
+  
+*  **Parâmetros via url**
+
+
+   | Atributo     | Tipo do dado     | Descrição                                    | Obrigatório     | Valor padrão     | Exemplo        |
+   |----------    |--------------    |------------------------------------------    |-------------    |--------------    |------------    |
+   | employeeId   | numérico         | Identificador do colaborador                 | sim             | -                | 10             |
+   | costCenterId | numérico         | Identificador do centro de custo             | sim             | -                | 20             |
+  
+* **Retorno**
+  
+  **Status Code:** 204
+  
+-----
+
+#### Busca de política de uso do colaborador
+
+* **URL**
+
+  `/employees/{employeeId}/policy`
+
+* **Método**
+
+  `GET`
+  
+*  **Parâmetros via query**
+
+    | Atributo     | Tipo do dado     | Descrição                      | Obrigatório | Valor padrão | Exemplo    |
+    |--------------|------------------|--------------------------------|-------------|--------------|------------|
+    | employeeId   | numérico         | Identificador do colaborador   | sim         | -            | 20         |
+    
+
+
+* **Retorno**
+  
+  **Status Code:** 200
+  
+    ```json
+    {
+      "budget": {
+        "enabled": true,
+        "limit": 100.00,
+        "period": "date",
+        "validUntil": "2019-04-22"
+      },
+      "rideCredit": {
+        "credit": 10,
+        "enabled": true
+      }
+    }
+    ``` 
+-----
+
+#### Atualizar política de uso do colaborador
+
+* **URL**
+
+  `/employees/{employeeId}/policy`
+
+* **Método**
+
+  `PUT`
+  
+*  **Parâmetros via query**
+
+    | Atributo     | Tipo do dado     | Descrição                      | Obrigatório | Valor padrão | Exemplo    |
+    |--------------|------------------|--------------------------------|-------------|--------------|------------|
+    | employeeId   | numérico         | Identificador do colaborador   | sim         | -            | 20         |
+    
+*  **Parâmetros via body**
+
+    | Atributo                 | Tipo do dado              | Descrição                                                                                         | Obrigatório | Valor padrão | Exemplo                    |
+    |--------------------------|---------------------------|---------------------------------------------------------------------------------------------------|-------------|--------------|----------------------------|
+    | budget.enabled           | verdadeiro/falso          | Se verdadeiro, política por orçamento estará ativa para o colaborador                                           | sim         | false        | false                      |
+    | budget.limit             | numérico                  | Limite de crédito disponível para corridas do colaborador                                         | não         | -            | 100.00                     |
+    | budget.period            | alfanumérico              | Periodo de atividade da política por orçamento (valores: "monthly" ou "date")                                   | não         | -            | monthly                    |
+    | budget.validUntil        | alfanumérico              | Data de validade da política por orçamento                                                                     | não         | -            | 2019-04-22                 |
+    | rideCredit.enabled       | verdadeiro/falso          | Se verdadeiro, a política por quantidade de corridas estará ativo para o colaborador                               | sim         | false        | false                      |
+    | rideCredit.credit        | numérico                  | Quantidade de corridas autorizadas para o colaborador                                             | não         | -            | 10                         |
+    
+> Os atributos `budget.limit` e `budget.period` serão obrigatórios caso `budget.enabled` seja `true`  
+  O atributo `budget.validUntil` será obrigatório caso `budget.period` seja `date`  
+  O atributo `rideCredit.credit` será obrigatório caso `rideCredit.enabled` seja `true`
+
+
+*   **Exemplo de envio**
+
+    ```json
+      {
+        "budget": {
+          "enabled": true,
+          "limit": 100.00,
+          "period": "date",
+          "validUntil": "2019-04-22"
+        },
+        "rideCredit": {
+          "credit": 10,
+          "enabled": true
+        }
+      }
+    ``` 
+
+* **Retorno**
+  
+  **Status Code:** 200
+  
+    ```json
+    {
+      "budget": {
+        "enabled": true,
+        "limit": 100.00,
+        "period": "date",
+        "validUntil": "2019-04-22"
+      },
+      "rideCredit": {
+        "credit": 10,
+        "enabled": true
+      }
+    }
+    ``` 
+-----
+
+#### Remover politica de uso do colaborador
+
+* **URL**
+
+  `/employees/{employeeId}/policy`
+
+* **Método**
+
+  `DELETE`
+  
+*  **Parâmetros via url**
+
+
+   | Atributo     | Tipo do dado     | Descrição                      | Obrigatório | Valor padrão | Exemplo        |
+   |----------    |--------------    |--------------------------------|-------------|--------------|------------    |
+   | employeeId   | numérico         | Identificador do colaborador   | sim         | -            | 20             |
+
+* **Retorno**
+  
+  **Status Code:** 204
+    
+-----
+
+#### Busca de colaborador por identificador
 
 * **URL**
 
   `/employees/{id}`
 
-* **Method**
+* **Método**
 
   `GET`
   
@@ -214,13 +679,13 @@ curl -X GET PUT URL -H 'x-api-key: key-abc-123'
     
 -----
 
-## Atualizar os dados de colaborador
+#### Atualizar os dados de colaborador
 
 * **URL**
 
   `/employees/{id}`
 
-* **Method**
+* **Método**
 
   `PUT`
   
@@ -300,13 +765,13 @@ curl -X GET PUT URL -H 'x-api-key: key-abc-123'
     
 -----
 
-## Desativar um colaborador
+#### Desativar um colaborador
 
 * **URL**
 
   `/employees/{id}`
 
-* **Method**
+* **Método**
 
   `DELETE`
   
@@ -323,13 +788,13 @@ curl -X GET PUT URL -H 'x-api-key: key-abc-123'
     
 -----
 
-## Remover surpervisor do colaborador
+#### Remover surpervisor do colaborador
 
 * **URL**
 
   `/employees/{id}/supervisor`
 
-* **Method**
+* **Método**
 
   `DELETE`
   
@@ -346,118 +811,15 @@ curl -X GET PUT URL -H 'x-api-key: key-abc-123'
     
 -----
 
-## Busca de centro de custo do colaborador
+## Colaboradores com Identificador Externo
 
-* **URL**
-
-  `/employees/{employeeId}/costcenter`
-
-* **Method**
-
-  `GET`
-  
-*  **Parâmetros via query**
-
-    | Atributo     | Tipo do dado     | Descrição                      | Obrigatório | Valor padrão | Exemplo    |
-    |--------------|------------------|--------------------------------|-------------|--------------|------------|
-    | id           | numérico         | Identificador do colaborador   | sim         | -            | 20         |
-    
-
-
-* **Retorno**
-  
-  **Status Code:** 200
-  
-    ```json
-    [
-      {
-        "id": 77045,
-        "name": "IntegrationAPI"
-      }
-    ]
-    ``` 
------
-
-## Atualizar centro de custos do coladorador
-
-* **URL**
-
-  `/employees/{employeeId}/costcenter`
-
-* **Method**
-
-  `PATCH`
-  
-*  **Parâmetros via url**
-
-
-   | Atributo     | Tipo do dado     | Descrição                                    | Obrigatório     | Valor padrão     | Exemplo        |
-   |----------    |--------------    |------------------------------------------    |-------------    |--------------    |------------    |
-   | employeeId   | numérico         | Identificador do colaborador                 | sim             | -                | 125            |
-   
-  
-*  **Parâmetros via body**
-
-    | Atributo                   | Tipo do dado              | Descrição                             | Obrigatório | Valor padrão | Exemplo   |
-    |----------------------------|---------------------------|---------------------------------------|-------------|--------------|-----------|
-    | costCenterIDs              | conjunto de numéricos     | Identificadores de centros de custo   | sim         | -            | 100, 200  |
-
-*   **Exemplo de envio**
-
-    ```json
-    {
-      "costCenterIDs": [
-        100,
-        200
-      ]
-    }
-    ``` 
-
-
-* **Retorno**
-  
-  **Status Code:** 200
-  
-    ```json
-    [
-      100,
-      200
-    ]
-    ```
-    
------
-
-## Desassociar um centro de custo de um colaborador
-
-* **URL**
-
-  `/employees/{employeeId}/costcenter/{costCenterId}`
-
-* **Method**
-
-  `DELETE`
-  
-*  **Parâmetros via url**
-
-
-   | Atributo     | Tipo do dado     | Descrição                                    | Obrigatório     | Valor padrão     | Exemplo        |
-   |----------    |--------------    |------------------------------------------    |-------------    |--------------    |------------    |
-   | employeeId   | numérico         | Identificador do colaborador                 | sim             | -                | 10             |
-   | costCenterId | numérico         | Identificador do centro de custo             | sim             | -                | 20             |
-  
-* **Retorno**
-  
-  **Status Code:** 204
-  
------
-
-## Cadastrar um colaborador por identificador externo
+#### Cadastrar um colaborador por identificador externo
 
 * **URL**
 
   `/employees/external-id`
 
-* **Method**
+* **Método**
 
   `POST`
   
@@ -534,12 +896,12 @@ curl -X GET PUT URL -H 'x-api-key: key-abc-123'
     
 -----
 
-## Busca de colaboradores por identificador externo
+#### Busca de colaboradores por identificador externo
 * **URL**
 
   `/employees/external-id/{externalId}`
 
-* **Method**
+* **Método**
 
   `GET`
   
@@ -583,13 +945,13 @@ curl -X GET PUT URL -H 'x-api-key: key-abc-123'
   > O campo retornado `supervisorId` é o id interno e não representa o `supervisorExternalId`.
 -----
 
-## Atualizar os dados de colaborador por identificador externo
+#### Atualizar os dados de colaborador por identificador externo
 
 * **URL**
 
   `/employees/external-id/{externalId}`
 
-* **Method**
+* **Método**
 
   `PUT`
   
@@ -666,13 +1028,13 @@ curl -X GET PUT URL -H 'x-api-key: key-abc-123'
     
 -----
 
-## Desativar um colaborador por identificador externo
+#### Desativar um colaborador por identificador externo
 
 * **URL**
 
   `/employees/external-id/{externalId}`
 
-* **Method**
+* **Método**
 
   `DELETE`
   
@@ -689,12 +1051,12 @@ curl -X GET PUT URL -H 'x-api-key: key-abc-123'
 
 -----
 
-## Busca de centros de custos do colaborador por identificador externo
+#### Busca de centros de custos do colaborador por identificador externo
 * **URL**
 
   `/employees/external-id/{externalId}/costcenter`
 
-* **Method**
+* **Método**
 
   `GET`
   
@@ -721,13 +1083,13 @@ curl -X GET PUT URL -H 'x-api-key: key-abc-123'
     
 -----
 
-## Atualizar os dados de centro de custos do colaborador por identificador externo
+#### Atualizar os dados de centro de custos do colaborador por identificador externo
 
 * **URL**
 
   `/employees/external-id/{externalId}/costcenter`
 
-* **Method**
+* **Método**
 
   `PATCH`
   
@@ -768,13 +1130,13 @@ curl -X GET PUT URL -H 'x-api-key: key-abc-123'
     
 -----
 
-## Remover centro de custo de um colaborador por identificador externo
+#### Remover centro de custo de um colaborador por identificador externo
 
 * **URL**
 
   `/employees/external-id/{externalId}/costcenter/{costCenterId}`
 
-* **Method**
+* **Método**
 
   `DELETE`
   
@@ -792,168 +1154,13 @@ curl -X GET PUT URL -H 'x-api-key: key-abc-123'
   
 -----
 
-## Remover supervisor de um colaborador por identificador externo
-
-* **URL**
-
-  `/employees/external-id/{externalId}/supervisor`
-
-* **Method**
-
-  `DELETE`
-  
-*  **Parâmetros via url**
-
-
-   | Atributo     | Tipo do dado     | Descrição                                    | Obrigatório     | Valor padrão     | Exemplo        |
-   |----------    |--------------    |------------------------------------------    |-------------    |--------------    |------------    |
-   | externalId   | numérico         | Identificador do colaborador                 | sim             | -                | 10             |
-  
-* **Retorno**
-  
-  **Status Code:** 204
-  
------
-
-## Política de uso
-
-## Busca de política de uso do colaborador
-
-* **URL**
-
-  `/employees/{employeeId}/policy`
-
-* **Method**
-
-  `GET`
-  
-*  **Parâmetros via query**
-
-    | Atributo     | Tipo do dado     | Descrição                      | Obrigatório | Valor padrão | Exemplo    |
-    |--------------|------------------|--------------------------------|-------------|--------------|------------|
-    | employeeId   | numérico         | Identificador do colaborador   | sim         | -            | 20         |
-    
-
-
-* **Retorno**
-  
-  **Status Code:** 200
-  
-    ```json
-    {
-      "budget": {
-        "enabled": true,
-        "limit": 100.00,
-        "period": "date",
-        "validUntil": "2019-04-22"
-      },
-      "rideCredit": {
-        "credit": 10,
-        "enabled": true
-      }
-    }
-    ``` 
------
-
-## Atualizar política de uso do colaborador
-
-* **URL**
-
-  `/employees/{employeeId}/policy`
-
-* **Method**
-
-  `PUT`
-  
-*  **Parâmetros via query**
-
-    | Atributo     | Tipo do dado     | Descrição                      | Obrigatório | Valor padrão | Exemplo    |
-    |--------------|------------------|--------------------------------|-------------|--------------|------------|
-    | employeeId   | numérico         | Identificador do colaborador   | sim         | -            | 20         |
-    
-*  **Parâmetros via body**
-
-    | Atributo                 | Tipo do dado              | Descrição                                                                                         | Obrigatório | Valor padrão | Exemplo                    |
-    |--------------------------|---------------------------|---------------------------------------------------------------------------------------------------|-------------|--------------|----------------------------|
-    | budget.enabled           | verdadeiro/falso          | Se verdadeiro, política por orçamento estará ativa para o colaborador                                           | sim         | false        | false                      |
-    | budget.limit             | numérico                  | Limite de crédito disponível para corridas do colaborador                                         | não         | -            | 100.00                     |
-    | budget.period            | alfanumérico              | Periodo de atividade da política por orçamento (valores: "monthly" ou "date")                                   | não         | -            | monthly                    |
-    | budget.validUntil        | alfanumérico              | Data de validade da política por orçamento                                                                     | não         | -            | 2019-04-22                 |
-    | rideCredit.enabled       | verdadeiro/falso          | Se verdadeiro, a política por quantidade de corridas estará ativo para o colaborador                               | sim         | false        | false                      |
-    | rideCredit.credit        | numérico                  | Quantidade de corridas autorizadas para o colaborador                                             | não         | -            | 10                         |
-    
-> Os atributos `budget.limit` e `budget.period` serão obrigatórios caso `budget.enabled` seja `true`  
-  O atributo `budget.validUntil` será obrigatório caso `budget.period` seja `date`  
-  O atributo `rideCredit.credit` será obrigatório caso `rideCredit.enabled` seja `true`
-
-
-*   **Exemplo de envio**
-
-    ```json
-      {
-        "budget": {
-          "enabled": true,
-          "limit": 100.00,
-          "period": "date",
-          "validUntil": "2019-04-22"
-        },
-        "rideCredit": {
-          "credit": 10,
-          "enabled": true
-        }
-      }
-    ``` 
-
-* **Retorno**
-  
-  **Status Code:** 200
-  
-    ```json
-    {
-      "budget": {
-        "enabled": true,
-        "limit": 100.00,
-        "period": "date",
-        "validUntil": "2019-04-22"
-      },
-      "rideCredit": {
-        "credit": 10,
-        "enabled": true
-      }
-    }
-    ``` 
------
-
-## Remover politica de uso do colaborador
-
-* **URL**
-
-  `/employees/{employeeId}/policy`
-
-* **Method**
-
-  `DELETE`
-  
-*  **Parâmetros via url**
-
-
-   | Atributo     | Tipo do dado     | Descrição                      | Obrigatório | Valor padrão | Exemplo        |
-   |----------    |--------------    |--------------------------------|-------------|--------------|------------    |
-   | employeeId   | numérico         | Identificador do colaborador   | sim         | -            | 20             |
-
-* **Retorno**
-  
-  **Status Code:** 204
-    
------
-
-## Busca de política de uso do colaborador por identificador externo 
+#### Busca de política de uso do colaborador por identificador externo 
 
 * **URL**
 
   `/employees/external-id/{externalId}/policy`
 
-* **Method**
+* **Método**
 
   `GET`
   
@@ -984,13 +1191,13 @@ curl -X GET PUT URL -H 'x-api-key: key-abc-123'
     ``` 
 -----
 
-## Atualizar política de uso do colaborador por identificador externo
+#### Atualizar política de uso do colaborador por identificador externo
 
 * **URL**
 
   `/employees/external-id/{externalId}/policy`
 
-* **Method**
+* **Método**
 
   `PUT`
   
@@ -1053,13 +1260,13 @@ curl -X GET PUT URL -H 'x-api-key: key-abc-123'
     ``` 
 -----
 
-## Remover politica de uso do colaborador por identificador externo
+#### Remover politica de uso do colaborador por identificador externo
 
 * **URL**
 
   `/employees/external-id/{externalId}/policy`
 
-* **Method**
+* **Método**
 
   `DELETE`
   
@@ -1074,6 +1281,29 @@ curl -X GET PUT URL -H 'x-api-key: key-abc-123'
   
   **Status Code:** 204
 
+-----
+
+#### Remover supervisor de um colaborador por identificador externo
+
+* **URL**
+
+  `/employees/external-id/{externalId}/supervisor`
+
+* **Método**
+
+  `DELETE`
+  
+*  **Parâmetros via url**
+
+
+   | Atributo     | Tipo do dado     | Descrição                                    | Obrigatório     | Valor padrão     | Exemplo        |
+   |----------    |--------------    |------------------------------------------    |-------------    |--------------    |------------    |
+   | externalId   | numérico         | Identificador do colaborador                 | sim             | -                | 10             |
+  
+* **Retorno**
+  
+  **Status Code:** 204
+  
 -----
 
 ## Suporte da API
