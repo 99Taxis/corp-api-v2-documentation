@@ -1256,8 +1256,8 @@ curl -X GET PUT URL -H 'x-api-key: key-abc-123'
   | id       | numérico     | Identificador do colaborador   | sim         | -            | 10          |
   | fromLat  | alfanumérico | Latitude do ponto de origem    | sim         | -            | -23.5986665 |
   | fromLng  | alfanumérico | Longitude do ponto de origem   | sim         | -            | -46.6907445 |
-  | toLat    | alfanumérico | Latitude do ponto de destino   | sim         | -            | -23,6822    |
-  | toLng    | alfanumérico | Longitude do ponsto de destino | sim         | -            | -46,6896    |
+  | toLat    | alfanumérico | Latitude do ponto de destino   | sim         | -            | -23.6822    |
+  | toLng    | alfanumérico | Longitude do ponsto de destino | sim         | -            | -46.6896    |
 
 * **Retorno**
 
