@@ -25,6 +25,7 @@ curl -X GET PUT URL -H 'x-api-key: key-abc-123'
 - [Centro de Custo](#centro-de-custo)
 - [Colaboradores](#colaboradores)
 - [Colaboradores com Identificador Externo](#colaboradores-com-identificador-externo)
+- [Receitas](#receitas)
 - [Corridas](#corridas)
 
 ## Centro de Custo
@@ -1231,6 +1232,313 @@ curl -X GET PUT URL -H 'x-api-key: key-abc-123'
   **Status Code:** 204
 
 ---
+
+## Receitas
+
+#### Busca de receitas
+
+- **URL**
+
+  `/receipts`
+
+- **Método**
+
+  `GET`
+
+- **Parâmetros via url**
+  | Atributo  | Tipo do dado | Descrição                      | Obrigatório | Valor padrão | Exemplo     |
+  | --------  | ------------ | ------------------------------ | ----------- | ------------ | ----------- |
+  | startDate    | data         | Indica data de início para filtro de busca por corridas finalizadas               | sim         | -            | 2017-06-01  |
+  | endDate      | data         | Indica data de término para filtro de busca por corridas finalizadas              | sim         | -            | 2017-06-02  |
+  | costCenterId | numérico     | Indicador do centro de custo                                                      | não         | -            | 20          |
+  | projectId    | numérico     | Indicador do projeto                                                              | não         | -            | 15          |
+  | taxiCategory | alfanumérico | Categoria da corrida. Valores possíveis: regular-taxi, turbo-taxi, top99 ou pop99 | não         | -            | pop99       |
+  | limit        | numérico     | Quantidade de registros por página                                                | não         | 20           | 10          |
+  | offset       | numérico     | Índice da página no sistema de paginação                                          | não         | 0            | 1           |
+
+* **Retorno**
+  
+  **Status Code:** 200
+  
+  **Estrutura de retorno**
+   
+   | Atributo                       | Descrição                                                  |
+   |----------------------------    |--------------------------------------------------------    |
+   | ride.receiptId                 | Identificador do recibo             |
+   | ride.company.id                | Identificador da empresa                            |
+   | ride.company.name              | Nome da empresa                            |
+   | ride.employee.id               | Identificador do colaborador                                         |
+   | ride.employee.name             | Nome do colaborador                            |
+   | ride.employee.phone            | Telefone do colaborador                       |
+   | ride.employee.phoneCountry     | País do telefone do colaborador                 |
+   | ride.employee.email            | Email do colaborador                           |
+   | ride.employee.nationalId       | Documento do colaborador (somente números)                                  |
+   | ride.employee.externalId       | Identificador externo do colaborador. É possível relacionar o identificador de um sistema externo. |
+   | ride.costCenter.id             | Identificador do centro de custo                           |
+   | ride.costCenter.name           | Nome do centro de custo                                        |
+   | ride.project.id                | Identificador do projeto                              |
+   | ride.project.name              | Nome do projeto                      |
+   | ride.fare                      | Valor total da corrida          |
+   | ride.note                      | Justificativa                                   |
+   | ride.odometer                  | Distância total da corrida em metros                        |
+   | ride.duration                  | Duração da corrida em minutos 
+   | ride.start.latitude            | Latitude do ponto de origem                                |
+   | ride.start.longitude           | Longitude do ponto de origem                                 |
+   | ride.start.date                | Data de início da corrida                                      |
+   | ride.start.address             | Endereço de origem                       |
+   | ride.end.latitude              | Latitude do ponto de destino                          |
+   | ride.end.longitude             | Longitude do ponto de destino                             |
+   | ride.end.date                  | Data de término da corrida      |
+   | ride.end.address               | Endereço de destino     |
+   | ride.driver.name               | Nome do motorista                    |
+   | ride.driver.phone              | Telefone do motorista               |
+   | ride.driver.car                | Veículo do motorista |
+   | ride.driver.carYear            | Ano do veículo |
+   | ride.driver.carPlate           | Placa do veículo |
+   | ride.city                      | Cidade |
+   | ride.callPlatform              | Depreciado |
+   | ride.requesterName             | Nome da pessoa que solicitou a corrida |
+   | ride.taxiCategoryName          | Categoria da corrida |
+   | summary.quantity               | Quantidade de corridas  |
+   | summary.totalFare              | Valor total das corridas retornadas |
+
+  **Exemplo de retorno**
+  
+    ```json
+    {
+      "rides": [{
+        "receiptId": "8382932932",
+        "company": {
+          "id": 9311,
+          "name": "99 Tecnologia"
+        },
+        "employee": {
+          "id": 434343,
+          "name": "COLABORADOR",
+          "phone": "11999999999",
+          "phoneCountry": "BRA",
+          "email": "colaborador@99taxis.com",
+          "nationalId": "63313137709",
+          "externalId": 329932
+        },
+        "costCenter": {
+          "id": 8483843,
+          "name": "99Integracao"
+        },
+        "project": {
+          "id": 433902,
+          "name": "99Projeto"
+        },
+        "fare": 25.4,
+        "note": "justificativa",
+        "odometer": 7593,
+        "start": {
+          "latitude": -23.590760,
+          "longitude": -46.682129,
+          "date": 1502921626000,
+          "address": "Av. Faria Lima, 3000, São Paulo - SP, Brasil"
+        },
+        "end": {
+          "latitude": -23.564758,
+          "longitude": -46.651850,
+          "date": 1502922838000,
+          "address": "Av Paulista, 1000, São Paulo - SP, Brasil"
+        },
+        "driver": {
+          "name": "Motorista",
+          "phone": "11999999999",
+          "car": "Fiat Siena",
+          "carYear": 2015,
+          "carPlate": "EJF-3931"
+        },
+        "city": "São Paulo",
+        "callPlatform": "web",
+        "requesterName": "COLABORADOR",
+        "taxiCategoryName": "Taxi 30% OFF"
+      }],
+      "summary": {
+        "quantity": 1,
+        "totalFare": 25.4
+      }
+    }
+    ```
+    
+-----
+
+### Busca do recibo pelo identificador da corrida
+
+* **URL**
+
+  `/receipts/{rideId}`
+
+* **Method**
+
+  `GET`
+  
+*  **Parâmetros via url**
+
+
+   | Atributo     | Tipo do dado     | Descrição                                    | Obrigatório     | Valor padrão     | Exemplo        |
+   |----------    |--------------    |------------------------------------------    |-------------    |--------------    |------------    |
+   | rideId           | alfanumérico         | Identificador da corrida chamada pela api                   | sim             | -                | 1             |
+
+*  **Regras**
+
+    Após o término da corrida, existe o tempo de sincronização e geração do recibo. Devido a isso, pode demorar até 10 minutos para que o recibo da corrida esteja disponível. O identificador da corrida é o mesmo usado para obter os dados do recibo.
+
+    Enquanto o recibo não estiver disponível, o endpoint irá retornar o status code 404.
+
+* **Retorno**
+  
+  **Status Code:** 200
+
+  Descrição: Recibo gerado e disponível.
+  
+  **Exemplo de retorno**
+  
+    ```json
+    {
+      "receiptId": "8382932932",
+      "company": {
+        "id": 9311,
+        "name": "99 Tecnologia"
+      },
+      "employee": {
+        "id": 434343,
+        "name": "COLABORADOR",
+        "phone": "11999999999",
+        "phoneCountry": "BRA",
+        "email": "colaborador@99taxis.com",
+        "nationalId": "63313137709",
+        "externalId": 329932
+      },
+      "costCenter": {
+        "id": 8483843,
+        "name": "99Integracao"
+      },
+      "project": {
+        "id": 433902,
+        "name": "99Projeto"
+      },
+      "fare": 25.4,
+      "note": "justificativa",
+      "odometer": 7593,
+      "start": {
+        "latitude": -23.590760,
+        "longitude": -46.682129,
+        "date": 1502921626000,
+        "address": "Av. Faria Lima, 3000, São Paulo - SP, Brasil"
+      },
+      "end": {
+        "latitude": -23.564758,
+        "longitude": -46.651850,
+        "date": 1502922838000,
+        "address": "Av Paulista, 1000, São Paulo - SP, Brasil"
+      },
+      "driver": {
+        "name": "Motorista",
+        "phone": "11999999999",
+        "car": "Fiat Siena",
+        "carYear": 2015,
+        "carPlate": "EJF-3931"
+      },
+      "city": "São Paulo",
+      "callPlatform": "web",
+      "requesterName": "COLABORADOR",
+      "taxiCategoryName": "Taxi 30% OFF"
+    }
+    ```
+
+    **Status Code:** 404
+
+    Descrição: O recibo não existe ou não está disponível. Em caso de corrida finalizada, deve-se aguardar o tempo de sincronização e geração do recibo.
+        
+-----
+
+### Busca do recibo pelo identificador do recibo
+
+* **URL**
+
+  `/receipts/receipt-id/{receiptId}`
+
+* **Method**
+
+  `GET`
+  
+*  **Parâmetros via url**
+
+
+   | Atributo     | Tipo do dado     | Descrição                                    | Obrigatório     | Valor padrão     | Exemplo        |
+   |----------    |--------------    |------------------------------------------    |-------------    |--------------    |------------    |
+   | receiptId           | alfanumérico         | Identificador do recibo                   | sim             | -                | 1             |
+
+
+* **Retorno**
+  
+  **Status Code:** 200
+
+  Descrição: Recibo gerado e disponível.
+  
+  **Exemplo de retorno**
+  
+    ```json
+    {
+      "receiptId": "8382932932",
+      "company": {
+        "id": 9311,
+        "name": "99 Tecnologia"
+      },
+      "employee": {
+        "id": 434343,
+        "name": "COLABORADOR",
+        "phone": "11999999999",
+        "phoneCountry": "BRA",
+        "email": "colaborador@99taxis.com",
+        "nationalId": "63313137709",
+        "externalId": 329932
+      },
+      "costCenter": {
+        "id": 8483843,
+        "name": "99Integracao"
+      },
+      "project": {
+        "id": 433902,
+        "name": "99Projeto"
+      },
+      "fare": 25.4,
+      "note": "justificativa",
+      "odometer": 7593,
+      "start": {
+        "latitude": -23.590760,
+        "longitude": -46.682129,
+        "date": 1502921626000,
+        "address": "Av. Faria Lima, 3000, São Paulo - SP, Brasil"
+      },
+      "end": {
+        "latitude": -23.564758,
+        "longitude": -46.651850,
+        "date": 1502922838000,
+        "address": "Av Paulista, 1000, São Paulo - SP, Brasil"
+      },
+      "driver": {
+        "name": "Motorista",
+        "phone": "11999999999",
+        "car": "Fiat Siena",
+        "carYear": 2015,
+        "carPlate": "EJF-3931"
+      },
+      "city": "São Paulo",
+      "callPlatform": "web",
+      "requesterName": "COLABORADOR",
+      "taxiCategoryName": "Taxi 30% OFF"
+    }
+    ```
+
+    **Status Code:** 404
+
+    Descrição: O recibo não existe ou não está disponível. Em caso de corrida finalizada, deve-se aguardar o tempo de sincronização e geração do recibo.
+        
+-----
 
 ## Corridas
 
