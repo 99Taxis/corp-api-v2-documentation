@@ -25,6 +25,7 @@ curl -X GET PUT URL -H 'x-api-key: key-abc-123'
 - [Centro de Custo](#centro-de-custo)
 - [Colaboradores](#colaboradores)
 - [Colaboradores com Identificador Externo](#colaboradores-com-identificador-externo)
+- [Corridas](#corridas)
 
 ## Centro de Custo
 
