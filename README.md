@@ -327,12 +327,6 @@ curl -X GET PUT URL -H 'x-api-key: key-abc-123'
   | employee.categories    | conjunto de alfanuméricos | Categorias permitidas para uso do colaborador. Valores aceitos: regular-taxi, turbo-taxi, top99, pop99 | sim         | -            | regular-taxi, turbo-taxi   |
   | sendWelcomeEmail       | verdadeiro/falso          | Se verdadeiro, colaborador cadastrado receberá um e-mail de boas vindas                                | não         | false        | false                      |
 
-- **Regras**
-
-  Ao cadastrar um colaborador é necessário informar o nationalId ou o pin. Ambos os atributos podem ser cadastrados, mas ao menos um deles é obrigatório.
-
-  Quando o colaborador realizar uma corrida da categoria "regular-taxi", ao término da mesma será necessário entrar com um código de confirmação do pagamento. Esse código será os 3 primeiros dígitos do CPF ou o código pin cadastrado (também de 3 dígitos).
-
 - **Exemplo de envio**
 
   ```json
@@ -1243,7 +1237,7 @@ curl -X GET PUT URL -H 'x-api-key: key-abc-123'
 
 - **URL**
 
-  `/employees/external-id/{externalId}`
+  `/rides/estimate/{employeeId}`
 
 - **Método**
 
