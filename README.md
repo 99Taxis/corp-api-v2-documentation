@@ -1296,7 +1296,7 @@ curl -X GET PUT URL -H 'x-api-key: key-abc-123'
    | ride.driver.carYear            | Ano do veículo                                                                                     |
    | ride.driver.carPlate           | Placa do veículo                                                                                   |
    | ride.city                      | Cidade                                                                                             |
-   | ride.callPlatform              | Depreciado                                                                                         |
+   | ride.callPlatform              | Plataforma de chamada                                                                              |
    | ride.requesterName             | Nome da pessoa que solicitou a corrida                                                             |
    | ride.taxiCategoryName          | Categoria da corrida                                                                               |
    | summary.quantity               | Quantidade de corridas                                                                             |
