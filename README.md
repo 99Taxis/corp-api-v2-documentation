@@ -46,7 +46,7 @@ curl -X GET PUT URL -H 'x-api-key: key-abc-123'
   | -------- | ------------ | ---------------------------------------- | ----------- | ------------ | ----------- |
   | search   | alfanumérico | Busca pelo nome do centro de custo       | não         | -            | Atendimento |
   | limit    | numérico     | Quantidade de registros por página       | não         | 50           | 20          |
-  | offset   | numérico     | Índice da página no sistema de paginação | não         | 1            | 0           |
+  | page     | numérico     | Índice da página no sistema de paginação | não         | 1            | 3           |
 
 - **Retorno**
   **Status Code:** 200
@@ -271,9 +271,8 @@ curl -X GET PUT URL -H 'x-api-key: key-abc-123'
   | Atributo   | Tipo do dado | Descrição                                  | Obrigatório | Valor padrão | Exemplo     |
   | ---------- | ------------ | ------------------------------------------ | ----------- | ------------ | ----------- |
   | search     | alfanumérico | Busca pelo nome do colaborador             | não         | -            | José Santos |
-  | offset     | numérico     | Índice da página no sistema de paginação   | não         | 1            | 0           |
   | limit      | numérico     | Quantidade de registros por página         | não         | 50           | 20          |
-  | page       | numérico     | Depreciado                                 | não         | -            | -           |
+  | page       | numérico     | Índice da página no sistema de paginação   | não         | 1            | 3           |
   | nationalId | alfanumérico | Documento do colaborador (somente números) | não         | -            | 98765432100 |
 
 - **Retorno**
@@ -1246,15 +1245,16 @@ curl -X GET PUT URL -H 'x-api-key: key-abc-123'
   `GET`
 
 - **Parâmetros via url**
-  | Atributo  | Tipo do dado | Descrição                      | Obrigatório | Valor padrão | Exemplo     |
-  | --------  | ------------ | ------------------------------ | ----------- | ------------ | ----------- |
+
+  | Atributo     | Tipo do dado | Descrição                                                                         | Obrigatório | Valor padrão | Exemplo     |
+  | -----------  | ------------ | --------------------------------------------------------------------------------- | ----------- | ------------ | ----------- |
   | startDate    | data         | Indica data de início para filtro de busca por corridas finalizadas               | sim         | -            | 2017-06-01  |
   | endDate      | data         | Indica data de término para filtro de busca por corridas finalizadas              | sim         | -            | 2017-06-02  |
   | costCenterId | numérico     | Indicador do centro de custo                                                      | não         | -            | 20          |
   | projectId    | numérico     | Indicador do projeto                                                              | não         | -            | 15          |
   | taxiCategory | alfanumérico | Categoria da corrida. Valores possíveis: regular-taxi, turbo-taxi, top99 ou pop99 | não         | -            | pop99       |
   | limit        | numérico     | Quantidade de registros por página                                                | não         | 20           | 10          |
-  | offset       | numérico     | Índice da página no sistema de paginação                                          | não         | 0            | 1           |
+  | page         | numérico     | Índice da página no sistema de paginação                                          | não         | 1            | 3           |
 
 * **Retorno**
   
@@ -1262,45 +1262,45 @@ curl -X GET PUT URL -H 'x-api-key: key-abc-123'
   
   **Estrutura de retorno**
    
-   | Atributo                       | Descrição                                                  |
-   |----------------------------    |--------------------------------------------------------    |
-   | ride.receiptId                 | Identificador do recibo             |
-   | ride.company.id                | Identificador da empresa                            |
-   | ride.company.name              | Nome da empresa                            |
-   | ride.employee.id               | Identificador do colaborador                                         |
-   | ride.employee.name             | Nome do colaborador                            |
-   | ride.employee.phone            | Telefone do colaborador                       |
-   | ride.employee.phoneCountry     | País do telefone do colaborador                 |
-   | ride.employee.email            | Email do colaborador                           |
-   | ride.employee.nationalId       | Documento do colaborador (somente números)                                  |
+   | Atributo                       | Descrição                                                                                          |
+   |----------------------------    |------------------------------------------------------------------------------------------------    |
+   | ride.receiptId                 | Identificador do recibo                                                                            |
+   | ride.company.id                | Identificador da empresa                                                                           |
+   | ride.company.name              | Nome da empresa                                                                                    |
+   | ride.employee.id               | Identificador do colaborador                                                                       |
+   | ride.employee.name             | Nome do colaborador                                                                                |
+   | ride.employee.phone            | Telefone do colaborador                                                                            |
+   | ride.employee.phoneCountry     | País do telefone do colaborador                                                                    |
+   | ride.employee.email            | Email do colaborador                                                                               |
+   | ride.employee.nationalId       | Documento do colaborador (somente números)                                                         |
    | ride.employee.externalId       | Identificador externo do colaborador. É possível relacionar o identificador de um sistema externo. |
-   | ride.costCenter.id             | Identificador do centro de custo                           |
-   | ride.costCenter.name           | Nome do centro de custo                                        |
-   | ride.project.id                | Identificador do projeto                              |
-   | ride.project.name              | Nome do projeto                      |
-   | ride.fare                      | Valor total da corrida          |
-   | ride.note                      | Justificativa                                   |
-   | ride.odometer                  | Distância total da corrida em metros                        |
-   | ride.duration                  | Duração da corrida em minutos 
-   | ride.start.latitude            | Latitude do ponto de origem                                |
-   | ride.start.longitude           | Longitude do ponto de origem                                 |
-   | ride.start.date                | Data de início da corrida                                      |
-   | ride.start.address             | Endereço de origem                       |
-   | ride.end.latitude              | Latitude do ponto de destino                          |
-   | ride.end.longitude             | Longitude do ponto de destino                             |
-   | ride.end.date                  | Data de término da corrida      |
-   | ride.end.address               | Endereço de destino     |
-   | ride.driver.name               | Nome do motorista                    |
-   | ride.driver.phone              | Telefone do motorista               |
-   | ride.driver.car                | Veículo do motorista |
-   | ride.driver.carYear            | Ano do veículo |
-   | ride.driver.carPlate           | Placa do veículo |
-   | ride.city                      | Cidade |
-   | ride.callPlatform              | Depreciado |
-   | ride.requesterName             | Nome da pessoa que solicitou a corrida |
-   | ride.taxiCategoryName          | Categoria da corrida |
-   | summary.quantity               | Quantidade de corridas  |
-   | summary.totalFare              | Valor total das corridas retornadas |
+   | ride.costCenter.id             | Identificador do centro de custo                                                                   |
+   | ride.costCenter.name           | Nome do centro de custo                                                                            |
+   | ride.project.id                | Identificador do projeto                                                                           |
+   | ride.project.name              | Nome do projeto                                                                                    |
+   | ride.fare                      | Valor total da corrida                                                                             |
+   | ride.note                      | Justificativa                                                                                      |
+   | ride.odometer                  | Distância total da corrida em metros                                                               |
+   | ride.duration                  | Duração da corrida em minutos                                                                      |
+   | ride.start.latitude            | Latitude do ponto de origem                                                                        |
+   | ride.start.longitude           | Longitude do ponto de origem                                                                       |
+   | ride.start.date                | Data de início da corrida                                                                          |
+   | ride.start.address             | Endereço de origem                                                                                 |
+   | ride.end.latitude              | Latitude do ponto de destino                                                                       |
+   | ride.end.longitude             | Longitude do ponto de destino                                                                      |
+   | ride.end.date                  | Data de término da corrida                                                                         |
+   | ride.end.address               | Endereço de destino                                                                                |
+   | ride.driver.name               | Nome do motorista                                                                                  | 
+   | ride.driver.phone              | Telefone do motorista                                                                              |
+   | ride.driver.car                | Veículo do motorista                                                                               |
+   | ride.driver.carYear            | Ano do veículo                                                                                     |
+   | ride.driver.carPlate           | Placa do veículo                                                                                   |
+   | ride.city                      | Cidade                                                                                             |
+   | ride.callPlatform              | Depreciado                                                                                         |
+   | ride.requesterName             | Nome da pessoa que solicitou a corrida                                                             |
+   | ride.taxiCategoryName          | Categoria da corrida                                                                               |
+   | summary.quantity               | Quantidade de corridas                                                                             |
+   | summary.totalFare              | Valor total das corridas retornadas                                                                |
 
   **Exemplo de retorno**
   
@@ -1371,7 +1371,7 @@ curl -X GET PUT URL -H 'x-api-key: key-abc-123'
 
   `/receipts/{rideId}`
 
-* **Method**
+* **Método**
 
   `GET`
   
@@ -1380,7 +1380,7 @@ curl -X GET PUT URL -H 'x-api-key: key-abc-123'
 
    | Atributo     | Tipo do dado     | Descrição                                    | Obrigatório     | Valor padrão     | Exemplo        |
    |----------    |--------------    |------------------------------------------    |-------------    |--------------    |------------    |
-   | rideId           | alfanumérico         | Identificador da corrida chamada pela api                   | sim             | -                | 1             |
+   | rideId       | alfanumérico     | Identificador da corrida chamada pela api    | sim             | -                | 1              |
 
 *  **Regras**
 
@@ -1461,7 +1461,7 @@ curl -X GET PUT URL -H 'x-api-key: key-abc-123'
 
   `/receipts/receipt-id/{receiptId}`
 
-* **Method**
+* **Método**
 
   `GET`
   
@@ -1470,7 +1470,7 @@ curl -X GET PUT URL -H 'x-api-key: key-abc-123'
 
    | Atributo     | Tipo do dado     | Descrição                                    | Obrigatório     | Valor padrão     | Exemplo        |
    |----------    |--------------    |------------------------------------------    |-------------    |--------------    |------------    |
-   | receiptId           | alfanumérico         | Identificador do recibo                   | sim             | -                | 1             |
+   | receiptId    | alfanumérico     | Identificador do recibo                      | sim             | -                | 1              |
 
 
 * **Retorno**
