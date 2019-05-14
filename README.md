@@ -293,7 +293,6 @@ curl -X GET PUT URL -H 'x-api-key: key-abc-123'
     },
     "nationalId": "98765432100",
     "supervisorId": 167,
-    "pin": "053",
     "enabled": true,
     "externalId": 0,
     "categories": ["regular-taxi", "top99", "turbo-taxi", "pop99"],
@@ -322,7 +321,6 @@ curl -X GET PUT URL -H 'x-api-key: key-abc-123'
   | employee.phone.country | alfanumérico              | Código do país atrelado ao número                                                                      | não         | BRA          | BRA                        |
   | employee.email         | alfanumérico              | E-mail do colaborador                                                                                  | sim         | -            | jose.santos@empresa.com.br |
   | employee.nationalId    | alfanumérico              | Documento do colaborador (CPF) (Somente números)                                                       | não         | -            | 98765432100                |
-  | employee.pin           | alfanumérico              | Código de confirmação de corrida (deve conter 3 dígitos)                                               | não         | -            | 934                        |
   | employee.externalId    | numérico                  | Identificador externo do colaborador. É possível relacionar o identificador de um sistema externo.     | não         | -            | 456                        |
   | employee.supervisorId  | numérico                  | Id do supervisor (employeeId)do colaborador.                                                           | não         | -            | 256                        |
   | employee.categories    | conjunto de alfanuméricos | Categorias permitidas para uso do colaborador. Valores aceitos: regular-taxi, turbo-taxi, top99, pop99 | sim         | -            | regular-taxi, turbo-taxi   |
@@ -337,8 +335,6 @@ curl -X GET PUT URL -H 'x-api-key: key-abc-123'
       "name": "José Santos",
       "nationalId": "98765432100",
       "externalId": 55091,
-      "pin": "053",
-      "usePin": true,
       "categories": ["regular-taxi", "turbo-taxi", "pop99"],
       "phone": {
         "number": "11999999999",
@@ -360,8 +356,6 @@ curl -X GET PUT URL -H 'x-api-key: key-abc-123'
       "name": "José Santos",
       "nationalId": "98765432100",
       "externalId": 55091,
-      "pin": "053",
-      "usePin": true,
       "categories": ["regular-taxi", "turbo-taxi", "pop99"],
       "phone": {
         "number": "11999999999",
@@ -630,8 +624,6 @@ curl -X GET PUT URL -H 'x-api-key: key-abc-123'
     },
     "nationalId": "98765432100",
     "supervisorId": 167,
-    "pin": "053",
-    "enabled": true,
     "externalId": 0,
     "categories": ["regular-taxi", "turbo-taxi", "pop99"],
     "id": 125
@@ -665,7 +657,6 @@ curl -X GET PUT URL -H 'x-api-key: key-abc-123'
   | employee.phone.country | alfanumérico              | Código do país atrelado ao número                                                                      | não         | BRA          | BRA                        |
   | employee.email         | alfanumérico              | E-mail do colaborador                                                                                  | sim         | -            | jose.santos@empresa.com.br |
   | employee.nationalId    | alfanumérico              | Documento do colaborador (CPF) (Somente números)                                                       | não         | -            | 98765432100                |
-  | employee.pin           | alfanumérico              | Código de confirmação de corrida (deve conter 3 dígitos)                                               | não         | -            | 934                        |
   | employee.externalId    | numérico                  | Identificador externo do colaborador. É possível relacionar o identificador de um sistema externo.     | não         | -            | 456                        |
   | employee.supervisorId  | numérico                  | Id do supervisor (employeeId) do colaborador.                                                          | não         | -            | 256                        |
   | employee.categories    | conjunto de alfanuméricos | Categorias permitidas para uso do colaborador. Valores aceitos: regular-taxi, turbo-taxi, top99, pop99 | sim         | -            | regular-taxi, turbo-taxi   |
@@ -684,7 +675,6 @@ curl -X GET PUT URL -H 'x-api-key: key-abc-123'
       "email": "jose.santos@empresa.com.br",
       "nationalId": "98765432100",
       "supervisorId": 256,
-      "pin": "123",
       "externalId": 55666,
       "categories": ["pop99"],
       "id": 125
@@ -711,7 +701,6 @@ curl -X GET PUT URL -H 'x-api-key: key-abc-123'
     "email": "jose.santos@empresa.com.br",
     "nationalId": "98765432100",
     "supervisorId": 256,
-    "pin": "123",
     "externalId": 55666,
     "categories": ["pop99"],
     "id": 125
@@ -792,7 +781,6 @@ curl -X GET PUT URL -H 'x-api-key: key-abc-123'
   | employee.email                | alfanumérico              | E-mail do colaborador                                                                                  | sim         | -            | jose.santos@empresa.com.br |
   | employee.nationalId           | alfanumérico              | Documento do colaborador (CPF) (Somente números)                                                       | não         | -            | 98765432100                |
   | employee.supervisorExternalId | numérico                  | Id do supervisor (employeeExternalId) do colaborador.                                                  | não         | -            | 256                        |
-  | employee.pin                  | alfanumérico              | Código de confirmação de corrida (deve conter 3 dígitos)                                               | não         | -            | 934                        |
   | employee.categories           | conjunto de alfanuméricos | Categorias permitidas para uso do colaborador. Valores aceitos: regular-taxi, turbo-taxi, top99, pop99 | sim         | -            | regular-taxi, turbo-taxi   |
   | sendWelcomeEmail              | verdadeiro/falso          | Se verdadeiro, colaborador cadastrado receberá um e-mail de boas vindas                                | não         | false        | false                      |
 
@@ -809,7 +797,6 @@ curl -X GET PUT URL -H 'x-api-key: key-abc-123'
       "email": "jose.santos@empresa.com.br",
       "nationalId": "98765432100",
       "supervisorExternalId": 256,
-      "pin": "123",
       "categories": ["pop99"]
     },
     "sendWelcomeEmail": false
@@ -834,7 +821,6 @@ curl -X GET PUT URL -H 'x-api-key: key-abc-123'
     "enabled": true,
     "supervisorId": 256,
     "externalId": 123749,
-    "pin": "123",
     "categories": ["pop99"],
     "id": 999999
   }
@@ -878,7 +864,6 @@ curl -X GET PUT URL -H 'x-api-key: key-abc-123'
     },
     "nationalId": "98765432100",
     "supervisorId": 167,
-    "pin": "053",
     "enabled": true,
     "externalId": 10,
     "categories": ["regular-taxi", "turbo-taxi", "pop99"],
@@ -916,7 +901,6 @@ curl -X GET PUT URL -H 'x-api-key: key-abc-123'
   | employee.email                | alfanumérico              | E-mail do colaborador                                                                                  | sim         | -            | jose.santos@empresa.com.br |
   | employee.nationalId           | alfanumérico              | Documento do colaborador (CPF) (Somente números)                                                       | não         | -            | 98765432100                |
   | employee.supervisorExternalId | numérico                  | Id do supervisor (employeeExternalId) do colaborador.                                                  | não         | -            | 256                        |
-  | employee.pin                  | alfanumérico              | Código de confirmação de corrida (deve conter 3 dígitos)                                               | não         | -            | 934                        |
   | employee.categories           | conjunto de alfanuméricos | Categorias permitidas para uso do colaborador. Valores aceitos: regular-taxi, turbo-taxi, top99, pop99 | sim         | -            | regular-taxi, turbo-taxi   |
   | sendWelcomeEmail              | verdadeiro/falso          | Se verdadeiro, colaborador cadastrado receberá um e-mail de boas vindas                                | não         | false        | false                      |
 
@@ -933,7 +917,6 @@ curl -X GET PUT URL -H 'x-api-key: key-abc-123'
       "email": "jose.santos@empresa.com.br",
       "nationalId": "98765432100",
       "supervisorExternalId": 256,
-      "pin": "123",
       "categories": ["pop99"]
     },
     "sendWelcomeEmail": false
@@ -956,7 +939,6 @@ curl -X GET PUT URL -H 'x-api-key: key-abc-123'
     "enabled": true,
     "supervisorId": 256,
     "externalId": 123749,
-    "pin": "123",
     "categories": ["pop99"],
     "id": 999999
   }
