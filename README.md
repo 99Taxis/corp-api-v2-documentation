@@ -25,6 +25,7 @@ curl -X GET PUT URL -H 'x-api-key: key-abc-123'
 - [Centro de Custo](#centro-de-custo)
 - [Colaboradores](#colaboradores)
 - [Colaboradores com Identificador Externo](#colaboradores-com-identificador-externo)
+- [Receitas](#receitas)
 - [Corridas](#corridas)
 
 ## Centro de Custo
@@ -45,7 +46,7 @@ curl -X GET PUT URL -H 'x-api-key: key-abc-123'
   | -------- | ------------ | ---------------------------------------- | ----------- | ------------ | ----------- |
   | search   | alfanumérico | Busca pelo nome do centro de custo       | não         | -            | Atendimento |
   | limit    | numérico     | Quantidade de registros por página       | não         | 50           | 20          |
-  | offset   | numérico     | Índice da página no sistema de paginação | não         | 1            | 0           |
+  | page     | numérico     | Índice da página no sistema de paginação | não         | 1            | 3           |
 
 - **Retorno**
   **Status Code:** 200
@@ -270,9 +271,8 @@ curl -X GET PUT URL -H 'x-api-key: key-abc-123'
   | Atributo   | Tipo do dado | Descrição                                  | Obrigatório | Valor padrão | Exemplo     |
   | ---------- | ------------ | ------------------------------------------ | ----------- | ------------ | ----------- |
   | search     | alfanumérico | Busca pelo nome do colaborador             | não         | -            | José Santos |
-  | offset     | numérico     | Índice da página no sistema de paginação   | não         | 1            | 0           |
   | limit      | numérico     | Quantidade de registros por página         | não         | 50           | 20          |
-  | page       | numérico     | Depreciado                                 | não         | -            | -           |
+  | page       | numérico     | Índice da página no sistema de paginação   | não         | 1            | 3           |
   | nationalId | alfanumérico | Documento do colaborador (somente números) | não         | -            | 98765432100 |
 
 - **Retorno**
@@ -293,7 +293,6 @@ curl -X GET PUT URL -H 'x-api-key: key-abc-123'
     },
     "nationalId": "98765432100",
     "supervisorId": 167,
-    "pin": "053",
     "enabled": true,
     "externalId": 0,
     "categories": ["regular-taxi", "top99", "turbo-taxi", "pop99"],
@@ -322,7 +321,6 @@ curl -X GET PUT URL -H 'x-api-key: key-abc-123'
   | employee.phone.country | alfanumérico              | Código do país atrelado ao número                                                                      | não         | BRA          | BRA                        |
   | employee.email         | alfanumérico              | E-mail do colaborador                                                                                  | sim         | -            | jose.santos@empresa.com.br |
   | employee.nationalId    | alfanumérico              | Documento do colaborador (CPF) (Somente números)                                                       | não         | -            | 98765432100                |
-  | employee.pin           | alfanumérico              | Código de confirmação de corrida (deve conter 3 dígitos)                                               | não         | -            | 934                        |
   | employee.externalId    | numérico                  | Identificador externo do colaborador. É possível relacionar o identificador de um sistema externo.     | não         | -            | 456                        |
   | employee.supervisorId  | numérico                  | Id do supervisor (employeeId)do colaborador.                                                           | não         | -            | 256                        |
   | employee.categories    | conjunto de alfanuméricos | Categorias permitidas para uso do colaborador. Valores aceitos: regular-taxi, turbo-taxi, top99, pop99 | sim         | -            | regular-taxi, turbo-taxi   |
@@ -337,8 +335,6 @@ curl -X GET PUT URL -H 'x-api-key: key-abc-123'
       "name": "José Santos",
       "nationalId": "98765432100",
       "externalId": 55091,
-      "pin": "053",
-      "usePin": true,
       "categories": ["regular-taxi", "turbo-taxi", "pop99"],
       "phone": {
         "number": "11999999999",
@@ -360,8 +356,6 @@ curl -X GET PUT URL -H 'x-api-key: key-abc-123'
       "name": "José Santos",
       "nationalId": "98765432100",
       "externalId": 55091,
-      "pin": "053",
-      "usePin": true,
       "categories": ["regular-taxi", "turbo-taxi", "pop99"],
       "phone": {
         "number": "11999999999",
@@ -630,8 +624,6 @@ curl -X GET PUT URL -H 'x-api-key: key-abc-123'
     },
     "nationalId": "98765432100",
     "supervisorId": 167,
-    "pin": "053",
-    "enabled": true,
     "externalId": 0,
     "categories": ["regular-taxi", "turbo-taxi", "pop99"],
     "id": 125
@@ -665,7 +657,6 @@ curl -X GET PUT URL -H 'x-api-key: key-abc-123'
   | employee.phone.country | alfanumérico              | Código do país atrelado ao número                                                                      | não         | BRA          | BRA                        |
   | employee.email         | alfanumérico              | E-mail do colaborador                                                                                  | sim         | -            | jose.santos@empresa.com.br |
   | employee.nationalId    | alfanumérico              | Documento do colaborador (CPF) (Somente números)                                                       | não         | -            | 98765432100                |
-  | employee.pin           | alfanumérico              | Código de confirmação de corrida (deve conter 3 dígitos)                                               | não         | -            | 934                        |
   | employee.externalId    | numérico                  | Identificador externo do colaborador. É possível relacionar o identificador de um sistema externo.     | não         | -            | 456                        |
   | employee.supervisorId  | numérico                  | Id do supervisor (employeeId) do colaborador.                                                          | não         | -            | 256                        |
   | employee.categories    | conjunto de alfanuméricos | Categorias permitidas para uso do colaborador. Valores aceitos: regular-taxi, turbo-taxi, top99, pop99 | sim         | -            | regular-taxi, turbo-taxi   |
@@ -684,7 +675,6 @@ curl -X GET PUT URL -H 'x-api-key: key-abc-123'
       "email": "jose.santos@empresa.com.br",
       "nationalId": "98765432100",
       "supervisorId": 256,
-      "pin": "123",
       "externalId": 55666,
       "categories": ["pop99"],
       "id": 125
@@ -711,7 +701,6 @@ curl -X GET PUT URL -H 'x-api-key: key-abc-123'
     "email": "jose.santos@empresa.com.br",
     "nationalId": "98765432100",
     "supervisorId": 256,
-    "pin": "123",
     "externalId": 55666,
     "categories": ["pop99"],
     "id": 125
@@ -792,7 +781,6 @@ curl -X GET PUT URL -H 'x-api-key: key-abc-123'
   | employee.email                | alfanumérico              | E-mail do colaborador                                                                                  | sim         | -            | jose.santos@empresa.com.br |
   | employee.nationalId           | alfanumérico              | Documento do colaborador (CPF) (Somente números)                                                       | não         | -            | 98765432100                |
   | employee.supervisorExternalId | numérico                  | Id do supervisor (employeeExternalId) do colaborador.                                                  | não         | -            | 256                        |
-  | employee.pin                  | alfanumérico              | Código de confirmação de corrida (deve conter 3 dígitos)                                               | não         | -            | 934                        |
   | employee.categories           | conjunto de alfanuméricos | Categorias permitidas para uso do colaborador. Valores aceitos: regular-taxi, turbo-taxi, top99, pop99 | sim         | -            | regular-taxi, turbo-taxi   |
   | sendWelcomeEmail              | verdadeiro/falso          | Se verdadeiro, colaborador cadastrado receberá um e-mail de boas vindas                                | não         | false        | false                      |
 
@@ -809,7 +797,6 @@ curl -X GET PUT URL -H 'x-api-key: key-abc-123'
       "email": "jose.santos@empresa.com.br",
       "nationalId": "98765432100",
       "supervisorExternalId": 256,
-      "pin": "123",
       "categories": ["pop99"]
     },
     "sendWelcomeEmail": false
@@ -834,7 +821,6 @@ curl -X GET PUT URL -H 'x-api-key: key-abc-123'
     "enabled": true,
     "supervisorId": 256,
     "externalId": 123749,
-    "pin": "123",
     "categories": ["pop99"],
     "id": 999999
   }
@@ -878,7 +864,6 @@ curl -X GET PUT URL -H 'x-api-key: key-abc-123'
     },
     "nationalId": "98765432100",
     "supervisorId": 167,
-    "pin": "053",
     "enabled": true,
     "externalId": 10,
     "categories": ["regular-taxi", "turbo-taxi", "pop99"],
@@ -916,7 +901,6 @@ curl -X GET PUT URL -H 'x-api-key: key-abc-123'
   | employee.email                | alfanumérico              | E-mail do colaborador                                                                                  | sim         | -            | jose.santos@empresa.com.br |
   | employee.nationalId           | alfanumérico              | Documento do colaborador (CPF) (Somente números)                                                       | não         | -            | 98765432100                |
   | employee.supervisorExternalId | numérico                  | Id do supervisor (employeeExternalId) do colaborador.                                                  | não         | -            | 256                        |
-  | employee.pin                  | alfanumérico              | Código de confirmação de corrida (deve conter 3 dígitos)                                               | não         | -            | 934                        |
   | employee.categories           | conjunto de alfanuméricos | Categorias permitidas para uso do colaborador. Valores aceitos: regular-taxi, turbo-taxi, top99, pop99 | sim         | -            | regular-taxi, turbo-taxi   |
   | sendWelcomeEmail              | verdadeiro/falso          | Se verdadeiro, colaborador cadastrado receberá um e-mail de boas vindas                                | não         | false        | false                      |
 
@@ -933,7 +917,6 @@ curl -X GET PUT URL -H 'x-api-key: key-abc-123'
       "email": "jose.santos@empresa.com.br",
       "nationalId": "98765432100",
       "supervisorExternalId": 256,
-      "pin": "123",
       "categories": ["pop99"]
     },
     "sendWelcomeEmail": false
@@ -956,7 +939,6 @@ curl -X GET PUT URL -H 'x-api-key: key-abc-123'
     "enabled": true,
     "supervisorId": 256,
     "externalId": 123749,
-    "pin": "123",
     "categories": ["pop99"],
     "id": 999999
   }
@@ -1231,6 +1213,360 @@ curl -X GET PUT URL -H 'x-api-key: key-abc-123'
   **Status Code:** 204
 
 ---
+
+## Receitas
+
+#### Busca de receitas
+
+- **URL**
+
+  `/receipts`
+
+- **Método**
+
+  `GET`
+
+- **Parâmetros via url**
+
+  | Atributo     | Tipo do dado | Descrição                                                                         | Obrigatório | Valor padrão | Exemplo     |
+  | -----------  | ------------ | --------------------------------------------------------------------------------- | ----------- | ------------ | ----------- |
+  | startDate    | data         | Indica data de início para filtro de busca por corridas finalizadas               | sim         | -            | 2017-06-01  |
+  | endDate      | data         | Indica data de término para filtro de busca por corridas finalizadas              | sim         | -            | 2017-06-02  |
+  | costCenterId | numérico     | Identificador do centro de custo                                                  | não         | -            | 20          |
+  | projectId    | numérico     | Identificador do projeto                                                          | não         | -            | 15          |
+  | taxiCategory | alfanumérico | Categoria da corrida. Valores possíveis: regular-taxi, turbo-taxi, top99 ou pop99 | não         | -            | pop99       |
+  | limit        | numérico     | Quantidade de registros por página                                                | não         | 20           | 10          |
+  | page         | numérico     | Índice da página no sistema de paginação                                          | não         | 1            | 3           |
+
+* **Retorno**
+  
+  **Status Code:** 200
+  
+  **Estrutura de retorno**
+   
+   | Atributo                       | Descrição                                                                                          |
+   |----------------------------    |------------------------------------------------------------------------------------------------    |
+   | ride.receiptId                 | Identificador do recibo                                                                            |
+   | ride.company.id                | Identificador da empresa                                                                           |
+   | ride.company.name              | Nome da empresa                                                                                    |
+   | ride.employee.id               | Identificador do colaborador                                                                       |
+   | ride.employee.name             | Nome do colaborador                                                                                |
+   | ride.employee.phone            | Telefone do colaborador                                                                            |
+   | ride.employee.phoneCountry     | País do telefone do colaborador                                                                    |
+   | ride.employee.email            | Email do colaborador                                                                               |
+   | ride.employee.nationalId       | Documento do colaborador (somente números)                                                         |
+   | ride.employee.externalId       | Identificador externo do colaborador. É possível relacionar o identificador de um sistema externo. |
+   | ride.costCenter.id             | Identificador do centro de custo                                                                   |
+   | ride.costCenter.name           | Nome do centro de custo                                                                            |
+   | ride.project.id                | Identificador do projeto                                                                           |
+   | ride.project.name              | Nome do projeto                                                                                    |
+   | ride.fare                      | Valor total da corrida                                                                             |
+   | ride.note                      | Justificativa                                                                                      |
+   | ride.odometer                  | Distância total da corrida em metros                                                               |
+   | ride.duration                  | Duração da corrida em minutos                                                                      |
+   | ride.start.latitude            | Latitude do ponto de origem                                                                        |
+   | ride.start.longitude           | Longitude do ponto de origem                                                                       |
+   | ride.start.date                | Data de início da corrida                                                                          |
+   | ride.start.address             | Endereço de origem                                                                                 |
+   | ride.end.latitude              | Latitude do ponto de destino                                                                       |
+   | ride.end.longitude             | Longitude do ponto de destino                                                                      |
+   | ride.end.date                  | Data de término da corrida                                                                         |
+   | ride.end.address               | Endereço de destino                                                                                |
+   | ride.realStart.latitude        | Latitude do ponto de embarque                                                                      |
+   | ride.realStart.longitude       | Longitude do ponto de embarque                                                                     |
+   | ride.realStart.date            | Data de início da corrida                                                                          |
+   | ride.realStart.address         | Endereço de embarque                                                                               |
+   | ride.realEnd.latitude          | Latitude do ponto de desembarque                                                                   |
+   | ride.realEnd.longitude         | Longitude do ponto de desembarque                                                                  |
+   | ride.realEnd.date              | Data de início da corrida                                                                          |
+   | ride.realEnd.address           | Endereço de desembarque                                                                            |
+   | ride.driver.name               | Nome do motorista                                                                                  | 
+   | ride.driver.phone              | Telefone do motorista                                                                              |
+   | ride.driver.car                | Veículo do motorista                                                                               |
+   | ride.driver.carYear            | Ano do veículo                                                                                     |
+   | ride.driver.carPlate           | Placa do veículo                                                                                   |
+   | ride.city                      | Cidade                                                                                             |
+   | ride.callPlatform              | Plataforma de chamada                                                                              |
+   | ride.requesterName             | Nome da pessoa que solicitou a corrida                                                             |
+   | ride.taxiCategoryName          | Categoria da corrida                                                                               |
+   | summary.quantity               | Quantidade de corridas                                                                             |
+   | summary.totalFare              | Valor total das corridas retornadas                                                                |
+
+  **Exemplo de retorno**
+  
+    ```json
+    {
+      "rides": [
+        {
+          "receiptId": "8382932932",
+          "company": {
+            "id": 9311,
+            "name": "99 Tecnologia"
+          },
+          "employee": {
+            "id": 434343,
+            "name": "COLABORADOR",
+            "phone": "11999999999",
+            "phoneCountry": "BRA",
+            "email": "colaborador@99taxis.com",
+            "nationalId": "63313137709",
+            "externalId": 329932
+          },
+          "costCenter": {
+            "id": 8483843,
+            "name": "99Integracao"
+          },
+          "project": {
+            "id": 433902,
+            "name": "99Projeto"
+          },
+          "fare": 25.4,
+          "note": "justificativa",
+          "odometer": 7593,
+          "start": {
+            "latitude": -30.021647,
+            "longitude": -51.210702,
+            "date": "2019-04-04 17:13",
+            "address": "R. Gaspar Martins, 395 - Floresta, Porto Alegre - RS, 90220-160, Brasil"
+          },
+          "end": {
+            "latitude": -30.029277,
+            "longitude": -51.234226,
+            "date": "2019-04-04 17:24",
+            "address": "Rua General João Manoel, 50, Centro Histórico, Porto Alegre - RS, Brasil"
+          },
+          "realStart": {
+            "latitude": -30.021714,
+            "longitude": -51.210759,
+            "date": "2019-04-04 17:13",
+            "address": "Floresta - R. São Carlos, 545 - Floresta, Porto Alegre - RS, 90220-121, Brasil"
+          },
+          "realEnd": {
+            "latitude": -30.029156,
+            "longitude": -51.233957,
+            "date": "2019-04-04 17:24",
+            "address": "R. Gen. João Manoel, 127 - Centro Histórico, Porto Alegre - RS, 90010-030, Brasil"
+          },
+          "duration": 11,
+          "driver": {
+            "name": "Motorista",
+            "phone": "11999999999",
+            "car": "Fiat Siena",
+            "carYear": 2015,
+            "carPlate": "EJF-3931"
+          },
+          "city": "Porto Alegre",
+          "callPlatform": "app",
+          "requesterName": "COLABORADOR",
+          "taxiCategoryName": "Taxi 30% OFF"
+        }
+      ],
+      "summary": {
+        "quantity": 1,
+        "totalFare": 25.4
+      }
+    }
+    ```
+    
+-----
+
+### Busca do recibo pelo identificador da corrida
+
+* **URL**
+
+  `/receipts/{rideId}`
+
+* **Método**
+
+  `GET`
+  
+*  **Parâmetros via url**
+
+
+   | Atributo     | Tipo do dado     | Descrição                                    | Obrigatório     | Valor padrão     | Exemplo        |
+   |----------    |--------------    |------------------------------------------    |-------------    |--------------    |------------    |
+   | rideId       | alfanumérico     | Identificador da corrida chamada pela api    | sim             | -                | 1              |
+
+*  **Regras**
+
+    Após o término da corrida, existe o tempo de sincronização e geração do recibo. Devido a isso, pode demorar até 10 minutos para que o recibo da corrida esteja disponível. O identificador da corrida é o mesmo usado para obter os dados do recibo.
+
+    Enquanto o recibo não estiver disponível, o endpoint irá retornar o status code 404.
+
+* **Retorno**
+  
+  **Status Code:** 200
+  
+  **Exemplo de retorno**
+  
+    ```json
+    {
+      "receiptId": "8382932932",
+      "company": {
+        "id": 9311,
+        "name": "99 Tecnologia"
+      },
+      "employee": {
+        "id": 434343,
+        "name": "COLABORADOR",
+        "phone": "11999999999",
+        "phoneCountry": "BRA",
+        "email": "colaborador@99taxis.com",
+        "nationalId": "63313137709",
+        "externalId": 329932
+      },
+      "costCenter": {
+        "id": 8483843,
+        "name": "99Integracao"
+      },
+      "project": {
+        "id": 433902,
+        "name": "99Projeto"
+      },
+      "fare": 25.4,
+      "note": "justificativa",
+      "odometer": 7593,
+      "start": {
+        "latitude": -30.021647,
+        "longitude": -51.210702,
+        "date": "2019-04-04 17:13",
+        "address": "R. Gaspar Martins, 395 - Floresta, Porto Alegre - RS, 90220-160, Brasil"
+      },
+      "end": {
+        "latitude": -30.029277,
+        "longitude": -51.234226,
+        "date": "2019-04-04 17:24",
+        "address": "Rua General João Manoel, 50, Centro Histórico, Porto Alegre - RS, Brasil"
+      },
+      "realStart": {
+        "latitude": -30.021714,
+        "longitude": -51.210759,
+        "date": "2019-04-04 17:13",
+        "address": "Floresta - R. São Carlos, 545 - Floresta, Porto Alegre - RS, 90220-121, Brasil"
+      },
+      "realEnd": {
+        "latitude": -30.029156,
+        "longitude": -51.233957,
+        "date": "2019-04-04 17:24",
+        "address": "R. Gen. João Manoel, 127 - Centro Histórico, Porto Alegre - RS, 90010-030, Brasil"
+      },
+      "duration": 11,
+      "driver": {
+        "name": "Motorista",
+        "phone": "11999999999",
+        "car": "Fiat Siena",
+        "carYear": 2015,
+        "carPlate": "EJF-3931"
+      },
+      "city": "Porto Alegre",
+      "callPlatform": "web",
+      "requesterName": "COLABORADOR",
+      "taxiCategoryName": "Taxi 30% OFF"
+    }
+    ```
+
+    **Status Code:** 404
+
+    > O recibo não existe ou não está disponível. Em caso de corrida finalizada, deve-se aguardar o tempo de sincronização e geração do recibo.
+        
+-----
+
+### Busca do recibo pelo identificador do recibo
+
+* **URL**
+
+  `/receipts/receipt-id/{receiptId}`
+
+* **Método**
+
+  `GET`
+  
+*  **Parâmetros via url**
+
+
+   | Atributo     | Tipo do dado     | Descrição                                    | Obrigatório     | Valor padrão     | Exemplo        |
+   |----------    |--------------    |------------------------------------------    |-------------    |--------------    |------------    |
+   | receiptId    | alfanumérico     | Identificador do recibo                      | sim             | -                | 1              |
+
+
+* **Retorno**
+  
+  **Status Code:** 200
+
+  Descrição: Recibo gerado e disponível.
+  
+  **Exemplo de retorno**
+  
+    ```json
+    {
+      "receiptId": "8382932932",
+      "company": {
+        "id": 9311,
+        "name": "99 Tecnologia"
+      },
+      "employee": {
+        "id": 434343,
+        "name": "COLABORADOR",
+        "phone": "11999999999",
+        "phoneCountry": "BRA",
+        "email": "colaborador@99taxis.com",
+        "nationalId": "63313137709",
+        "externalId": 329932
+      },
+      "costCenter": {
+        "id": 8483843,
+        "name": "99Integracao"
+      },
+      "project": {
+        "id": 433902,
+        "name": "99Projeto"
+      },
+      "fare": 25.4,
+      "note": "justificativa",
+      "odometer": 7593,
+      "start": {
+        "latitude": -30.021647,
+        "longitude": -51.210702,
+        "date": "2019-04-04 17:13",
+        "address": "R. Gaspar Martins, 395 - Floresta, Porto Alegre - RS, 90220-160, Brasil"
+      },
+      "end": {
+        "latitude": -30.029277,
+        "longitude": -51.234226,
+        "date": "2019-04-04 17:24",
+        "address": "Rua General João Manoel, 50, Centro Histórico, Porto Alegre - RS, Brasil"
+      },
+      "realStart": {
+        "latitude": -30.021714,
+        "longitude": -51.210759,
+        "date": "2019-04-04 17:13",
+        "address": "Floresta - R. São Carlos, 545 - Floresta, Porto Alegre - RS, 90220-121, Brasil"
+      },
+      "realEnd": {
+        "latitude": -30.029156,
+        "longitude": -51.233957,
+        "date": "2019-04-04 17:24",
+        "address": "R. Gen. João Manoel, 127 - Centro Histórico, Porto Alegre - RS, 90010-030, Brasil"
+      },
+      "duration": 11,
+      "driver": {
+        "name": "Motorista",
+        "phone": "11999999999",
+        "car": "Fiat Siena",
+        "carYear": 2015,
+        "carPlate": "EJF-3931"
+      },
+      "city": "Porto Alegre",
+      "callPlatform": "app",
+      "taxiCategoryName": "99TAXI "
+    }
+    ```
+
+    **Status Code:** 404
+
+    > O recibo não existe ou não está disponível. Em caso de corrida finalizada, deve-se aguardar o tempo de sincronização e geração do recibo.
+        
+-----
 
 ## Corridas
 
