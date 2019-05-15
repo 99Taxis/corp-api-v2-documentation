@@ -1272,6 +1272,14 @@ curl -X GET PUT URL -H 'x-api-key: key-abc-123'
    | ride.end.longitude             | Longitude do ponto de destino                                                                      |
    | ride.end.date                  | Data de término da corrida                                                                         |
    | ride.end.address               | Endereço de destino                                                                                |
+   | ride.realStart.latitude        | Latitude do ponto de embarque                                                                      |
+   | ride.realStart.longitude       | Longitude do ponto de embarque                                                                     |
+   | ride.realStart.date            | Data de início da corrida                                                                          |
+   | ride.realStart.address         | Endereço de embarque                                                                               |
+   | ride.realEnd.latitude          | Latitude do ponto de desembarque                                                                   |
+   | ride.realEnd.longitude         | Longitude do ponto de desembarque                                                                  |
+   | ride.realEnd.date              | Data de início da corrida                                                                          |
+   | ride.realEnd.address           | Endereço de desembarque                                                                            |
    | ride.driver.name               | Nome do motorista                                                                                  | 
    | ride.driver.phone              | Telefone do motorista                                                                              |
    | ride.driver.car                | Veículo do motorista                                                                               |
@@ -1288,56 +1296,71 @@ curl -X GET PUT URL -H 'x-api-key: key-abc-123'
   
     ```json
     {
-      "rides": [{
-        "receiptId": "8382932932",
-        "company": {
-          "id": 9311,
-          "name": "99 Tecnologia"
-        },
-        "employee": {
-          "id": 434343,
-          "name": "COLABORADOR",
-          "phone": "11999999999",
-          "phoneCountry": "BRA",
-          "email": "colaborador@99taxis.com",
-          "nationalId": "63313137709",
-          "externalId": 329932
-        },
-        "costCenter": {
-          "id": 8483843,
-          "name": "99Integracao"
-        },
-        "project": {
-          "id": 433902,
-          "name": "99Projeto"
-        },
-        "fare": 25.4,
-        "note": "justificativa",
-        "odometer": 7593,
-        "start": {
-          "latitude": -23.590760,
-          "longitude": -46.682129,
-          "date": 1502921626000,
-          "address": "Av. Faria Lima, 3000, São Paulo - SP, Brasil"
-        },
-        "end": {
-          "latitude": -23.564758,
-          "longitude": -46.651850,
-          "date": 1502922838000,
-          "address": "Av Paulista, 1000, São Paulo - SP, Brasil"
-        },
-        "driver": {
-          "name": "Motorista",
-          "phone": "11999999999",
-          "car": "Fiat Siena",
-          "carYear": 2015,
-          "carPlate": "EJF-3931"
-        },
-        "city": "São Paulo",
-        "callPlatform": "web",
-        "requesterName": "COLABORADOR",
-        "taxiCategoryName": "Taxi 30% OFF"
-      }],
+      "rides": [
+        {
+          "receiptId": "8382932932",
+          "company": {
+            "id": 9311,
+            "name": "99 Tecnologia"
+          },
+          "employee": {
+            "id": 434343,
+            "name": "COLABORADOR",
+            "phone": "11999999999",
+            "phoneCountry": "BRA",
+            "email": "colaborador@99taxis.com",
+            "nationalId": "63313137709",
+            "externalId": 329932
+          },
+          "costCenter": {
+            "id": 8483843,
+            "name": "99Integracao"
+          },
+          "project": {
+            "id": 433902,
+            "name": "99Projeto"
+          },
+          "fare": 25.4,
+          "note": "justificativa",
+          "odometer": 7593,
+          "start": {
+            "latitude": -30.021647,
+            "longitude": -51.210702,
+            "date": "2019-04-04 17:13",
+            "address": "R. Gaspar Martins, 395 - Floresta, Porto Alegre - RS, 90220-160, Brasil"
+          },
+          "end": {
+            "latitude": -30.029277,
+            "longitude": -51.234226,
+            "date": "2019-04-04 17:24",
+            "address": "Rua General João Manoel, 50, Centro Histórico, Porto Alegre - RS, Brasil"
+          },
+          "realStart": {
+            "latitude": -30.021714,
+            "longitude": -51.210759,
+            "date": "2019-04-04 17:13",
+            "address": "Floresta - R. São Carlos, 545 - Floresta, Porto Alegre - RS, 90220-121, Brasil"
+          },
+          "realEnd": {
+            "latitude": -30.029156,
+            "longitude": -51.233957,
+            "date": "2019-04-04 17:24",
+            "address": "R. Gen. João Manoel, 127 - Centro Histórico, Porto Alegre - RS, 90010-030, Brasil"
+          },
+          "duration": 11,
+          "driver": {
+            "name": "Motorista",
+            "phone": "11999999999",
+            "car": "Fiat Siena",
+            "carYear": 2015,
+            "carPlate": "EJF-3931"
+          },
+          "city": "Porto Alegre",
+          "callPlatform": "app",
+          "requesterName": "COLABORADOR",
+          "taxiCategoryName": "Taxi 30% OFF"
+        }
+      ],
       "summary": {
         "quantity": 1,
         "totalFare": 25.4
@@ -1373,8 +1396,6 @@ curl -X GET PUT URL -H 'x-api-key: key-abc-123'
 * **Retorno**
   
   **Status Code:** 200
-
-  Descrição: Recibo gerado e disponível.
   
   **Exemplo de retorno**
   
@@ -1406,17 +1427,30 @@ curl -X GET PUT URL -H 'x-api-key: key-abc-123'
       "note": "justificativa",
       "odometer": 7593,
       "start": {
-        "latitude": -23.590760,
-        "longitude": -46.682129,
-        "date": 1502921626000,
-        "address": "Av. Faria Lima, 3000, São Paulo - SP, Brasil"
+        "latitude": -30.021647,
+        "longitude": -51.210702,
+        "date": "2019-04-04 17:13",
+        "address": "R. Gaspar Martins, 395 - Floresta, Porto Alegre - RS, 90220-160, Brasil"
       },
       "end": {
-        "latitude": -23.564758,
-        "longitude": -46.651850,
-        "date": 1502922838000,
-        "address": "Av Paulista, 1000, São Paulo - SP, Brasil"
+        "latitude": -30.029277,
+        "longitude": -51.234226,
+        "date": "2019-04-04 17:24",
+        "address": "Rua General João Manoel, 50, Centro Histórico, Porto Alegre - RS, Brasil"
       },
+      "realStart": {
+        "latitude": -30.021714,
+        "longitude": -51.210759,
+        "date": "2019-04-04 17:13",
+        "address": "Floresta - R. São Carlos, 545 - Floresta, Porto Alegre - RS, 90220-121, Brasil"
+      },
+      "realEnd": {
+        "latitude": -30.029156,
+        "longitude": -51.233957,
+        "date": "2019-04-04 17:24",
+        "address": "R. Gen. João Manoel, 127 - Centro Histórico, Porto Alegre - RS, 90010-030, Brasil"
+      },
+      "duration": 11,
       "driver": {
         "name": "Motorista",
         "phone": "11999999999",
@@ -1424,7 +1458,7 @@ curl -X GET PUT URL -H 'x-api-key: key-abc-123'
         "carYear": 2015,
         "carPlate": "EJF-3931"
       },
-      "city": "São Paulo",
+      "city": "Porto Alegre",
       "callPlatform": "web",
       "requesterName": "COLABORADOR",
       "taxiCategoryName": "Taxi 30% OFF"
@@ -1433,7 +1467,7 @@ curl -X GET PUT URL -H 'x-api-key: key-abc-123'
 
     **Status Code:** 404
 
-    Descrição: O recibo não existe ou não está disponível. Em caso de corrida finalizada, deve-se aguardar o tempo de sincronização e geração do recibo.
+    > O recibo não existe ou não está disponível. Em caso de corrida finalizada, deve-se aguardar o tempo de sincronização e geração do recibo.
         
 -----
 
@@ -1491,17 +1525,30 @@ curl -X GET PUT URL -H 'x-api-key: key-abc-123'
       "note": "justificativa",
       "odometer": 7593,
       "start": {
-        "latitude": -23.590760,
-        "longitude": -46.682129,
-        "date": 1502921626000,
-        "address": "Av. Faria Lima, 3000, São Paulo - SP, Brasil"
+        "latitude": -30.021647,
+        "longitude": -51.210702,
+        "date": "2019-04-04 17:13",
+        "address": "R. Gaspar Martins, 395 - Floresta, Porto Alegre - RS, 90220-160, Brasil"
       },
       "end": {
-        "latitude": -23.564758,
-        "longitude": -46.651850,
-        "date": 1502922838000,
-        "address": "Av Paulista, 1000, São Paulo - SP, Brasil"
+        "latitude": -30.029277,
+        "longitude": -51.234226,
+        "date": "2019-04-04 17:24",
+        "address": "Rua General João Manoel, 50, Centro Histórico, Porto Alegre - RS, Brasil"
       },
+      "realStart": {
+        "latitude": -30.021714,
+        "longitude": -51.210759,
+        "date": "2019-04-04 17:13",
+        "address": "Floresta - R. São Carlos, 545 - Floresta, Porto Alegre - RS, 90220-121, Brasil"
+      },
+      "realEnd": {
+        "latitude": -30.029156,
+        "longitude": -51.233957,
+        "date": "2019-04-04 17:24",
+        "address": "R. Gen. João Manoel, 127 - Centro Histórico, Porto Alegre - RS, 90010-030, Brasil"
+      },
+      "duration": 11,
       "driver": {
         "name": "Motorista",
         "phone": "11999999999",
@@ -1509,16 +1556,15 @@ curl -X GET PUT URL -H 'x-api-key: key-abc-123'
         "carYear": 2015,
         "carPlate": "EJF-3931"
       },
-      "city": "São Paulo",
-      "callPlatform": "web",
-      "requesterName": "COLABORADOR",
-      "taxiCategoryName": "Taxi 30% OFF"
+      "city": "Porto Alegre",
+      "callPlatform": "app",
+      "taxiCategoryName": "99TAXI "
     }
     ```
 
     **Status Code:** 404
 
-    Descrição: O recibo não existe ou não está disponível. Em caso de corrida finalizada, deve-se aguardar o tempo de sincronização e geração do recibo.
+    > O recibo não existe ou não está disponível. Em caso de corrida finalizada, deve-se aguardar o tempo de sincronização e geração do recibo.
         
 -----
 
