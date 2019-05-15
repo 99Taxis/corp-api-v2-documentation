@@ -1232,8 +1232,8 @@ curl -X GET PUT URL -H 'x-api-key: key-abc-123'
   | -----------  | ------------ | --------------------------------------------------------------------------------- | ----------- | ------------ | ----------- |
   | startDate    | data         | Indica data de início para filtro de busca por corridas finalizadas               | sim         | -            | 2017-06-01  |
   | endDate      | data         | Indica data de término para filtro de busca por corridas finalizadas              | sim         | -            | 2017-06-02  |
-  | costCenterId | numérico     | Indicador do centro de custo                                                      | não         | -            | 20          |
-  | projectId    | numérico     | Indicador do projeto                                                              | não         | -            | 15          |
+  | costCenterId | numérico     | Identificador do centro de custo                                                  | não         | -            | 20          |
+  | projectId    | numérico     | Identificador do projeto                                                          | não         | -            | 15          |
   | taxiCategory | alfanumérico | Categoria da corrida. Valores possíveis: regular-taxi, turbo-taxi, top99 ou pop99 | não         | -            | pop99       |
   | limit        | numérico     | Quantidade de registros por página                                                | não         | 20           | 10          |
   | page         | numérico     | Índice da página no sistema de paginação                                          | não         | 1            | 3           |
