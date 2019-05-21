@@ -1766,6 +1766,9 @@ curl -X GET PUT URL -H 'x-api-key: key-abc-123'
   | ---------- | ------------ | ------------------- | ----------- | ------------ | ------------------------ |
   | email      | alfanumérico | email do usuário    | sim         | -            | colaborador@empresa.com  |
 
+  > Para permitir carateres especiais, é preciso fazer o _encode_ do parâmetro `email` antes de efetuar a requisição.  
+  ex: `jose+marketing@empresa.com` -> `jose%2Bmarketing%40empresa.com`
+
 - **Retorno**
 
   **Status Code:** 204
@@ -1787,6 +1790,9 @@ curl -X GET PUT URL -H 'x-api-key: key-abc-123'
   | Atributo   | Tipo do dado | Descrição           | Obrigatório | Valor padrão | Exemplo                  |
   | ---------- | ------------ | ------------------- | ----------- | ------------ | ------------------------ |
   | email      | alfanumérico | email do usuário    | sim         | -            | colaborador@empresa.com  |
+
+  > Para permitir carateres especiais, é preciso fazer o _encode_ do parâmetro `email` antes de efetuar a requisição.  
+  ex: `jose+marketing@empresa.com` -> `jose%2Bmarketing%40empresa.com`
 
 - **Retorno**
 
@@ -1817,6 +1823,9 @@ curl -X GET PUT URL -H 'x-api-key: key-abc-123'
   | Atributo   | Tipo do dado | Descrição           | Obrigatório | Valor padrão | Exemplo                  |
   | ---------- | ------------ | ------------------- | ----------- | ------------ | ------------------------ |
   | email      | alfanumérico | email do usuário    | sim         | -            | colaborador@empresa.com  |
+
+  > Para permitir carateres especiais, é preciso fazer o _encode_ do parâmetro `email` antes de efetuar a requisição.  
+  ex: `jose+marketing@empresa.com` -> `jose%2Bmarketing%40empresa.com`
 
 - **Retorno**
 
