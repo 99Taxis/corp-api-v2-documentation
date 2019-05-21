@@ -27,6 +27,7 @@ curl -X GET PUT URL -H 'x-api-key: key-abc-123'
 - [Colaboradores com Identificador Externo](#colaboradores-com-identificador-externo)
 - [Receitas](#receitas)
 - [Corridas](#corridas)
+- [Usuários](#usuários)
 
 ## Centro de Custo
 
@@ -1672,6 +1673,195 @@ curl -X GET PUT URL -H 'x-api-key: key-abc-123'
     }
   ]
   ```
+---
+
+## Usuários
+
+#### Listar usuários com os perfis de acesso
+
+- **URL**
+
+  `/users`
+
+- **Método**
+
+  `GET`
+
+- **Retorno**
+
+  **Status Code:** 200
+
+  ```json
+  [
+    {
+      "name": "Colaborador 1",
+      "email": "colaborador1@99taxis.com",
+      "profile": "CorporateUser"
+    },
+    {
+      "name": "Colaborador 2",
+      "email": "colaborador2@99taxis.com",
+      "profile": "EmployeeUser"
+    }
+  ]
+  ```
+
+---
+
+#### Criar um usuário
+
+- **URL**
+
+  `/users`
+
+- **Método**
+
+  `POST`
+
+- **Parâmetros via body**
+
+  | Atributo        | Tipo do dado    | Descrição           | Obrigatório | Valor padrão | Exemplo           |
+  | --------------- | --------------- | ------------------- | ----------- | ------------ | ----------------- |
+  | user.name       | alfanumérico    | Nome do usuário     | sim         | -            | José Santos       |
+  | user.email      | alfanumérico    | E-mail do usuário   | sim         | -            | jose@empresa.com  |
+  
+- **Exemplo de envio**
+
+    ```json
+    {
+      "email": "José Santos",
+      "name": "jose@empresa.com"
+    }
+    ```
+
+- **Retorno**
+
+  **Status Code:** 201
+
+  ```json
+  [
+    {
+      "name": "José Santos",
+      "email": "jose@empresa.com",
+      "profile": "EmployeeUser"
+    }
+  ]
+  ```
+
+---
+
+#### Remover usuário
+
+- **URL**
+
+  `/users`
+
+- **Método**
+
+  `DELETE`
+
+- **Parâmetros via url**
+
+  | Atributo   | Tipo do dado | Descrição           | Obrigatório | Valor padrão | Exemplo                  |
+  | ---------- | ------------ | ------------------- | ----------- | ------------ | ------------------------ |
+  | email      | alfanumérico | email do usuário    | sim         | -            | colaborador@empresa.com  |
+
+  > Para permitir carateres especiais, é preciso fazer o _encode_ do parâmetro `email` antes de efetuar a requisição.  
+  ex: `jose+marketing@empresa.com` -> `jose%2Bmarketing%40empresa.com`
+
+- **Retorno**
+
+  **Status Code:** 204
+
+---
+
+#### Adicionar o perfil de CorporateUser ao usuário
+ 
+- **URL**
+
+  `/users/admin`
+
+- **Método**
+
+  `PUT`
+
+- **Parâmetros via url**
+
+  | Atributo   | Tipo do dado | Descrição           | Obrigatório | Valor padrão | Exemplo                  |
+  | ---------- | ------------ | ------------------- | ----------- | ------------ | ------------------------ |
+  | email      | alfanumérico | email do usuário    | sim         | -            | colaborador@empresa.com  |
+
+  > Para permitir carateres especiais, é preciso fazer o _encode_ do parâmetro `email` antes de efetuar a requisição.  
+  ex: `jose+marketing@empresa.com` -> `jose%2Bmarketing%40empresa.com`
+
+- **Retorno**
+
+  **Status Code:** 200
+
+  ```json
+  {
+    "name": "Colaborador",
+    "email": "colaborador@empresa.com",
+    "profile": "CorporateUser"
+  }
+  ```
+
+---
+
+#### Remover o perfil de CorporateUser ao usuário
+ 
+- **URL**
+
+  `/users/admin`
+
+- **Método**
+
+  `DELETE`
+
+- **Parâmetros via url**
+
+  | Atributo   | Tipo do dado | Descrição           | Obrigatório | Valor padrão | Exemplo                  |
+  | ---------- | ------------ | ------------------- | ----------- | ------------ | ------------------------ |
+  | email      | alfanumérico | email do usuário    | sim         | -            | colaborador@empresa.com  |
+
+  > Para permitir carateres especiais, é preciso fazer o _encode_ do parâmetro `email` antes de efetuar a requisição.  
+  ex: `jose+marketing@empresa.com` -> `jose%2Bmarketing%40empresa.com`
+
+- **Retorno**
+
+  **Status Code:** 200
+
+  ```json
+  {
+    "name": "Colaborador",
+    "email": "colaborador@empresa.com",
+    "profile": "EmployeeUser"
+  }
+  ```
+
+---
+
+#### Atualizar o perfil do usuário
+ 
+- **URL**
+
+  `/users/profile`
+
+- **Método**
+
+  `PUT`
+
+- **Retorno**
+
+  **Status Code:** 200
+
+  ```json
+  {
+    "name": "Colaborador",
+    "email": "colaborador@empresa.com"
+  }
+  ```
+
 ---
 
 ## Suporte da API
