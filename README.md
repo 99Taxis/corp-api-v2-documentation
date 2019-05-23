@@ -22,12 +22,46 @@ curl -X GET PUT URL -H 'x-api-key: key-abc-123'
 
 ## Seções
 
+- [Empresas](#empresas)
 - [Centro de Custo](#centro-de-custo)
 - [Colaboradores](#colaboradores)
 - [Colaboradores com Identificador Externo](#colaboradores-com-identificador-externo)
 - [Receitas](#receitas)
 - [Corridas](#corridas)
 - [Usuários](#usuários)
+
+-----
+
+## Empresas
+
+### Busca de empresas autenticadas
+
+* **URL**
+
+  `/companies`
+
+* **Method**
+
+  `GET`
+  
+* **Retorno**
+  
+  **Status Code:** 200
+  
+    ```json
+    [
+      {
+       "id": "8b8fe0bc-f417-4bfc-8c4c-528e46b776dd",
+        "name": "Empresa principal"
+      },
+      {
+        "id": "75492c7e-f33c-4b7f-87ce-abe3f933991b",
+        "name": "Empresa secundária"
+      }
+    ]
+    ``` 
+    
+-----
 
 ## Centro de Custo
 
