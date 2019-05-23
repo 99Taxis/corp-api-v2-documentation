@@ -30,6 +30,8 @@ curl -X GET PUT URL -H 'x-api-key: key-abc-123'
 - [Corridas](#corridas)
 - [Usuários](#usuários)
 
+-----
+
 ## Empresas
 
 ### Busca de empresas autenticadas
