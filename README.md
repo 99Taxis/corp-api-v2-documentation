@@ -34,13 +34,13 @@ curl -X GET PUT URL -H 'x-api-key: key-abc-123'
 
 ## Empresas
 
-### Busca de empresas autenticadas
+#### Busca de empresas autenticadas
 
 * **URL**
 
   `/companies`
 
-* **Method**
+* **Método**
 
   `GET`
   
