@@ -63,6 +63,64 @@ curl -X GET PUT URL -H 'x-api-key: key-abc-123'
     
 -----
 
+#### Busca de parâmetros de justificativa para corrida
+
+* **URL**
+
+  `/companies/justification`
+
+* **Método**
+
+  `GET`
+  
+* **Retorno**
+  
+  **Status Code:** 200
+  
+    ```json
+    {
+        "justificationRequired": true,
+        "minLength": 4,
+        "maxLength": 128
+    }
+    ``` 
+    
+-----
+
+#### Alteração de parâmetros de justificativa para corrida
+
+* **URL**
+
+  `/companies/justification`
+
+* **Método**
+
+  `PUT`
+
+- **Parâmetros via body**
+
+  | Atributo                | Tipo do dado       | Descrição                                    | Obrigatório | Valor padrão | Exemplo   |
+  | ----------------------- | ------------------ | -------------------------------------------- | ----------- | ------------ | --------- |
+  | justificationRequired   | verdadeiro/falso   | Habilitar obrigatoriedade da justificativa   | sim         | -            | true      |
+  | minLength               | numérico           | Tamanho mínimo da justificativa              | não         | -            | 4         |
+  | maxLength               | numérico           | Tamanho máximo da justificativa              | não         | -            | 128       |
+
+> Os atributos `minLength` e `maxLength` são obrigatórios quando o atributo `justificationRequired` é igual a `true` 
+  
+* **Retorno**
+  
+  **Status Code:** 200
+  
+    ```json
+    {
+        "justificationRequired": true,
+        "minLength": 4,
+        "maxLength": 128
+    }
+    ``` 
+    
+-----
+
 ## Centro de Custo
 
 #### Busca de centros de custo
