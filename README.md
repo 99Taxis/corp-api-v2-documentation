@@ -157,9 +157,9 @@ curl -X GET PUT URL -H 'x-api-key: key-abc-123'
 
 - **Parâmetros via body**
 
-  | Atributo   | Tipo do dado   | Descrição             | Obrigatório | Valor padrão | Exemplo                    |
-  | -----------| -------------- | ----------------------| ----------- | ------------ | -------------------------- |
-  | email      | Lista          | E-mail do responsável | sim         | -            | jose.santos@empresa.com.br |
+  | Atributo   | Tipo do dado   | Descrição             | Obrigatório | Valor padrão | Exemplo                                             |
+  | -----------| -------------- | ----------------------| ----------- | ------------ | --------------------------------------------------- |
+  | email      | Lista          | E-mail do responsável | sim         | -            | ["colaborador@99app.com", "colaborador2@99app.com"] |
   
 * **Exemplo de envio**
 
