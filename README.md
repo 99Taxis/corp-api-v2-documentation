@@ -121,6 +121,70 @@ curl -X GET PUT URL -H 'x-api-key: key-abc-123'
     
 -----
 
+#### Busca de emails dos responsáveis da empresa 
+
+* **URL**
+
+  `/companies/emails`
+
+* **Método**
+
+  `GET`
+  
+* **Retorno**
+  
+  **Status Code:** 200
+  
+    ```json
+    [
+      "colaborador@99app.com",
+      "colaborador2@99app.com",
+      "colaborador3@99app.com"
+    ]
+    ``` 
+    
+-----
+
+#### Alteração de emails de responsáveis da empresa
+
+* **URL**
+
+  `/companies/emails`
+
+* **Método**
+
+  `PUT`
+
+- **Parâmetros via body**
+
+  | Atributo   | Tipo do dado   | Descrição             | Obrigatório | Valor padrão | Exemplo                                             |
+  | -----------| -------------- | ----------------------| ----------- | ------------ | --------------------------------------------------- |
+  | email      | Lista          | E-mail do responsável | sim         | -            | ["colaborador@99app.com", "colaborador2@99app.com"] |
+  
+* **Exemplo de envio**
+
+    ```json
+    [
+      "colaborador@99app.com",
+      "colaborador2@99app.com",
+      "colaborador3@99app.com"
+    ]
+    ```
+
+* **Retorno**
+  
+  **Status Code:** 200
+  
+    ```json
+    [
+      "colaborador@99app.com",
+      "colaborador2@99app.com",
+      "colaborador3@99app.com"
+    ]
+    ``` 
+    
+-----
+
 ## Centro de Custo
 
 #### Busca de centros de custo
