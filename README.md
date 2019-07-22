@@ -23,6 +23,7 @@ curl -X GET PUT URL -H 'x-api-key: key-abc-123'
 ## Seções
 
 - [Empresas](#empresas)
+- [Políticas de uso](#políticas-de-uso)
 - [Centro de Custo](#centro-de-custo)
 - [Colaboradores](#colaboradores)
 - [Colaboradores com Identificador Externo](#colaboradores-com-identificador-externo)
@@ -184,6 +185,400 @@ curl -X GET PUT URL -H 'x-api-key: key-abc-123'
     ``` 
     
 -----
+
+## Políticas de uso
+
+### Busca por políticas de uso
+
+- **URL**
+
+  `/timepolicies`
+
+- **Método**
+
+  `GET`
+
+- **Parâmetros via query**
+
+  | Atributo | Tipo do dado | Descrição                                | Obrigatório | Valor padrão | Exemplo     |
+  | -------- | ------------ | ---------------------------------------- | ----------- | ------------ | ----------- |
+  | limit    | numérico     | Quantidade de registros por página       | não         | 20           | 50          |
+  | page     | numérico     | Índice da página no sistema de paginação | não         | 1            | 3           |
+
+- **Retorno**
+  **Status Code:** 200
+  ```json
+  [
+    {
+      "id": 2035,
+      "name": "Política para comerciais",
+      "description": "Define o uso para os colaboradores do setor comercial",
+      "intervals": [
+        {
+          "dayOfWeek": 1,
+          "startTime": "09:00",
+          "endTime": "17:29"
+        },
+        {
+          "dayOfWeek": 2,
+          "startTime": "09:00",
+          "endTime": "17:29"
+        },
+        {
+          "dayOfWeek": 3,
+          "startTime": "09:00",
+          "endTime": "17:29"
+        },
+        {
+          "dayOfWeek": 4,
+          "startTime": "09:00",
+          "endTime": "17:29"
+        },
+        {
+          "dayOfWeek": 5,
+          "startTime": "09:00",
+          "endTime": "17:29"
+        },
+        {
+          "dayOfWeek": 6,
+          "startTime": "09:00",
+          "endTime": "17:29"
+        },
+      ]
+    },
+    {
+      "id": 2037,
+      "name": "Política para implantação",
+      "description": "Define o uso para os colaboradores do setor de TI",
+      "intervals": [
+        {
+          "dayOfWeek": 2,
+          "startTime": "09:00",
+          "endTime": "17:29"
+        },
+        {
+          "dayOfWeek": 3,
+          "startTime": "09:00",
+          "endTime": "17:29"
+        },
+        {
+          "dayOfWeek": 4,
+          "startTime": "09:00",
+          "endTime": "17:29"
+        }      ]
+    }
+  ]
+  ```
+-----
+
+### Cadastro de política de uso
+
+- **URL**
+
+  `/timepolicies`
+
+- **Método**
+
+  `POST`
+
+- **Parâmetros via body**
+
+  | Atributo            | Tipo do dado | Descrição                                              | Obrigatório | Valor padrão | Exemplo                                               |
+  | ------------------- | ------------ | ------------------------------------------------------ | ----------- | ------------ | ----------------------------------------------------- |
+  | name                | alfanumérico | Nome da política de uso                                | sim         | -            | Política para comerciais                              |
+  | description         | alfanumérico | Descrição da política de uso                           | não         | -            | Define o uso para os colaboradores do setor comercial |
+  | intervals           | lista        | Define os intervalos de uso                            | sim         | -            |                                                       |
+  | intervals.dayOfWeek | numérico     | Identifica os dias da semanas                          | sim         | -            | 1                                                     |
+  | intervals.startTime | hora         | Identifica a hora de inicio do intervalo               | sim         | -            | 10:00                                                 |
+  | intervals.endTime   | hora         | Identifica a hora de fim do intervalo                  | sim         | -            | 17:29                                                 |
+
+- **Exemplo de envio**
+
+  ```json
+  {
+    "name": "Política para atendimentos emergenciais",
+    "description": "Define o uso para atendimentos emergenciais nos finais de semana",
+    "intervals": [
+      {
+        "dayOfWeek": 0,
+        "startTime": "07:00",
+        "endTime": "22:29"
+      },
+      {
+        "dayOfWeek": 6,
+        "startTime": "07:00",
+        "endTime": "22:29"
+      }
+    ]
+  }
+  ```
+
+- **Retorno**
+  **Status Code:** 201
+  ```json
+  {
+    "id": 2066,
+    "name": "Política para atendimentos emergenciais",
+    "description": "Define o uso para atendimentos emergenciais nos finais de semana",
+    "intervals": [
+      {
+        "dayOfWeek": 0,
+        "startTime": "7:00",
+        "endTime": "22:29"
+      },
+      {
+        "dayOfWeek": 6,
+        "startTime": "7:00",
+        "endTime": "22:29"
+      }
+    ]
+  }
+  ```
+> O atributo `intervals.dayOfWeek` identifica os dias da semana, sendo `0` domingo e `6` o sábado. Qualquer número diferente desse rango de 0 à 6 não é aceito.
+>  O atributo `intervals.startTime` indica a hora de inicio do intervalo em horas e minutos. Os minutos aceitos são `0` e `30`  
+>  O atributo `intervals.endTime` indica a hora de finalização do intervalo em horas e minutos. Os minutos aceitos são `29` e `59`  
+
+-----
+
+#### Busca de política de uso por identificador
+
+- **URL**
+
+  `/timepolicies/{id}`
+
+- **Método**
+
+  `GET`
+
+- **Parâmetros via url**
+
+  | Atributo | Tipo do dado | Descrição                        | Obrigatório | Valor padrão | Exemplo |
+  | -------- | ------------ | -------------------------------- | ----------- | ------------ | ------- |
+  | id       | numérico     | Identificador da política de uso | sim         | -            | 2066    |
+
+- **Retorno**
+  **Status Code:** 200
+  ```json
+  {
+    "id": 2066,
+    "name": "Política para atendimentos emergenciais",
+    "description": "Define o uso para atendimentos emergenciais nos finais de semana",
+    "intervals": [
+      {
+        "dayOfWeek": 0,
+        "startTime": "7:00",
+        "endTime": "22:29"
+      },
+      {
+        "dayOfWeek": 6,
+        "startTime": "7:00",
+        "endTime": "22:29"
+      }
+    ]
+  }
+  ```
+-----
+
+### Atualizar de política de uso
+
+- **URL**
+
+  `/timepolicies/{id}`
+
+- **Método**
+
+  `PUT`
+
+- **Parâmetros via url**
+
+  | Atributo   | Tipo do dado | Descrição                        | Obrigatório | Valor padrão | Exemplo |
+  | ---------- | ------------ | -------------------------------- | ----------- | ------------ | ------- |
+  | id         | numérico     | Identificador da política de uso | sim         | -            | 2066     |
+
+- **Parâmetros via body**
+
+  | Atributo            | Tipo do dado | Descrição                                              | Obrigatório | Valor padrão | Exemplo                                               |
+  | ------------------- | ------------ | ------------------------------------------------------ | ----------- | ------------ | ----------------------------------------------------- |
+  | name                | alfanumérico | Nome da política de uso                                | sim         | -            | Política para comerciais                              |
+  | description         | alfanumérico | Descrição da política de uso                           | não         | -            | Define o uso para os colaboradores do setor comercial |
+  | intervals           | lista        | Define os intervalos de uso                            | sim         | -            |                                                       |
+  | intervals.dayOfWeek | numérico     | Identifica os dias da semanas                          | sim         | -            | 1                                                     |
+  | intervals.startTime | hora         | Identifica a hora de inicio do intervalo               | sim         | -            | 10:00                                                 |
+  | intervals.endTime   | hora         | Identifica a hora de fim do intervalo                  | sim         | -            | 17:29                                                 |
+
+- **Exemplo de envio**
+
+  ```json
+  {
+    "name": "Política para atendimentos emergenciais",
+    "description": "Define o uso para atendimentos emergenciais nos finais de semana",
+    "intervals": [
+      {
+        "dayOfWeek": 0,
+        "startTime": "07:00",
+        "endTime": "22:29"
+      },
+      {
+        "dayOfWeek": 5,
+        "startTime": "21:00",
+        "endTime": "23:59"
+      },
+      {
+        "dayOfWeek": 6,
+        "startTime": "07:00",
+        "endTime": "22:29"
+      }
+    ]
+  }
+  ```
+
+- **Retorno**
+  **Status Code:** 200
+  ```json
+  {
+    "id": 2066,
+    "name": "Política para atendimentos emergenciais",
+    "description": "Define o uso para atendimentos emergenciais nos finais de semana",
+    "intervals": [
+      {
+        "dayOfWeek": 0,
+        "startTime": "7:00",
+        "endTime": "22:29"
+      },
+      {
+        "dayOfWeek": 5,
+        "startTime": "21:00",
+        "endTime": "23:59"
+      },
+      {
+        "dayOfWeek": 6,
+        "startTime": "7:00",
+        "endTime": "22:29"
+      }
+    ]
+  }
+  ```
+> O atributo `intervals` sobreescreve os intervalos existentes.
+>  O atributo `intervals.dayOfWeek` identifica os dias da semana, sendo `0` domingo e `6` o sábado. Qualquer número diferente desse rango de 0 à 6 não é aceito.
+>  O atributo `intervals.startTime` indica a hora de inicio do intervalo em horas e minutos. Os minutos aceitos são `0` e `30`  
+>  O atributo `intervals.endTime` indica a hora de finalização do intervalo em horas e minutos. Os minutos aceitos são `29` e `59`  
+
+-----
+
+#### Remover uma política de uso
+
+- **URL**
+
+  `/timepolicies/{id}`
+
+- **Método**
+
+  `DELETE`
+
+- **Parâmetros via url**
+
+  | Atributo | Tipo do dado | Descrição                        | Obrigatório | Valor padrão | Exemplo |
+  | -------- | ------------ | -------------------------------- | ----------- | ------------ | ------- |
+  | id       | numérico     | Identificador da política de uso | sim         | -            | 2066    |
+
+- **Retorno**
+  **Status Code:** 204
+
+-----
+#### Busca de centros de custo da política de uso
+
+- **URL**
+
+  `/timepolicies/{id}/costcenter`
+
+- **Método**
+
+  `GET`
+
+- **Parâmetros via query**
+
+  | Atributo | Tipo do dado | Descrição                        | Obrigatório | Valor padrão | Exemplo |
+  | -------- | ------------ | -------------------------------- | ----------- | ------------ | ------- |
+  | id       | numérico     | Identificador da política de uso | sim         | -            | 20      |
+
+* **Retorno**
+
+  **Status Code:** 200
+
+  ```json
+  [
+    {
+      "id": 696575,
+      "name": "CC comerciais setor norte"
+    },
+    {
+      "id": 696576,
+      "name": "CC comerciais setor este"
+    }
+  ]
+  ```
+---
+
+#### Atualizar centro de custos da política de uso
+
+- **URL**
+
+  `/employees/{id}/costcenter`
+
+- **Método**
+
+  `PATCH`
+
+- **Parâmetros via url**
+
+  | Atributo   | Tipo do dado | Descrição                        | Obrigatório | Valor padrão | Exemplo |
+  | ---------- | ------------ | -------------------------------- | ----------- | ------------ | ------- |
+  | id         | numérico     | Identificador da política de uso | sim         | -            | 125     |
+
+* **Parâmetros via body**
+
+  | Atributo      | Tipo do dado          | Descrição                           | Obrigatório | Valor padrão | Exemplo  |
+  | ------------- | --------------------- | ----------------------------------- | ----------- | ------------ | -------- |
+  | lista de id   | conjunto de numéricos | Identificadores de centros de custo | sim         | -            | 100, 200 |
+
+* **Exemplo de envio**
+
+  ```json
+  [696575, 696576]
+  ```
+
+- **Retorno**
+
+  **Status Code:** 200
+
+  ```json
+  [696575, 696576]
+  ```
+
+---
+
+#### Desassociar um centro de custo de uma política de uso
+
+- **URL**
+
+  `/timepolicies/{id}/costcenter/{costCenterId}`
+
+- **Método**
+
+  `DELETE`
+
+- **Parâmetros via url**
+
+| Atributo     | Tipo do dado | Descrição                        | Obrigatório | Valor padrão | Exemplo |
+| ------------ | ------------ | -------------------------------- | ----------- | ------------ | ------- |
+| id           | numérico     | Identificador da política de uso | sim         | -            | 10      |
+| costCenterId | numérico     | Identificador do centro de custo | sim         | -            | 20      |
+
+- **Retorno**
+
+  **Status Code:** 204
+
+---
 
 ## Centro de Custo
 
