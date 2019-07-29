@@ -186,6 +186,58 @@ curl -X GET PUT URL -H 'x-api-key: key-abc-123'
     
 -----
 
+#### Busca de parâmetro de ativação de envio de emails de recibo de corrida
+
+* **URL**
+
+  `/companies/receiptEmail`
+
+* **Método**
+
+  `GET`
+  
+* **Retorno**
+  
+  **Status Code:** 200
+  
+    ```json
+    true
+    ``` 
+    
+-----
+
+#### Alteração de parâmetro de ativação de envio de emails de recibo de corrida
+
+* **URL**
+
+  `/companies/receiptEmail`
+
+* **Método**
+
+  `PUT`
+
+- **Parâmetros via body**
+
+  | Atributo   | Tipo do dado   | Descrição                             | Obrigatório | Valor padrão | Exemplo                                             |
+  | -----------| -------------- | ------------------------------------- | ----------- | ------------ | --------------------------------------------------- |
+  | enable     | booleano       | Flag para ativar ou desativar o envio | sim         | -            | true                                                |
+  
+* **Exemplo de envio**
+
+    ```json
+    false
+    ```
+
+* **Retorno**
+  
+  **Status Code:** 200
+  
+    ```json
+    false
+    ``` 
+    
+-----
+
 ## Políticas de uso
 
 ### Busca por políticas de uso
@@ -334,7 +386,7 @@ curl -X GET PUT URL -H 'x-api-key: key-abc-123'
     ]
   }
   ```
-> O atributo `intervals.dayOfWeek` identifica os dias da semana, sendo `0` domingo e `6` o sábado. Qualquer número diferente desse rango de 0 à 6 não é aceito.  
+> O atributo `intervals.dayOfWeek` identifica os dias da semana, sendo `0` domingo e `6` o sábado. Qualquer número diferente desse intervalo de 0 à 6 não é aceito.  
 >  O atributo `intervals.startTime` indica a hora de inicio do intervalo em horas e minutos. Os minutos aceitos são `0` e `30`  
 >  O atributo `intervals.endTime` indica a hora de finalização do intervalo em horas e minutos. Os minutos aceitos são `29` e `59`  
 
@@ -459,7 +511,7 @@ curl -X GET PUT URL -H 'x-api-key: key-abc-123'
   }
   ```
 > O atributo `intervals` sobreescreve os intervalos existentes.  
->  O atributo `intervals.dayOfWeek` identifica os dias da semana, sendo `0` domingo e `6` o sábado. Qualquer número diferente desse rango de 0 à 6 não é aceito.  
+>  O atributo `intervals.dayOfWeek` identifica os dias da semana, sendo `0` domingo e `6` o sábado. Qualquer número diferente desse intervalo de 0 à 6 não é aceito.  
 >  O atributo `intervals.startTime` indica a hora de inicio do intervalo em horas e minutos. Os minutos aceitos são `0` e `30`  
 >  O atributo `intervals.endTime` indica a hora de finalização do intervalo em horas e minutos. Os minutos aceitos são `29` e `59`  
 
