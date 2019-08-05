@@ -25,6 +25,7 @@ curl -X GET PUT URL -H 'x-api-key: key-abc-123'
 - [Empresas](#empresas)
 - [Políticas de uso](#políticas-de-uso)
 - [Centro de Custo](#centro-de-custo)
+- [Projetos](#projetos)
 - [Colaboradores](#colaboradores)
 - [Colaboradores com Identificador Externo](#colaboradores-com-identificador-externo)
 - [Receitas](#receitas)
@@ -857,6 +858,202 @@ curl -X GET PUT URL -H 'x-api-key: key-abc-123'
   ```
 
 ---
+
+## Projetos
+
+#### Busca de projetos
+
+* **URL**
+
+  `/projects`
+
+* **Method**
+
+  `GET`
+  
+*  **Parâmetros via query**
+
+
+   | Atributo     | Tipo do dado     | Descrição                                    | Obrigatório     | Valor padrão     | Exemplo        |
+   |----------    |--------------    |------------------------------------------    |-------------    |--------------    |------------    |
+   | search       | alfanumérico     | Busca pelo nome do centro de custo           | não             | -                | financeiro     |
+   | page        | numérico         | Índice da página no sistema de paginação     | não             | 1                | 0              |
+   | limit        | numérico         | Quantidade de registros por página           | não             | 50               | 20             |
+
+* **Retorno**
+  
+  **Status Code:** 200
+  
+    ```json
+    [
+      {
+        "id": 1,
+        "name": "evento brasil 2019",
+        "company": {
+          "id": "47a3083b-5d03-4e05-ad9d-9fd6fddd613e",
+          "name": "99"
+        }
+      },
+      {
+        "id": 2,
+        "name": "project financeiro",
+        "company": {
+          "id": "47a3083b-5d03-4e05-ad9d-9fd6fddd613e",
+          "name": "99"
+        }
+      }
+    ]
+    ``` 
+    
+-----
+
+#### Busca de projeto por identificador
+
+* **URL**
+
+  `/projects/{id}`
+
+* **Method**
+
+  `GET`
+  
+*  **Parâmetros via url**
+
+
+   | Atributo     | Tipo do dado     | Descrição                                    | Obrigatório     | Valor padrão     | Exemplo        |
+   |----------    |--------------    |------------------------------------------    |-------------    |--------------    |------------    |
+   | id           | numérico         | Identificador do project                   | sim             | -                | 1             |
+
+* **Retorno**
+  
+  **Status Code:** 200
+  
+    ```json
+    {
+      "id": 1,
+      "name": "evento brasil 2019",
+      "company": {
+        "id": "47a3083b-5d03-4e05-ad9d-9fd6fddd613e",
+        "name": "99"
+      }
+    }
+    ```
+    
+-----
+
+#### Cadastro de projeto
+
+* **URL**
+
+  `/projects`
+
+* **Method**
+
+  `POST`
+  
+*  **Parâmetros via body**
+
+
+   | Atributo     | Tipo do dado     | Descrição                                    | Obrigatório     | Valor padrão     | Exemplo            |
+   |----------    |--------------    |------------------------------------------    |-------------    |--------------    |------------        |
+   | name       | alfanumérico     | Nome do projecto                           | sim             | -                | expo 2019         |
+   
+*  **Exemplo de envio**
+   
+   ```json
+   {
+     "name": "recursos humanos"
+   }
+   ```
+
+* **Retorno**
+  
+  **Status Code:** 201
+  
+    ```json
+    {
+      "id": 5,
+      "name": "expo 2019",
+      "company": {
+        "id": "47a3083b-5d03-4e05-ad9d-9fd6fddd613e",
+        "name": "99"
+      }
+    }
+    ```
+    
+-----
+
+#### Atualizar os dados de um projeto
+
+* **URL**
+
+  `/projects/{id}`
+
+* **Method**
+
+  `PUT`
+  
+*  **Parâmetros via url**
+
+
+    | Atributo     | Tipo do dado     | Descrição                                    | Obrigatório     | Valor padrão     | Exemplo        |
+    |----------    |--------------    |------------------------------------------    |-------------    |--------------    |------------    |
+    | id           | numérico         | Identificador do project                   | sim             | -                | 1             |
+  
+*  **Parâmetros via body**
+
+
+   | Atributo     | Tipo do dado     | Descrição                                    | Obrigatório     | Valor padrão     | Exemplo            |
+   |----------    |--------------    |------------------------------------------    |-------------    |--------------    |------------        |
+   | name       | alfanumérico     | Nome do projeto                           | sim             | -                | expo 2017         |
+   
+*  **Exemplo de envio**
+   
+   ```json
+   {
+     "name": "expo 2017"
+   }
+   ```
+
+* **Retorno**
+  
+  **Status Code:** 201
+  
+    ```json
+    {
+      "id": 5,
+      "name": "expo 2017",
+      "company": {
+        "id": "47a3083b-5d03-4e05-ad9d-9fd6fddd613e",
+        "name": "99"
+      }
+    }
+    ```
+    
+-----
+
+#### Desativar um projeto
+
+* **URL**
+
+  `/projects/{id}`
+
+* **Method**
+
+  `DELETE`
+  
+*  **Parâmetros via body**
+
+
+   | Atributo     | Tipo do dado     | Descrição                                    | Obrigatório     | Valor padrão     | Exemplo        |
+   |----------    |--------------    |------------------------------------------    |-------------    |--------------    |------------    |
+   | id           | numérico         | Identificador do projeto                   | sim             | -                | 20             |
+
+* **Retorno**
+  
+  **Status Code:** 204
+    
+-----
 
 ## Colaboradores
 
