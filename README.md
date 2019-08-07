@@ -2475,6 +2475,286 @@ curl -X GET PUT URL -H 'x-api-key: key-abc-123'
   ```
 ---
 
+#### Busca de corridas em andamento
+
+* **URL**
+
+  `/rides`
+
+* **Method**
+
+  `GET`
+  
+* **Retorno**
+  
+  **Status Code:** 200 se houver corridas, 204 se não houver
+  
+  **Estrutura de retorno**
+  
+  | Atributo                              | Descrição                                                                         |
+  |-------------------------------------  |-------------------------------------------------------------------------------    |
+  | employeeID                            | Identificador do colaborador atrelado a corrida                                   |
+  | from.latitude                         | Latitude do endereço de origem                                                    |
+  | from.longitude                        | Longitude do endereço de origem                                                   |
+  | from.street                           | Endereço de origem                                                                |
+  | phoneNumber                           | Telefone do colaborador atrelado a corrida                                        |
+  | costCenterID                          | Identificador do centro de custo                                                  |
+  | projectID                             | Identificador do projeto                                                          |
+  | categoryID                            | Categoria da corrida. Valores possíveis: regular-taxi, turbo-taxi, top99 ou pop99 |
+  | to.latitude                           | Latitude do endereço de destino                                                   |
+  | to.longitude                          | Longitude do endereço de destino                                                  |
+  | to.street                             | Endereço de destino                                                               |
+  | optionals                             | Opcionais da corrida                                                              |
+  | status                                | Estado da corrida. Os valores possíveis estão listados na tabela abaixo.          |
+  | running.rideID                        | Identificador da corrida em andamento                                             |
+  | running.jobID                         | Identificador da corrida finalizada                                               |
+  | running.driver.driverId               | Identificador do motorista                                                        |
+  | running.driver.fullName               | Nome completo do motorista                                                        |
+  | running.driver.phoneNumber            | Telefone do motorista                                                             |
+  | running.driver.carModel               | Modelo do carro usado pelo motorista                                              |
+  | running.driver.carPlate               | Placa do veículo usado na corrida                                                 |
+  | running.driver.carColor               | Cor do veículo usado na corrida                                                   |
+  | running.driver.img                    | Endereço com foto do motorista                                                    |
+  | running.driver.position.latitude      | Latitude do endereço onde o motorista está localizado                             |
+  | running.driver.position.longitude     | Longitude do endereço onde o motorista está localizado                            |
+  | running.route.time                    | Tempo restante para chegada do motorista para início da corrida (em segundos)     |
+  | running.route.distance                | Distância já percorrida na corrida (em metros)                                    |
+  | running.smsStartedSent                | Notifica se o SMS com os dados do motorista foi enviado ao passageiro             |
+  | running.smsDriverCanceledSent         | Notifica se o SMS informando o cancelamento da corrida pelo motorista foi enviado |
+  
+  **Retornos possíveis para o estado da corrida**
+  
+  | Código                             | Descrição                                           |
+  |--------------------------------    |-------------------------------------------------    |
+  | WAITING_DRIVERS_ANSWERS            | Aguardando resposta dos motoristas                  | 
+  | COULDNT_FIND_AVAILABLE_DRIVERS     | Nenhum motorista disponível                         |
+  | DRIVERS_REJECTED                   | Nenhum motorista aceitou a corrida                  |
+  | CAR_ON_THE_WAY                     | Motorista está a caminho do endereço solicitado     |
+  | WAITING_FOR_PASSENGER              | Motorista chegou e está aguardando passageiro       | 
+  | CAR_ARRIVED                        | A corrida está em andamento                         |
+  | CANCELED_BY_DRIVER                 | Corrida cancelada pelo motorista                    |
+  | CANCELED_BY_PASSENGER              | Corrida cancelada pelo passageiro                   |
+  | RIDE_ENDED                         | Corrida finalizada                                  |
+
+  **Exemplo de retorno**
+  
+    ```json
+    [{
+      "employeeID": 884373,
+      "from": {
+        "latitude": -23.564758,
+        "longitude": -46.651850,
+        "street": "Av Paulista, 1000, São Paulo - SP, Brasil"
+      },
+      "phoneNumber": "11999999999",
+      "costCenterID": 43431,
+      "categoryID": "turbo-taxi",
+      "to": {
+        "latitude": -23.590760,
+        "longitude": -46.682129,
+        "street": "Av. Faria Lima, 3000, São Paulo - SP, Brasil"
+      },
+      "projectID": 394932,
+      "status": "CAR_ARRIVED",
+      "running": {
+        "rideID": "12219921932",
+        "jobID": "12219921932",
+        "driver": {
+          "driverId": 6988,
+          "fullName": "Claudo Moreira Cruz",
+          "phoneNumber": "11999999999",
+          "carModel": "Toyota Etios Sedan",
+          "carPlate": "EAN-0165",
+          "img": "https://s3.amazonaws.com/99taxis-drivers/xxx.jpg",
+          "position": {
+            "latitude": -23.582894,
+            "longitude": -46.683991
+          }
+        },
+        "route": {
+          "time": 0,
+          "distance": 507
+        },
+        "smsStartedSent": true,
+        "smsDriverCanceledSent": false
+      }
+    }]
+    ```
+    
+-----
+
+#### Busca de corrida em andamento ou recentes por identificador
+
+* **URL**
+
+  `/rides/{id}`
+
+* **Method**
+
+  `GET`
+  
+*  **Parâmetros via url**
+
+
+   | Atributo     | Tipo do dado     | Descrição                                    | Obrigatório     | Valor padrão     | Exemplo        |
+   |----------    |--------------    |------------------------------------------    |-------------    |--------------    |------------    |
+   | id           | alfanumérico     | Identificador da corrida                     | sim             | -                | 1              |
+
+* **Retorno**
+  
+  **Status Code:** 200
+  
+  **Exemplo de retorno**
+  
+    ```json
+    {
+        "employeeID": 884373,
+        "from": {
+            "latitude": -23.564758,
+            "longitude": -46.651850,
+            "street": "Av Paulista, 1000, São Paulo - SP, Brasil"
+        },
+        "phoneNumber": "11999999999",
+        "costCenterID": 43431,
+        "categoryID": "turbo-taxi",
+        "to": {
+            "latitude": -23.590760,
+            "longitude": -46.682129,
+            "street": "Av. Faria Lima, 3000, São Paulo - SP, Brasil"
+        },
+        "projectID": 394932,
+        "status": "CAR_ARRIVED",
+        "running": {
+            "rideID": "12219921932",
+            "jobID": "12219921932",
+            "driver": {
+                "driverId": 6988,
+                "fullName": "Claudo Moreira Cruz",
+                "phoneNumber": "11999999999",
+                "carModel": "Toyota Etios Sedan",
+                "carPlate": "EAN-0165",
+                "img": "https://s3.amazonaws.com/99taxis-drivers/xxx.jpg",
+                "position": {
+                    "latitude": -23.582894,
+                    "longitude": -46.683991
+                }
+            },
+            "route": {
+                "time": 0,
+                "distance": 507
+            },
+            "smsStartedSent": true,
+            "smsDriverCanceledSent": false
+        }
+    }
+    ```
+    
+-----
+
+    
+#### Solicitar corrida
+
+* **URL**
+
+  `/rides`
+
+* **Method**
+
+  `POST`
+  
+*  **Parâmetros via body**
+
+
+    | Atributo         | Tipo do dado                | Descrição                                                                                   | Obrigatório | Valor padrão | Exemplo                                   |
+    |------------      |---------------------------  |-------------------------------------------------------------------------------------------  |-------------|--------------|------------------------------------------ |
+    | employeeID       | numérico                    | Identificador do colaborador                                                                | sim         | -            | 884373                                    |
+    | from.latitude    | alfanumérico                | Latitude do endereço de origem                                                              | sim         | -            |  -23.564758                               |
+    | from.longitude   | alfanumérico                | Longitude do endereço de origem                                                             | sim         | -            | -46.651850                                |
+    | from.street      | alfanumérico                | Endereço de origem                                                                          | sim         | -            | Av Paulista, 1000, São Paulo - SP, Brasil |
+    | from.number      | alfanumérico                | Endereço de origem                                                                          | sim         | -            | Av Paulista, 1000, São Paulo - SP, Brasil |
+    | from.reference   | alfanumérico                | Ponto de referência para endereço de origem                                                 | não         | -            | Próximo a estação de metrô                |
+    | to.latitude      | alfanumérico                | Latitude do endereço de destino                                                             | sim         | -            |  -23.564758                               |
+    | to.longitude     | alfanumérico                | Longitude do endereço de destino                                                            | sim         | -            | -46.651850                                |
+    | to.street        | alfanumérico                | Endereço de destino                                                                         | sim         | -            | Av Paulista, 1000, São Paulo - SP, Brasil |
+    | to.reference     | alfanumérico                | Ponto de referência para destino de origem                                                  | não         | -            | Próximo a estação de metrô                |
+    | phoneNumber      | alfanumérico                | Número de telefone do colaborador a ser exibido para o motorista                            | sim         | -            | 11999999999                               |
+    | costCenterID     | numérico                    | Identificador do centro de custo                                                            | sim         | -            | 43431                                     |
+    | categoryID       | alfanumérico                |  Categoria a ser usada na corrida. Valores aceitos: regular-taxi, turbo-taxi, top99, pop99  | sim         | -            | pop99                                     |
+    | projectID        | numérico                    | Identificador do projeto                                                                    | não         | -            | 394932                                    |
+    | notes            | alfanumérico                | Justificativa da corrida                                                                    | não         | -            | reunião com cliente                       |
+    | optionals        | conjunto de alfanuméricos   | Opcionais da corrida                                                                        | não         | -            | -                                         |
+    
+
+ *  **Exemplo de envio**
+
+    ```json
+    {
+      "employeeID": 884373,
+      "from": {
+        "latitude": -23.564758,
+        "longitude": -46.651850,
+        "street": "Av Paulista, 1000, São Paulo - SP, Brasil",
+        "number": "1000",
+        "reference": ""
+      },
+      "phoneNumber": "11999999999",
+      "costCenterID": 43431,
+      "categoryID": "pop99",
+      "to": {
+        "latitude": -23.590760,
+        "longitude": -46.682129,
+        "street": "Av. Faria Lima, 3000, São Paulo - SP, Brasil",
+        "number": "0",
+        "reference": ""
+      },
+      "notes": "",
+      "projectID": 394932,
+      "optionals": [
+        "air-conditioner",
+        "female-driver"
+      ]
+    }
+    ``` 
+
+
+* **Retorno**
+  
+  **Status Code:** 200
+  
+    ```json
+    {
+        "rideID": "12219921932",
+        "smsStartedSent": false,
+        "smsDriverCanceledSent": false
+    }
+    ```
+    
+-----
+
+#### Cancelar uma corrida em andamento
+
+* **URL**
+
+  `/rides/{id}`
+
+* **Method**
+
+  `DELETE`
+  
+*  **Parâmetros via body**
+
+
+   | Atributo     | Tipo do dado     | Descrição                                    | Obrigatório     | Valor padrão     | Exemplo        |
+   |----------    |--------------    |------------------------------------------    |-------------    |--------------    |------------    |
+   | id           | alfanumérico     | Identificador da corrida                     | sim             | -                | 20             |
+
+* **Retorno**
+  
+  **Status Code:** 204
+    
+-----
+
+
 ## Usuários
 
 #### Listar usuários com os perfis de acesso
