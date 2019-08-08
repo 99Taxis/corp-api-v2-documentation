@@ -2406,9 +2406,9 @@ Os status marcados como **final** significam que não sofrerão alterações fut
 
 * **URL**
 
-  `/webhook/`
+  `/webhook`
 
-* **Method**
+* **Método**
 
   `GET`
 
@@ -2436,9 +2436,9 @@ Os status marcados como **final** significam que não sofrerão alterações fut
 
 * **URL**
 
-  `/webhook/`
+  `/webhook`
 
-* **Method**
+* **Método**
 
   `PUT`
   
@@ -2458,7 +2458,7 @@ Os status marcados como **final** significam que não sofrerão alterações fut
   
   - Conter ao menos 8 caracteres
   - Conter ao menos 1 dígito numérico
-  - Conter ao menos 1 caracter special
+  - Conter ao menos 1 caractere especial
 
 * **Exemplo de envio**
 
@@ -2528,9 +2528,9 @@ Os status marcados como **final** significam que não sofrerão alterações fut
 
 * **URL**
 
-  `/webhook/`
+  `/webhook`
 
-* **Method**
+* **Método**
 
   `DELETE`
 
