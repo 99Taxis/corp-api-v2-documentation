@@ -29,6 +29,7 @@ curl -X GET PUT URL -H 'x-api-key: key-abc-123'
 - [Colaboradores](#colaboradores)
 - [Colaboradores com Identificador Externo](#colaboradores-com-identificador-externo)
 - [Receitas](#receitas)
+- [Webhook](#webhook)
 - [Corridas](#corridas)
 - [Usuários](#usuários)
 
@@ -2368,6 +2369,178 @@ curl -X GET PUT URL -H 'x-api-key: key-abc-123'
     > O recibo não existe ou não está disponível. Em caso de corrida finalizada, deve-se aguardar o tempo de sincronização e geração do recibo.
         
 -----
+
+## Webhooks
+
+Webhook permite que seu sistema receba notificações de eventos originados de corridas da 99.
+Quando um desses eventos ocorrer, iremos enviar um HTTP POST com o payload do evento para a URL configurada no webhook. Webhooks podem ser utilizados para receber o status e a posição do motorista durante uma corrida em andamento. É possível receber eventos de mudança de status de corrida, assim como posição atual do motorista durante uma corrida em andamento.
+
+#### Segurança
+
+Toda comunicação deve ser feita com HTTPS e a url de recebimento do evento deve estar configurada na porta 443.
+
+Para garantir a integridade do evento, e que o mesmo está sendo enviado através dos servidores da 99, um header no padrão Basic Authentication será acrescentado em toda requisição. As credenciais podem ser configuradas através do endpoint de Criação de Webhook abaixo. Seu servidor deve validar o header afim de garantir a segurança da informação.
+
+#### Estratégia de tentativas 
+O webhook espera que sua aplicação responda com o http status code de sucesso 2xx (aceita-se 200, 201, 202, 203, 204, 205 ou 206) com um corpo vazio para todo evento gerado, e iremos aguardar até 10 segundos para receber a resposta. Caso qualquer uma dessas regras não sejam atingidas, o evento será re-transmitido para sua aplicação de acordo com um algoritmo de compensação exponencial (exponential back-off) com multiplicador de 15 segundos, até um limite máximo de 10 tentativas. Isso significa que iremos tentar enviar o mesmo evento para o seu servidor durante um período de 2 horas (por exemplo: 15, 30, 60, 120, 240 segundos e assim sucessivamente).
+
+De acordo com as regras acima, um evento pode ser transmitido mais de uma única vez para os seus servidores, portanto você deve decidir em ignorar caso receba eventos repetidos. O atributo `event.id` garante a chave única do evento, e você pode utilizá-lo para validar eventuais duplicidades.
+
+#### Status de corridas
+
+Os seguintes status de corrida serão notificados quando ocorrerem.
+Os status marcados como **final** significam que não sofrerão alterações futuras.
+
+| Status     | Descrição | Status final? |
+|----------    |--------------    |---- |
+| finding           | Buscando motorista | não |
+| no-drivers-available | Nenhum motorista foi encontrado para sua solicitação| sim |
+| canceled-by-passenger | Corrida cancelada pelo passageiro | sim |
+| canceled-by-driver | Corrida cancelada pelo motorista | sim |
+| on-the-way | Motorista encontrado e a caminho | não |
+| arrived | Motorista chegou e está aguardando o passageiro | não |
+| in-progress | Corrida iniciada com passageiro a bordo | não |
+| finished | Corrida encerrada | sim |
+
+#### Obter configuração do Webhook
+
+* **URL**
+
+  `/webhooks/`
+
+* **Method**
+
+  `GET`
+
+* **Retorno**
+  
+  **Status Code:** 200
+
+  Descrição: Configuração do webhook cadastrada
+
+  ```json
+  {
+    "url": "https://app.99taxis.com/v1/webhook",
+    "authentication": {
+        "username": "username",
+        "password": "password123&&"
+    },
+    "subscriptions": [
+        "ride-status",
+        "ride-driver-location"
+    ]
+  }
+  ```
+
+#### Criação do Webhook
+
+* **URL**
+
+  `/webhooks/`
+
+* **Method**
+
+  `PUT`
+  
+*  **Parâmetros via body**
+
+
+   | Atributo                 | Tipo do dado     | Descrição                                            | Obrigatório     | Valor padrão     | Exemplo        |
+   |----------                |--------------    |------------------------------------------            |-------------    |--------------    |------------    |
+   | url                      | alfanumérico     | URL https de recebimento dos eventos do seu servidor | sim             | não possui       | https://seudominio.com.br/ninenine/webhooks |
+   | authentication.username  | alfanumérico | Credencial do usuário de Basic Authentication            | sim             | não possui       | username |
+   | authentication.password  | alfanumérico | Credencial de senha de Basic Authentication              | sim             | não possui       | password |
+   | subscriptions            | conjunto de alfanuméricos | Lista com subscrições para recebimento de webhooks. Valores aceitos: ride-status, ride-driver-location | sim | não possui | ["ride-status", "ride-driver-location"] |
+
+* **Regras**
+
+- A senha informada para o sistema de segurança Basic Authentication deve conter as seguintes premissas:
+  
+  - Conter ao menos 8 caracteres
+  - Conter ao menos 1 dígito numérico
+  - Conter ao menos 1 caracter special
+
+* **Exemplo de envio**
+
+  ```json
+  {
+    "url": "https://app.99taxis.com/v1/webhook",
+    "authentication": {
+        "username": "username",
+        "password": "password123&&"
+    },
+    "subscriptions": [
+        "ride-status",
+        "ride-driver-location"
+    ]
+  }
+  ```
+
+* **Retorno**
+  
+  **Status Code:** 200
+
+  Descrição: Configuração de webhook atualizada.
+
+  **Status Code:** 422
+
+  Descrição: Ocorreram um ou mais erros de validação. Neste status, a seguinte estrutura json será retornada:
+
+  ```json
+  {
+    "errors": [
+        {
+            "code": "required-url",
+            "field": "url",
+            "message": "Url must be informed"
+        },
+        {
+            "code": "invalid-url",
+            "field": "url",
+            "message": "Url is not valid"
+        },
+        {
+            "code": "required-authentication",
+            "field": "authentication",
+            "message": "Authentication must be informed"
+        }
+    ]
+  }
+  ```
+
+  Segue mapeamento de erros completos que podem ser retornados caso algum dado inválido seja informado ao se definir o webhook.
+
+  | Code                     | Field                   | Message                                                               | Descrição  |
+  |----------                |-------                  |---------                                                              | ---------  |
+  | required-url             | url                     | Url must be informed                                                  | Url não foi informada |
+  | invalid-url              | url                     | Url is not valid                                                      | Url informada não é válida |
+  | invalid-url              | url                     | Url must have secure https scheme                                     | Url precisa ser segura e usar https |
+  | required-authenticationl | authentication          | Authentication must be informed                                       | Dados de autenticação não foram informados |
+  | required-username        | authentication.username | Authentication username must be informed                              | Usuário para autenticação não foi informado |
+  | required-password        | authentication.password | Authentication password must be informed                              | Senha para autenticação não foi informado |
+  | invalid-password         | authentication.password | Authentication password should contain at least eight digits          | Senha de autenticação deve conter ao menos 8 caracteres |
+  | invalid-password         | authentication.password | Authentication password should contain at least one digit             | Senha de autenticação deve conter ao menos 1 número |
+  | invalid-password         | authentication.password | Authentication password should contain at least one special character | Senha de autenticação deve conter ao menos 1 caracter especial |
+  | required-subscriptions   | subscriptions           | At least one subscription must be informed                            | Subscrição de eventos não foi definida |
+  | invalid-subscriptions    | subscriptions           | Allowed subscriptions: ride-status, ride-driver-location              | Subscrição de evento selecionada não é válida |
+
+#### Desativação do uso do Webhook
+
+* **URL**
+
+  `/webhooks/`
+
+* **Method**
+
+  `DELETE`
+
+* **Retorno**
+  
+  **Status Code:** 204
+
+  Descrição: Desativado uso do webhook.
+
+---
 
 ## Corridas
 
