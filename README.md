@@ -2370,7 +2370,7 @@ curl -X GET PUT URL -H 'x-api-key: key-abc-123'
         
 -----
 
-## Webhooks
+## Webhook
 
 Webhook permite que seu sistema receba notificações de eventos originados de corridas da 99.
 Quando um desses eventos ocorrer, iremos enviar um HTTP POST com o payload do evento para a URL configurada no webhook. Webhooks podem ser utilizados para receber o status e a posição do motorista durante uma corrida em andamento. É possível receber eventos de mudança de status de corrida, assim como posição atual do motorista durante uma corrida em andamento.
@@ -2406,7 +2406,7 @@ Os status marcados como **final** significam que não sofrerão alterações fut
 
 * **URL**
 
-  `/webhooks/`
+  `/webhook/`
 
 * **Method**
 
@@ -2436,7 +2436,7 @@ Os status marcados como **final** significam que não sofrerão alterações fut
 
 * **URL**
 
-  `/webhooks/`
+  `/webhook/`
 
 * **Method**
 
@@ -2528,7 +2528,7 @@ Os status marcados como **final** significam que não sofrerão alterações fut
 
 * **URL**
 
-  `/webhooks/`
+  `/webhook/`
 
 * **Method**
 
