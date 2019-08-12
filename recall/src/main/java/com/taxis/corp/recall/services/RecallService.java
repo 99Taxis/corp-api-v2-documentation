@@ -1,4 +1,4 @@
-package com.taxis.corp.recall;
+package com.taxis.corp.recall.services;
 
 import com.taxis.corp.recall.domain.RideAddressModel;
 import com.taxis.corp.recall.domain.RideRequest;
@@ -10,11 +10,16 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * Service to do the recall
+ */
+@Service
 public class RecallService {
     /**
      * API Key to identify and login you API
