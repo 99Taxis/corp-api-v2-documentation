@@ -4,7 +4,7 @@
 This sample is a project to show how to do recall for canceled rides. The sample ups a server with a endpoint to recall a ride.
 
 ## Run project
-First, need changes some lines on recallService.java:
+First, need changes some lines on RecallService.java:
 ```Java
     /**
      * API Key to identify and login you API
