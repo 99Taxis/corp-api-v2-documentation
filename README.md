@@ -2016,6 +2016,8 @@ curl -X GET PUT URL -H 'x-api-key: key-abc-123'
 
 ---
 
+
+
 ## Receitas
 
 #### Busca de receitas
@@ -2925,6 +2927,14 @@ Os status marcados como **final** significam que não sofrerão alterações fut
   
   **Status Code:** 204
     
+---
+
+#### Rechamada
+
+A função de rechamada não existe explicitamente, porém é possível fazê-la de forma manual, verificando o status da corrida. Na pasta **recall** há um código de exemplo em Java.
+
+- [Ver código Java](https://github.com/99Taxis/corp-api-v2-documentation/tree/master/recall)
+
 -----
 
 
