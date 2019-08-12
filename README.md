@@ -2020,7 +2020,7 @@ curl -X GET PUT URL -H 'x-api-key: key-abc-123'
 
 A função de rechamada não existe explicitamente, porém é possível faze-la de forma manual, verificando o status da corrida. Na pasta **recall** há um código de exemplo em Java.
 
-https://github.com/99Taxis/corp-api-v2-documentation/tree/master/recall
+- [Ver código Java](https://github.com/99Taxis/corp-api-v2-documentation/tree/master/recall)
 
 
 
