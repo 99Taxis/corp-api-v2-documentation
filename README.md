@@ -240,6 +240,51 @@ curl -X GET PUT URL -H 'x-api-key: key-abc-123'
     
 -----
 
+#### Ativação de obrigatoriedade de informação do identificador do projeto para chamar corrida.
+
+* **URL**
+
+  `/companies/enable`
+
+* **Método**
+
+  `PUT`
+  
+
+* **Retorno**
+    
+  **Status Code:** 200
+  
+    Solicitação efetuada com sucesso
+
+  **Status Code:** 304
+
+    Empresa já possui obrigatoriedade de informação do identificador do projeto.
+    
+-----
+
+#### Desativação de obrigatoriedade de informação do identificador do projeto para chamar corrida.
+
+* **URL**
+
+  `/companies/disable`
+
+* **Método**
+
+  `PUT`
+  
+* **Retorno**
+    
+  **Status Code:** 200
+  
+    Solicitação efetuada com sucesso
+
+  **Status Code:** 304
+
+    Obrigatoriedade de informação do identificador do projeto já está desabilitada.
+    
+-----
+
 ## Políticas de uso
 
 ### Busca por políticas de uso
