@@ -1698,7 +1698,7 @@ curl -X GET PUT URL -H 'x-api-key: key-abc-123'
   **Status Code:** 200
 
   ```json
-  {
+  [{
     "name": "José Santos",
     "phone": {
       "number": "11999999999",
@@ -1715,7 +1715,7 @@ curl -X GET PUT URL -H 'x-api-key: key-abc-123'
     "externalId": 10,
     "categories": ["regular-taxi", "turbo-taxi", "pop99"],
     "id": 125
-  }
+  }]
   ```
 
   > O campo retornado `supervisorId` é o id interno e não representa o `supervisorExternalId`.
