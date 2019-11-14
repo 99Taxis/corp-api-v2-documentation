@@ -1802,6 +1802,8 @@ curl -X GET PUT URL -H 'x-api-key: key-abc-123'
 
 #### Desativar colaboradores por identificador externo
 
+- **Observação:** Todos os colaboradores com o `externalId` informado será desativado
+
 - **URL**
 
   `/employees/external-id/{externalId}`
@@ -1894,6 +1896,8 @@ curl -X GET PUT URL -H 'x-api-key: key-abc-123'
 ---
 
 #### Remover centro de custo de colaboradores por identificador externo
+
+- **Observação:** Todos os centros de custo, associados a algum colaboador com o `externalId` informado serão removidos
 
 - **URL**
 
@@ -2023,6 +2027,8 @@ curl -X GET PUT URL -H 'x-api-key: key-abc-123'
 ---
 
 #### Remover politica de uso dos colaboradores por identificador externo
+
+- **Observação:** Todos as politicas de uso, associadas a algum colaboador com o `externalId` informado serão removidas
 
 - **URL**
 
