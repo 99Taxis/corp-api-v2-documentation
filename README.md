@@ -1654,7 +1654,7 @@ curl -X GET PUT URL -H 'x-api-key: key-abc-123'
 
   > Se não for informar o `supervisorExternalId`, o comportamento do método será o mesmo que `POST /employees/`
 
-  > O `supervisorExternalId` só irá funcionar corretamente caso possua apenas um colaborador com o `externalId` informado, caso sua o campo `externalId` seja usado para identificar múltiplos colaboradores, recomenda-se user o `supervisorId`
+  > O `supervisorExternalId` só irá funcionar corretamente caso possua apenas um colaborador com o `externalId` informado, caso o campo `externalId` seja usado para identificar múltiplos colaboradores, recomenda-se usar o `supervisorId`
 
 - **Retorno**
 
