@@ -1602,6 +1602,8 @@ curl -X GET PUT URL -H 'x-api-key: key-abc-123'
 
 ## Colaboradores com Identificador Externo
 
+- **Observação:** O campo `externalId` não é único, portanto, caso você atribua um `externalId` a mais de um colaborador, ao fazer operações (com exceção do cadastro) com esse `externalId`, a mesma estará sendo feita para todos os colaboradores que o possuem.
+
 #### Cadastrar um colaborador por identificador externo
 
 - **URL**
@@ -1651,6 +1653,8 @@ curl -X GET PUT URL -H 'x-api-key: key-abc-123'
   ```
 
   > Se não for informar o `supervisorExternalId`, o comportamento do método será o mesmo que `POST /employees/`
+
+  > O `supervisorExternalId` só irá funcionar corretamente caso possua apenas um colaborador com o `externalId` informado, caso o campo `externalId` seja usado para identificar múltiplos colaboradores, recomenda-se usar o `supervisorId`
 
 - **Retorno**
 
@@ -1722,11 +1726,11 @@ curl -X GET PUT URL -H 'x-api-key: key-abc-123'
 
 ---
 
-#### Atualizar os dados de colaborador por identificador externo
+#### Atualizar os dados de colaborador por identificador externo e telefone
 
 - **URL**
 
-  `/employees/external-id/{externalId}`
+  `/employees/external-id/{externalId}/{phone}`
 
 - **Método**
 
@@ -1734,9 +1738,10 @@ curl -X GET PUT URL -H 'x-api-key: key-abc-123'
 
 - **Parâmetros via url**
 
-| Atributo   | Tipo do dado | Descrição                    | Obrigatório | Valor padrão | Exemplo |
-| ---------- | ------------ | ---------------------------- | ----------- | ------------ | ------- |
-| externalId | numérico     | Identificador do colaborador | sim         | -            | 125     |
+| Atributo   | Tipo do dado | Descrição                    | Obrigatório | Valor padrão | Exemplo    |
+| ---------- | ------------ | ---------------------------- | ----------- | ------------ | -----------|
+| externalId | numérico     | Identificador do colaborador | sim         | -            | 125        |
+| phone      | numérico     | Telefone do colaborador      | sim         | -            | 11988778877|
 
 - **Parâmetros via body**
 
@@ -1795,7 +1800,9 @@ curl -X GET PUT URL -H 'x-api-key: key-abc-123'
 
 ---
 
-#### Desativar um colaborador por identificador externo
+#### Desativar colaboradores por identificador externo
+
+- **Observação:** Todos os colaboradores com o `externalId` informado será desativado
 
 - **URL**
 
@@ -1817,7 +1824,7 @@ curl -X GET PUT URL -H 'x-api-key: key-abc-123'
 
 ---
 
-#### Busca de centros de custos do colaborador por identificador externo
+#### Busca de centros de custos de colaboradores por identificador externo
 
 - **URL**
 
@@ -1848,7 +1855,7 @@ curl -X GET PUT URL -H 'x-api-key: key-abc-123'
 
 ---
 
-#### Atualizar os dados de centro de custos do colaborador por identificador externo
+#### Atualizar os dados de centro de custos dos colaboradores por identificador externo
 
 - **URL**
 
@@ -1888,7 +1895,9 @@ curl -X GET PUT URL -H 'x-api-key: key-abc-123'
 
 ---
 
-#### Remover centro de custo de um colaborador por identificador externo
+#### Remover centro de custo de colaboradores por identificador externo
+
+- **Observação:** Todos os centros de custo, associados a algum colaboador com o `externalId` informado serão removidos
 
 - **URL**
 
@@ -1911,7 +1920,7 @@ curl -X GET PUT URL -H 'x-api-key: key-abc-123'
 
 ---
 
-#### Busca de política de uso do colaborador por identificador externo
+#### Busca de política de uso dos colaboradores por identificador externo
 
 - **URL**
 
@@ -1932,7 +1941,7 @@ curl -X GET PUT URL -H 'x-api-key: key-abc-123'
   **Status Code:** 200
 
   ```json
-  {
+  [{
     "budget": {
       "enabled": true,
       "limit": 100.0,
@@ -1943,12 +1952,12 @@ curl -X GET PUT URL -H 'x-api-key: key-abc-123'
       "credit": 10,
       "enabled": true
     }
-  }
+  }]
   ```
 
 ---
 
-#### Atualizar política de uso do colaborador por identificador externo
+#### Atualizar política de uso dos colaboradores por identificador externo
 
 - **URL**
 
@@ -2017,7 +2026,9 @@ curl -X GET PUT URL -H 'x-api-key: key-abc-123'
 
 ---
 
-#### Remover politica de uso do colaborador por identificador externo
+#### Remover politica de uso dos colaboradores por identificador externo
+
+- **Observação:** Todos as politicas de uso, associadas a algum colaboador com o `externalId` informado serão removidas
 
 - **URL**
 
@@ -2039,7 +2050,7 @@ curl -X GET PUT URL -H 'x-api-key: key-abc-123'
 
 ---
 
-#### Remover supervisor de um colaborador por identificador externo
+#### Remover supervisor dos colaboradores por identificador externo
 
 - **URL**
 
