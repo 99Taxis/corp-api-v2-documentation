@@ -1509,6 +1509,9 @@ curl -X GET PUT URL -H 'x-api-key: key-abc-123'
   | employee.categories    | conjunto de alfanuméricos | Categorias permitidas para uso do colaborador. Valores aceitos: regular-taxi, turbo-taxi, top99, pop99 | sim         | -            | regular-taxi, turbo-taxi   |
   | sendWelcomeEmail       | verdadeiro/falso          | Se verdadeiro, colaborador cadastrado receberá um e-mail de boas vindas                                | não         | false        | false                      |
 
+> Caso o campo `externalId` não seja informado, será marcado como nullo na base de dados.
+> Esse mesmo comportamente ocorre para todos os campos não obrigatórios.
+
 * **Exemplo de envio**
 
   ```json
@@ -1755,6 +1758,9 @@ curl -X GET PUT URL -H 'x-api-key: key-abc-123'
   | employee.supervisorExternalId | numérico                  | Id do supervisor (employeeExternalId) do colaborador.                                                  | não         | -            | 256                        |
   | employee.categories           | conjunto de alfanuméricos | Categorias permitidas para uso do colaborador. Valores aceitos: regular-taxi, turbo-taxi, top99, pop99 | sim         | -            | regular-taxi, turbo-taxi   |
   | sendWelcomeEmail              | verdadeiro/falso          | Se verdadeiro, colaborador cadastrado receberá um e-mail de boas vindas                                | não         | false        | false                      |
+
+> Caso o campo `externalId` não seja informado, será marcado como nullo na base de dados.
+> Esse mesmo comportamente ocorre para todos os campos não obrigatórios.
 
 - **Exemplo de envio**
 
