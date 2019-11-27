@@ -1510,7 +1510,8 @@ curl -X GET PUT URL -H 'x-api-key: key-abc-123'
   | sendWelcomeEmail       | verdadeiro/falso          | Se verdadeiro, colaborador cadastrado receberá um e-mail de boas vindas                                | não         | false        | false                      |
 
 > Caso o campo `externalId` não seja informado, será marcado como nullo na base de dados.
-> Esse mesmo comportamente ocorre para todos os campos não obrigatórios.
+
+> O comportamento citado acima ocorre para todos os campos não obrigatórios.
 
 * **Exemplo de envio**
 
@@ -1760,7 +1761,8 @@ curl -X GET PUT URL -H 'x-api-key: key-abc-123'
   | sendWelcomeEmail              | verdadeiro/falso          | Se verdadeiro, colaborador cadastrado receberá um e-mail de boas vindas                                | não         | false        | false                      |
 
 > Caso o campo `externalId` não seja informado, será marcado como nullo na base de dados.
-> Esse mesmo comportamente ocorre para todos os campos não obrigatórios.
+
+> O comportamento citado acima ocorre para todos os campos não obrigatórios.
 
 - **Exemplo de envio**
 
