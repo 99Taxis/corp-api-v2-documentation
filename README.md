@@ -28,7 +28,7 @@ curl -X GET PUT URL -H 'x-api-key: key-abc-123'
 - [Projetos](#projetos)
 - [Colaboradores](#colaboradores)
 - [Colaboradores com Identificador Externo](#colaboradores-com-identificador-externo)
-- [Receitas](#receitas)
+- [Recibos](#recibos)
 - [Webhook](#webhook)
 - [Corridas](#corridas)
 - [Usuários](#usuários)
@@ -2074,9 +2074,9 @@ curl -X GET PUT URL -H 'x-api-key: key-abc-123'
 
 
 
-## Receitas
+## Recibos
 
-#### Busca de receitas
+#### Busca de recibos
 
 - **URL**
 
