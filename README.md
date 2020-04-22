@@ -2,13 +2,13 @@
 
 Documentação para uso dos endpoints da API para clientes corporativos da 99.
 
-Endereço de acesso: https://api.corp.99taxis.com/v2
+Endereço de acesso: https://api.corp.99app.com/v2
 
 ## Swagger
 
 É possível realizar testes online utilizando a interface do Swagger. Para isso, acesse o endereço abaixo:
 
-https://api.corp.99taxis.com/v2/docs/swagger-ui.html
+https://api.corp.99app.com/v2/docs/swagger-ui.html
 
 ## Autenticação
 
@@ -32,6 +32,7 @@ curl -X GET PUT URL -H 'x-api-key: key-abc-123'
 - [Webhook](#webhook)
 - [Corridas](#corridas)
 - [Usuários](#usuários)
+- [Testes em Sandbox](#testes-em-sandbox)
 
 -----
 
@@ -2168,7 +2169,7 @@ curl -X GET PUT URL -H 'x-api-key: key-abc-123'
             "name": "COLABORADOR",
             "phone": "11999999999",
             "phoneCountry": "BRA",
-            "email": "colaborador@99taxis.com",
+            "email": "colaborador@99app.com",
             "nationalId": "63313137709",
             "externalId": 329932
           },
@@ -2271,7 +2272,7 @@ curl -X GET PUT URL -H 'x-api-key: key-abc-123'
         "name": "COLABORADOR",
         "phone": "11999999999",
         "phoneCountry": "BRA",
-        "email": "colaborador@99taxis.com",
+        "email": "colaborador@99app.com",
         "nationalId": "63313137709",
         "externalId": 329932
       },
@@ -2369,7 +2370,7 @@ curl -X GET PUT URL -H 'x-api-key: key-abc-123'
         "name": "COLABORADOR",
         "phone": "11999999999",
         "phoneCountry": "BRA",
-        "email": "colaborador@99taxis.com",
+        "email": "colaborador@99app.com",
         "nationalId": "63313137709",
         "externalId": 329932
       },
@@ -2478,7 +2479,7 @@ Os status marcados como **final** significam que não sofrerão alterações fut
 
   ```json
   {
-    "url": "https://app.99taxis.com/v1/webhook",
+    "url": "https://app.99app.com/v1/webhook",
     "authentication": {
         "username": "username",
         "password": "password123&&"
@@ -2522,7 +2523,7 @@ Os status marcados como **final** significam que não sofrerão alterações fut
 
   ```json
   {
-    "url": "https://app.99taxis.com/v1/webhook",
+    "url": "https://app.99app.com/v1/webhook",
     "authentication": {
         "username": "username",
         "password": "password123&&"
@@ -2796,7 +2797,7 @@ Os status marcados como **final** significam que não sofrerão alterações fut
           "phoneNumber": "11999999999",
           "carModel": "Toyota Etios Sedan",
           "carPlate": "EAN-0165",
-          "img": "https://s3.amazonaws.com/99taxis-drivers/xxx.jpg",
+          "img": "https://s3.amazonaws.com/99app-drivers/xxx.jpg",
           "position": {
             "latitude": -23.582894,
             "longitude": -46.683991
@@ -2864,7 +2865,7 @@ Os status marcados como **final** significam que não sofrerão alterações fut
                 "phoneNumber": "11999999999",
                 "carModel": "Toyota Etios Sedan",
                 "carPlate": "EAN-0165",
-                "img": "https://s3.amazonaws.com/99taxis-drivers/xxx.jpg",
+                "img": "https://s3.amazonaws.com/99app-drivers/xxx.jpg",
                 "position": {
                     "latitude": -23.582894,
                     "longitude": -46.683991
@@ -2989,7 +2990,7 @@ Os status marcados como **final** significam que não sofrerão alterações fut
 
 A função de rechamada não existe explicitamente, porém é possível fazê-la de forma manual, verificando o status da corrida. Na pasta **recall** há um código de exemplo em Java.
 
-- [Ver código Java](https://github.com/99Taxis/corp-api-v2-documentation/tree/master/recall)
+- [Ver código Java](https://github.com/99app/corp-api-v2-documentation/tree/master/recall)
 
 -----
 
@@ -3014,12 +3015,12 @@ A função de rechamada não existe explicitamente, porém é possível fazê-la
   [
     {
       "name": "Colaborador 1",
-      "email": "colaborador1@99taxis.com",
+      "email": "colaborador1@99app.com",
       "profile": "CorporateUser"
     },
     {
       "name": "Colaborador 2",
-      "email": "colaborador2@99taxis.com",
+      "email": "colaborador2@99app.com",
       "profile": "EmployeeUser"
     }
   ]
@@ -3048,8 +3049,8 @@ A função de rechamada não existe explicitamente, porém é possível fazê-la
 
     ```json
     {
-      "email": "José Santos",
-      "name": "jose@empresa.com"
+      "email": "jose@empresa.com",
+      "name": "José Santos"
     }
     ```
 
@@ -3183,6 +3184,14 @@ A função de rechamada não existe explicitamente, porém é possível fazê-la
 
 ---
 
+## Testes em Sandbox
+Endereço
+
+https://sandbox-api-corp.99app.com/v2
+
+O ambiente de sandbox tem como objetivo prover uma estrutura para realizar os testes de gerenciamento de recursos como colaboradores (employee), centros de custo (cost center) e projetos (project) dentre outros, exceto a opção /rides onde não é possível criar e testar corridas em sandbox, os demais testes podem ser realizados normalmente.
+
+
 ## Suporte da API
 
-Caso tenha mais dúvidas ou esteja com problemas na integração, mande um e-mail para _help-corp-api@99taxis.com_
+Caso tenha mais dúvidas ou esteja com problemas na integração, mande um e-mail para _help-corp-api@99app.com_
