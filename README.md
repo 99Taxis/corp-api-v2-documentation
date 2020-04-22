@@ -2,7 +2,7 @@
 
 Documentação para uso dos endpoints da API para clientes corporativos da 99.
 
-Endereço de acesso: https://api.corp.99app.com/v2
+Endereço de acesso: https://api-corp.99app.com/v2
 
 ## Swagger
 
