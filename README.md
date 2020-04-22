@@ -8,7 +8,7 @@ Endereço de acesso: https://api.corp.99app.com/v2
 
 É possível realizar testes online utilizando a interface do Swagger. Para isso, acesse o endereço abaixo:
 
-https://api.corp.99app.com/v2/docs/swagger-ui.html
+https://api-corp.99app.com/v2/docs/swagger-ui.html
 
 ## Autenticação
 
