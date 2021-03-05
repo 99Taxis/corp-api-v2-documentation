@@ -343,7 +343,7 @@ curl -X GET PUT URL -H 'x-api-key: key-abc-123'
           "dayOfWeek": 6,
           "startTime": "09:00",
           "endTime": "17:29"
-        },
+        }
       ]
     },
     {
@@ -2753,6 +2753,8 @@ Os status marcados como **final** significam que não sofrerão alterações fut
   | running.route.distance                | Distância já percorrida na corrida (em metros)                                    |
   | running.smsStartedSent                | Notifica se o SMS com os dados do motorista foi enviado ao passageiro             |
   | running.smsDriverCanceledSent         | Notifica se o SMS informando o cancelamento da corrida pelo motorista foi enviado |
+  | receiver.name                         | Nome do destinatário da corrida do tipo Entrega99                                 | 
+  | receiver.phone                        | Telefone do destinatário da corrida do tipo Entrega99                             | 
   
   **Retornos possíveis para o estado da corrida**
   
@@ -2780,7 +2782,7 @@ Os status marcados como **final** significam que não sofrerão alterações fut
       },
       "phoneNumber": "11999999999",
       "costCenterID": 43431,
-      "categoryID": "turbo-taxi",
+      "categoryID": "delivery99",
       "to": {
         "latitude": -23.590760,
         "longitude": -46.682129,
@@ -2809,7 +2811,11 @@ Os status marcados como **final** significam que não sofrerão alterações fut
         },
         "smsStartedSent": true,
         "smsDriverCanceledSent": false
-      }
+        },
+        "receiver": {
+                "name": "João da Silva",
+                "phone": "+5511999998888"
+        }
     }]
     ```
     
@@ -2848,7 +2854,7 @@ Os status marcados como **final** significam que não sofrerão alterações fut
         },
         "phoneNumber": "11999999999",
         "costCenterID": 43431,
-        "categoryID": "turbo-taxi",
+        "categoryID": "delivery99",
         "to": {
             "latitude": -23.590760,
             "longitude": -46.682129,
@@ -2877,6 +2883,10 @@ Os status marcados como **final** significam que não sofrerão alterações fut
             },
             "smsStartedSent": true,
             "smsDriverCanceledSent": false
+        },
+        "receiver": {
+            "name": "João da Silva",
+            "phone": "+5511999998888"
         }
     }
     ```
@@ -2897,24 +2907,26 @@ Os status marcados como **final** significam que não sofrerão alterações fut
 *  **Parâmetros via body**
 
 
-    | Atributo         | Tipo do dado                | Descrição                                                                                   | Obrigatório | Valor padrão | Exemplo                                   |
-    |------------      |---------------------------  |-------------------------------------------------------------------------------------------  |-------------|--------------|------------------------------------------ |
-    | employeeID       | numérico                    | Identificador do colaborador                                                                | sim         | -            | 884373                                    |
-    | from.latitude    | alfanumérico                | Latitude do endereço de origem                                                              | sim         | -            |  -23.564758                               |
-    | from.longitude   | alfanumérico                | Longitude do endereço de origem                                                             | sim         | -            | -46.651850                                |
-    | from.street      | alfanumérico                | Endereço de origem                                                                          | sim         | -            | Av Paulista, 1000, São Paulo - SP, Brasil |
-    | from.number      | alfanumérico                | Endereço de origem                                                                          | sim         | -            | Av Paulista, 1000, São Paulo - SP, Brasil |
-    | from.reference   | alfanumérico                | Ponto de referência para endereço de origem                                                 | não         | -            | Próximo a estação de metrô                |
-    | to.latitude      | alfanumérico                | Latitude do endereço de destino                                                             | sim         | -            |  -23.564758                               |
-    | to.longitude     | alfanumérico                | Longitude do endereço de destino                                                            | sim         | -            | -46.651850                                |
-    | to.street        | alfanumérico                | Endereço de destino                                                                         | sim         | -            | Av Paulista, 1000, São Paulo - SP, Brasil |
-    | to.reference     | alfanumérico                | Ponto de referência para destino de origem                                                  | não         | -            | Próximo a estação de metrô                |
-    | phoneNumber      | alfanumérico                | Número de telefone do colaborador a ser exibido para o motorista                            | sim         | -            | 11999999999                               |
-    | costCenterID     | numérico                    | Identificador do centro de custo                                                            | sim         | -            | 43431                                     |
-    | categoryID       | alfanumérico                |  Categoria a ser usada na corrida. Valores aceitos: regular-taxi, turbo-taxi, top99, pop99  | sim         | -            | pop99                                     |
-    | projectID        | numérico                    | Identificador do projeto                                                                    | não         | -            | 394932                                    |
-    | notes            | alfanumérico                | Justificativa da corrida                                                                    | não         | -            | reunião com cliente                       |
-    | optionals        | conjunto de alfanuméricos   | Opcionais da corrida                                                                        | não         | -            | -                                         |
+    | Atributo         | Tipo do dado                | Descrição                                                                                                                  | Obrigatório                                            | Valor padrão | Exemplo                                   |
+    |------------      |---------------------------  |--------------------------------------------------------------------------------------------------------------------------  |--------------------------------------------------------|--------------|------------------------------------------ |
+    | employeeID       | numérico                    | Identificador do colaborador                                                                                               | sim                                                    | -            | 884373                                    |
+    | from.latitude    | alfanumérico                | Latitude do endereço de origem                                                                                             | sim                                                    | -            |  -23.564758                               |
+    | from.longitude   | alfanumérico                | Longitude do endereço de origem                                                                                            | sim                                                    | -            | -46.651850                                |
+    | from.street      | alfanumérico                | Endereço de origem                                                                                                         | sim                                                    | -            | Av Paulista, 1000, São Paulo - SP, Brasil |
+    | from.number      | alfanumérico                | Endereço de origem                                                                                                         | sim                                                    | -            | Av Paulista, 1000, São Paulo - SP, Brasil |
+    | from.reference   | alfanumérico                | Ponto de referência para endereço de origem                                                                                | não                                                    | -            | Próximo a estação de metrô                |
+    | to.latitude      | alfanumérico                | Latitude do endereço de destino                                                                                            | sim                                                    | -            |  -23.564758                               |
+    | to.longitude     | alfanumérico                | Longitude do endereço de destino                                                                                           | sim                                                    | -            | -46.651850                                |
+    | to.street        | alfanumérico                | Endereço de destino                                                                                                        | sim                                                    | -            | Av Paulista, 1000, São Paulo - SP, Brasil |
+    | to.reference     | alfanumérico                | Ponto de referência para destino de origem                                                                                 | não                                                    | -            | Próximo a estação de metrô                |
+    | phoneNumber      | alfanumérico                | Número de telefone do colaborador a ser exibido para o motorista                                                           | sim                                                    | -            | 11999999999                               |
+    | costCenterID     | numérico                    | Identificador do centro de custo                                                                                           | sim                                                    | -            | 43431                                     |
+    | categoryID       | alfanumérico                | Categoria a ser usada na corrida. Valores aceitos: regular-taxi, turbo-taxi, top99, pop99, comfort99, poupa99, delivery99  | sim                                                    | -            | pop99                                     |
+    | projectID        | numérico                    | Identificador do projeto                                                                                                   | não                                                    | -            | 394932                                    |
+    | notes            | alfanumérico                | Justificativa da corrida                                                                                                   | não                                                    | -            | reunião com cliente                       |
+    | optionals        | conjunto de alfanuméricos   | Opcionais da corrida                                                                                                       | não                                                    | -            | -                                         |
+    | receiver.name    | conjunto de alfanuméricos   | Nome do destinatário da corrida do tipo Entrega99                                                                          | apenas quando a corrida for da categoria delivery99    | -            | João da Silva                           |
+    | receiver.phone   | conjunto de alfanuméricos   | Número de telefone do destinatário da corrida do tipo Entrega99                                                            | apenas quando a corrida for da categoria delivery99    | -            | 11999999999                             |
     
 
  *  **Exemplo de envio**
