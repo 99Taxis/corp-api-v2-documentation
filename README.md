@@ -1599,6 +1599,51 @@ curl -X GET PUT URL -H 'x-api-key: key-abc-123'
 
   **Status Code:** 204
 
+
+---
+
+#### Salvar termos de aceite do colaborador
+
+- **URL**
+
+  `/employees/{id}/agreement`
+
+- **Método**
+
+  `POST`
+
+- **Parâmetros via url**
+
+  | Atributo | Tipo do dado | Descrição                    | Obrigatório | Valor padrão | Exemplo |
+  | -------- | ------------ | ---------------------------- | ----------- | ------------ | ------- |
+  | id       | numérico     | Identificador do colaborador | sim         | -            | 20      |
+
+- **Parâmetros via body**
+
+  | Atributo               | Tipo do dado              | Descrição                                     | Obrigatório | Valor padrão | Exemplo                      |
+  | ---------------------- | ------------------------- | --------------------------------------------- | ----------- | ------------ | ---------------------------- |
+  | term.link              | alfanumérico              | Link do termo de aceite.                      | sim         | -            | https://meu.termo.aceite.com |
+
+* **Exemplo de envio**
+
+  ```json
+  {
+    "term": {
+      "link": "https://meu.termo.aceite.com"
+    }
+  }
+  ```
+
+- **Retorno**
+
+  **Status Code:** 200
+
+  ```json
+  {
+    "agreementId": "8a08818e-7d80-4b97-9f36-0a0617a8ca90"
+  }
+  ```
+
 ---
 
 ## Colaboradores com Identificador Externo
