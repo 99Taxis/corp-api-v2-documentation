@@ -2766,7 +2766,7 @@ Os status marcados como **final** significam que não sofrerão alterações fut
 
   | Atributo | Tipo do dado | Descrição                                | Obrigatório | Valor padrão | Exemplo     |
     | -------- | ------------ | ---------------------------------------- | ----------- | ------------ | ----------- |
-  | phone    | numérico     | Telefone do colaborador atrelado a corrida. Números de 8 à 11 digitos.       | não         | - |11934234234
+  | phone    | numérico     | Telefone do colaborador atrelado a corrida. Números de 10 à 11 dígitos. (DDD) obrigatório.       | não         | - |11934234234
   
 * **Retorno**
   
