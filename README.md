@@ -2761,6 +2761,12 @@ Os status marcados como **final** significam que não sofrerão alterações fut
 * **Method**
 
   `GET`
+
+* **Parâmetros via query**
+
+  | Atributo | Tipo do dado | Descrição                                | Obrigatório | Exemplo |
+    | -------- | ------------ | ---------------------------------------- | ----------- | ------------ |
+  | phone    | numérico     | Telefone do colaborador atrelado a corrida        | não         | 11934234234
   
 * **Retorno**
   
