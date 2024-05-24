@@ -2850,7 +2850,7 @@ Os status marcados como **final** significam que não sofrerão alterações fut
           "phoneNumber": "11999999999",
           "carModel": "Toyota Etios Sedan",
           "carPlate": "EAN-0165",
-          "img": "https://s3.amazonaws.com/99app-drivers/xxx.jpg",
+          "img": "https://xxx.99app.com/images/xxx.jpg",
           "position": {
             "latitude": -23.582894,
             "longitude": -46.683991
@@ -2922,7 +2922,7 @@ Os status marcados como **final** significam que não sofrerão alterações fut
                 "phoneNumber": "11999999999",
                 "carModel": "Toyota Etios Sedan",
                 "carPlate": "EAN-0165",
-                "img": "https://s3.amazonaws.com/99app-drivers/xxx.jpg",
+                "img": "https://xxx.99app.com/images/xxx.jpg",
                 "position": {
                     "latitude": -23.582894,
                     "longitude": -46.683991
