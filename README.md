@@ -1171,7 +1171,7 @@ curl -X GET PUT URL -H 'x-api-key: key-abc-123'
   | employee.nationalId    | alfanumérico              | Documento do colaborador (CPF) (Somente números)                                                       | não         | -            | 98765432100                |
   | employee.externalId    | numérico                  | Identificador externo do colaborador. É possível relacionar o identificador de um sistema externo.     | não         | -            | 456                        |
   | employee.supervisorId  | numérico                  | Id do supervisor (employeeId)do colaborador.                                                           | não         | -            | 256                        |
-  | employee.categories    | conjunto de alfanuméricos | Categorias permitidas para uso do colaborador. Valores aceitos: regular-taxi, turbo-taxi, top99, pop99, comfort99, moto99, delivery99, delivery-moto99, poupa99 | sim         | -            | regular-taxi, turbo-taxi   |
+  | employee.categories    | conjunto de alfanuméricos | Categorias permitidas para uso do colaborador. Valores aceitos: regular-taxi, turbo-taxi, top99, pop99, comfort99, poupa99, delivery99, delivery-moto99, moto99 | sim         | -            | regular-taxi, turbo-taxi   |
   | sendWelcomeEmail       | verdadeiro/falso          | Se verdadeiro, colaborador cadastrado receberá um e-mail de boas vindas                                | não         | false        | false                      |
 
 - **Exemplo de envio**
@@ -1507,7 +1507,7 @@ curl -X GET PUT URL -H 'x-api-key: key-abc-123'
   | employee.nationalId    | alfanumérico              | Documento do colaborador (CPF) (Somente números)                                                       | não         | -            | 98765432100                |
   | employee.externalId    | numérico                  | Identificador externo do colaborador. É possível relacionar o identificador de um sistema externo.     | não         | -            | 456                        |
   | employee.supervisorId  | numérico                  | Id do supervisor (employeeId) do colaborador.                                                          | não         | -            | 256                        |
-  | employee.categories    | conjunto de alfanuméricos | Categorias permitidas para uso do colaborador. Valores aceitos: regular-taxi, turbo-taxi, top99, pop99 | sim         | -            | regular-taxi, turbo-taxi   |
+  | employee.categories    | conjunto de alfanuméricos | Categorias permitidas para uso do colaborador. Valores aceitos: regular-taxi, turbo-taxi, top99, pop99, comfort99, poupa99, delivery99, delivery-moto99, moto99 | sim         | -            | regular-taxi, turbo-taxi   |
   | sendWelcomeEmail       | verdadeiro/falso          | Se verdadeiro, colaborador cadastrado receberá um e-mail de boas vindas                                | não         | false        | false                      |
 
 * **Exemplo de envio**
@@ -1676,7 +1676,7 @@ curl -X GET PUT URL -H 'x-api-key: key-abc-123'
   | employee.email                | alfanumérico              | E-mail do colaborador                                                                                  | sim         | -            | jose.santos@empresa.com.br |
   | employee.nationalId           | alfanumérico              | Documento do colaborador (CPF) (Somente números)                                                       | não         | -            | 98765432100                |
   | employee.supervisorExternalId | numérico                  | Id do supervisor (employeeExternalId) do colaborador.                                                  | não         | -            | 256                        |
-  | employee.categories           | conjunto de alfanuméricos | Categorias permitidas para uso do colaborador. Valores aceitos: regular-taxi, turbo-taxi, top99, pop99 | sim         | -            | regular-taxi, turbo-taxi   |
+  | employee.categories           | conjunto de alfanuméricos | Categorias permitidas para uso do colaborador. Valores aceitos: regular-taxi, turbo-taxi, top99, pop99, comfort99, poupa99, delivery99, delivery-moto99, moto99 | sim         | -            | regular-taxi, turbo-taxi   |
   | sendWelcomeEmail              | verdadeiro/falso          | Se verdadeiro, colaborador cadastrado receberá um e-mail de boas vindas                                | não         | false        | false                      |
 
 - **Exemplo de envio**
@@ -1799,7 +1799,7 @@ curl -X GET PUT URL -H 'x-api-key: key-abc-123'
   | employee.email                | alfanumérico              | E-mail do colaborador                                                                                  | sim         | -            | jose.santos@empresa.com.br |
   | employee.nationalId           | alfanumérico              | Documento do colaborador (CPF) (Somente números)                                                       | não         | -            | 98765432100                |
   | employee.supervisorExternalId | numérico                  | Id do supervisor (employeeExternalId) do colaborador.                                                  | não         | -            | 256                        |
-  | employee.categories           | conjunto de alfanuméricos | Categorias permitidas para uso do colaborador. Valores aceitos: regular-taxi, turbo-taxi, top99, pop99 | sim         | -            | regular-taxi, turbo-taxi   |
+  | employee.categories           | conjunto de alfanuméricos | Categorias permitidas para uso do colaborador. Valores aceitos: regular-taxi, turbo-taxi, top99, pop99, comfort99, poupa99, delivery99, delivery-moto99, moto99 | sim         | -            | regular-taxi, turbo-taxi   |
   | sendWelcomeEmail              | verdadeiro/falso          | Se verdadeiro, colaborador cadastrado receberá um e-mail de boas vindas                                | não         | false        | false                      |
 
 - **Exemplo de envio**
@@ -2972,7 +2972,7 @@ Os status marcados como **final** significam que não sofrerão alterações fut
     | to.reference     | alfanumérico                | Ponto de referência para destino de origem                                                                                 | não                                                    | -            | Próximo a estação de metrô                |
     | phoneNumber      | alfanumérico                | Número de telefone do colaborador a ser exibido para o motorista                                                           | sim                                                    | -            | 11999999999                               |
     | costCenterID     | numérico                    | Identificador do centro de custo                                                                                           | sim                                                    | -            | 43431                                     |
-    | categoryID       | alfanumérico                | Categoria a ser usada na corrida. Valores aceitos: regular-taxi, turbo-taxi, top99, pop99, comfort99, poupa99, delivery99  | sim                                                    | -            | pop99                                     |
+    | categoryID       | alfanumérico                | Categoria a ser usada na corrida. Valores aceitos: regular-taxi, turbo-taxi, top99, pop99, comfort99, poupa99, delivery99, delivery-moto99, moto99  | sim                                                    | -            | pop99                                     |
     | projectID        | numérico                    | Identificador do projeto                                                                                                   | não                                                    | -            | 394932                                    |
     | notes            | alfanumérico                | Justificativa da corrida                                                                                                   | não                                                    | -            | reunião com cliente                       |
     | optionals        | conjunto de alfanuméricos   | Opcionais da corrida                                                                                                       | não                                                    | -            | -                                         |
