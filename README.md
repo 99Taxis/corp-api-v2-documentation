@@ -2906,6 +2906,10 @@ Os status marcados como **final** significam que não sofrerão alterações fut
         "phoneNumber": "11999999999",
         "costCenterID": 43431,
         "categoryID": "delivery99",
+        "categoryIDs": [
+            "top99",
+            "pop99"
+        ],
         "to": {
             "latitude": -23.590760,
             "longitude": -46.682129,
@@ -2972,7 +2976,8 @@ Os status marcados como **final** significam que não sofrerão alterações fut
     | to.reference     | alfanumérico                | Ponto de referência para destino de origem                                                                                 | não                                                    | -            | Próximo a estação de metrô                |
     | phoneNumber      | alfanumérico                | Número de telefone do colaborador a ser exibido para o motorista                                                           | sim                                                    | -            | 11999999999                               |
     | costCenterID     | numérico                    | Identificador do centro de custo                                                                                           | sim                                                    | -            | 43431                                     |
-    | categoryID       | alfanumérico                | Categoria a ser usada na corrida. Valores aceitos: regular-taxi, turbo-taxi, top99, pop99, comfort99, poupa99, delivery99, delivery-moto99, moto99  | sim                                                    | -            | pop99                                     |
+    | categoryID       | alfanumérico                | Categoria a ser usada na corrida. Valores aceitos: regular-taxi, turbo-taxi, top99, pop99, comfort99, poupa99, moto99, pop-expresso  | É mandatory o preenchimento de um, e somente um, dos campos: categoryIDou categoryIDs. Os dois campos não podem ser utilizados em conjunto.                           | -            | pop99                                     |
+    | categoryIDs      | conjunto de alfanuméricos   | Lista de categorias que podem ser usadas na funcionalidade anycar. Quando este campo é preenchido, a corrida permitirá a seleção múltipla de categorias para broadcast simultâneo, até que o motorista mais rápido aceite a corrida. Valores aceitos para cada item da lista: regular-taxi, turbo-taxi, top99, pop99, comfort99, poupa99, moto99, pop-expresso.  | É mandatory o preenchimento de um, e somente um, dos campos: categoryIDou categoryIDs. Os dois campos não podem ser utilizados em conjunto.                           | -            | pop99, regular-taxi                                |
     | projectID        | numérico                    | Identificador do projeto                                                                                                   | não                                                    | -            | 394932                                    |
     | notes            | alfanumérico                | Justificativa da corrida                                                                                                   | não                                                    | -            | reunião com cliente                       |
     | optionals        | conjunto de alfanuméricos   | Opcionais da corrida                                                                                                       | não                                                    | -            | -                                         |
@@ -2995,6 +3000,10 @@ Os status marcados como **final** significam que não sofrerão alterações fut
       "phoneNumber": "11999999999",
       "costCenterID": 43431,
       "categoryID": "pop99",
+      "categoryIDs": [
+          "pop99",
+          "regular-taxi"
+      ],
       "to": {
         "latitude": -23.590760,
         "longitude": -46.682129,
