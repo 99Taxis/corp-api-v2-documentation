@@ -2648,6 +2648,20 @@ Os status marcados como **final** significam que não sofrerão alterações fut
 
 ## Corridas
 
+> **Pontos de parada (stops)**
+>
+> Os endpoints de corrida suportam pontos de parada intermediários (stops). O motorista
+> segue a ordem `origem → stops[0] → stops[1] → destino`.
+>
+> - Cada ponto de parada reutiliza a mesma estrutura de endereço de `from`/`to`
+>   (`latitude`, `longitude`, `street`, `number`, `reference`).
+> - Em requisições, `latitude` e `longitude` são obrigatórios em cada ponto.
+> - Nas respostas de **consulta de corrida** e de **alteração de corrida**, cada ponto inclui
+>   adicionalmente `status`: `0` = não alcançado, `1` = já alcançado. (A resposta de **estimativa**
+>   não retorna `stops`.)
+> - A lista é **ordenada** e possui no máximo **2** pontos de parada.
+> - Omitir o campo `stops` mantém o comportamento atual (corrida direta origem → destino).
+
 #### Categorias por colaborador e estimativa de valor por corrida
 
 - **URL**
@@ -2667,10 +2681,17 @@ Os status marcados como **final** significam que não sofrerão alterações fut
   | fromLng  | alfanumérico | Longitude do ponto de origem   | sim         | -            | -46.6907445 |
   | toLat    | alfanumérico | Latitude do ponto de destino   | sim         | -            | -23.6822    |
   | toLng    | alfanumérico | Longitude do ponsto de destino | sim         | -            | -46.6896    |
+  | stops    | alfanumérico (JSON) | Lista ordenada de pontos de parada, como uma string JSON (codificada na URL). Cada item deve conter ao menos `latitude` e `longitude`. Máximo de 2 pontos. | não | - | [{"latitude":-23.5728,"longitude":-46.6578}] |
+
+* **Exemplo de chamada com pontos de parada**
+
+  `/rides/estimate/884373?fromLat=-23.5614&fromLng=-46.6559&toLat=-23.6261&toLng=-46.6566&stops=[{"latitude":-23.5728,"longitude":-46.6578},{"latitude":-23.5935,"longitude":-46.6502}]`
 
 * **Retorno**
 
   **Status Code:** 200
+
+  > A estrutura de retorno não muda. O valor estimado já considera a quilometragem adicional dos pontos de parada.
 
   ```json
   [
@@ -2787,6 +2808,11 @@ Os status marcados como **final** significam que não sofrerão alterações fut
   | to.latitude                           | Latitude do endereço de destino                                                   |
   | to.longitude                          | Longitude do endereço de destino                                                  |
   | to.street                             | Endereço de destino                                                               |
+  | stops                                 | Lista ordenada dos pontos de parada da corrida                                    |
+  | stops[].latitude                      | Latitude do ponto de parada                                                       |
+  | stops[].longitude                     | Longitude do ponto de parada                                                      |
+  | stops[].street                        | Endereço do ponto de parada                                                       |
+  | stops[].status                        | Estado do ponto de parada: 0 = não alcançado, 1 = já alcançado                    |
   | optionals                             | Opcionais da corrida                                                              |
   | status                                | Estado da corrida. Os valores possíveis estão listados na tabela abaixo.          |
   | running.rideID                        | Identificador da corrida em andamento                                             |
@@ -2839,6 +2865,9 @@ Os status marcados como **final** significam que não sofrerão alterações fut
         "longitude": -46.682129,
         "street": "Av. Faria Lima, 3000, São Paulo - SP, Brasil"
       },
+      "stops": [
+        { "latitude": -23.5728, "longitude": -46.6578, "street": "Rua Augusta, 500", "status": 0 }
+      ],
       "projectID": 394932,
       "status": "CAR_ARRIVED",
       "running": {
@@ -2915,6 +2944,10 @@ Os status marcados como **final** significam que não sofrerão alterações fut
             "longitude": -46.682129,
             "street": "Av. Faria Lima, 3000, São Paulo - SP, Brasil"
         },
+        "stops": [
+            { "latitude": -23.5728, "longitude": -46.6578, "street": "Rua Augusta, 500", "status": 1 },
+            { "latitude": -23.5935, "longitude": -46.6502, "street": "Av. Brasil, 200", "status": 0 }
+        ],
         "projectID": 394932,
         "status": "CAR_ARRIVED",
         "running": {
@@ -2959,30 +2992,33 @@ Os status marcados como **final** significam que não sofrerão alterações fut
 
   `POST`
   
-*  **Parâmetros via body**
+* **Parâmetros via body**
 
-
-    | Atributo         | Tipo do dado                | Descrição                                                                                                                  | Obrigatório                                            | Valor padrão | Exemplo                                   |
-    |------------      |---------------------------  |--------------------------------------------------------------------------------------------------------------------------  |--------------------------------------------------------|--------------|------------------------------------------ |
-    | employeeID       | numérico                    | Identificador do colaborador                                                                                               | sim                                                    | -            | 884373                                    |
-    | from.latitude    | alfanumérico                | Latitude do endereço de origem                                                                                             | sim                                                    | -            |  -23.564758                               |
-    | from.longitude   | alfanumérico                | Longitude do endereço de origem                                                                                            | sim                                                    | -            | -46.651850                                |
-    | from.street      | alfanumérico                | Endereço de origem                                                                                                         | sim                                                    | -            | Av Paulista, 1000, São Paulo - SP, Brasil |
-    | from.number      | alfanumérico                | Endereço de origem                                                                                                         | sim                                                    | -            | Av Paulista, 1000, São Paulo - SP, Brasil |
-    | from.reference   | alfanumérico                | Ponto de referência para endereço de origem                                                                                | não                                                    | -            | Próximo a estação de metrô                |
-    | to.latitude      | alfanumérico                | Latitude do endereço de destino                                                                                            | sim                                                    | -            |  -23.564758                               |
-    | to.longitude     | alfanumérico                | Longitude do endereço de destino                                                                                           | sim                                                    | -            | -46.651850                                |
-    | to.street        | alfanumérico                | Endereço de destino                                                                                                        | sim                                                    | -            | Av Paulista, 1000, São Paulo - SP, Brasil |
-    | to.reference     | alfanumérico                | Ponto de referência para destino de origem                                                                                 | não                                                    | -            | Próximo a estação de metrô                |
-    | phoneNumber      | alfanumérico                | Número de telefone do colaborador a ser exibido para o motorista                                                           | sim                                                    | -            | 11999999999                               |
-    | costCenterID     | numérico                    | Identificador do centro de custo                                                                                           | sim                                                    | -            | 43431                                     |
-    | categoryID       | alfanumérico                | Categoria a ser usada na corrida. Valores aceitos: regular-taxi, turbo-taxi, top99, pop99, delivery99, delivery-moto99, comfort99, poupa99, moto99, pop-expresso  | É mandatory o preenchimento de um, e somente um, dos campos: categoryIDou categoryIDs. Os dois campos não podem ser utilizados em conjunto.                           | -            | pop99                                     |
-    | categoryIDs      | conjunto de alfanuméricos   | Lista de categorias que podem ser usadas na funcionalidade anycar. Quando este campo é preenchido, a corrida permitirá a seleção múltipla de categorias para broadcast simultâneo, até que o motorista mais rápido aceite a corrida. Valores aceitos para cada item da lista: regular-taxi, turbo-taxi, top99, pop99, comfort99, poupa99, moto99, pop-expresso.  | É mandatory o preenchimento de um, e somente um, dos campos: categoryIDou categoryIDs. Os dois campos não podem ser utilizados em conjunto.| -            | pop99, regular-taxi                                |
-    | projectID        | numérico                    | Identificador do projeto                                                                                                   | não                                                    | -            | 394932                                    |
-    | notes            | alfanumérico                | Justificativa da corrida                                                                                                   | não                                                    | -            | reunião com cliente                       |
-    | optionals        | conjunto de alfanuméricos   | Opcionais da corrida                                                                                                       | não                                                    | -            | -                                         |
-    | receiver.name    | conjunto de alfanuméricos   | Nome do destinatário da corrida do tipo Entrega99                                                                          | apenas quando a corrida for da categoria delivery99    | -            | João da Silva                           |
-    | receiver.phone   | conjunto de alfanuméricos   | Número de telefone do destinatário da corrida do tipo Entrega99                                                            | apenas quando a corrida for da categoria delivery99    | -            | 11999999999                             |
+  | Atributo         | Tipo do dado                | Descrição                                                                                                                  | Obrigatório                                            | Valor padrão | Exemplo                                   |
+  |------------      |---------------------------  |--------------------------------------------------------------------------------------------------------------------------  |--------------------------------------------------------|--------------|------------------------------------------ |
+  | employeeID       | numérico                    | Identificador do colaborador                                                                                               | sim                                                    | -            | 884373                                    |
+  | from.latitude    | alfanumérico                | Latitude do endereço de origem                                                                                             | sim                                                    | -            |  -23.564758                               |
+  | from.longitude   | alfanumérico                | Longitude do endereço de origem                                                                                            | sim                                                    | -            | -46.651850                                |
+  | from.street      | alfanumérico                | Endereço de origem                                                                                                         | sim                                                    | -            | Av Paulista, 1000, São Paulo - SP, Brasil |
+  | from.number      | alfanumérico                | Endereço de origem                                                                                                         | sim                                                    | -            | Av Paulista, 1000, São Paulo - SP, Brasil |
+  | from.reference   | alfanumérico                | Ponto de referência para endereço de origem                                                                                | não                                                    | -            | Próximo a estação de metrô                |
+  | to.latitude      | alfanumérico                | Latitude do endereço de destino                                                                                            | sim                                                    | -            |  -23.564758                               |
+  | to.longitude     | alfanumérico                | Longitude do endereço de destino                                                                                           | sim                                                    | -            | -46.651850                                |
+  | to.street        | alfanumérico                | Endereço de destino                                                                                                        | sim                                                    | -            | Av Paulista, 1000, São Paulo - SP, Brasil |
+  | to.reference     | alfanumérico                | Ponto de referência para destino de origem                                                                                 | não                                                    | -            | Próximo a estação de metrô                |
+  | stops              | conjunto de objetos | Lista ordenada de pontos de parada intermediários (origem → stops → destino). Mesma estrutura de `from`/`to`. Máximo de 2 pontos. Omita o campo para uma corrida direta. | não | - | - |
+  | stops[].latitude   | alfanumérico | Latitude do ponto de parada  | sim (quando `stops` for informado) | - | -23.5728 |
+  | stops[].longitude  | alfanumérico | Longitude do ponto de parada | sim (quando `stops` for informado) | - | -46.6578 |
+  | stops[].street     | alfanumérico | Endereço do ponto de parada  | não | - | Rua Augusta, 500 |
+  | phoneNumber      | alfanumérico                | Número de telefone do colaborador a ser exibido para o motorista                                                           | sim                                                    | -            | 11999999999                               |
+  | costCenterID     | numérico                    | Identificador do centro de custo                                                                                           | sim                                                    | -            | 43431                                     |
+  | categoryID       | alfanumérico                | Categoria a ser usada na corrida. Valores aceitos: regular-taxi, turbo-taxi, top99, pop99, delivery99, delivery-moto99, comfort99, poupa99, moto99, pop-expresso  | É mandatory o preenchimento de um, e somente um, dos campos: categoryIDou categoryIDs. Os dois campos não podem ser utilizados em conjunto.                           | -            | pop99                                     |
+  | categoryIDs      | conjunto de alfanuméricos   | Lista de categorias que podem ser usadas na funcionalidade anycar. Quando este campo é preenchido, a corrida permitirá a seleção múltipla de categorias para broadcast simultâneo, até que o motorista mais rápido aceite a corrida. Valores aceitos para cada item da lista: regular-taxi, turbo-taxi, top99, pop99, comfort99, poupa99, moto99, pop-expresso.  | É mandatory o preenchimento de um, e somente um, dos campos: categoryIDou categoryIDs. Os dois campos não podem ser utilizados em conjunto.| -            | pop99, regular-taxi                                |
+  | projectID        | numérico                    | Identificador do projeto                                                                                                   | não                                                    | -            | 394932                                    |
+  | notes            | alfanumérico                | Justificativa da corrida                                                                                                   | não                                                    | -            | reunião com cliente                       |
+  | optionals        | conjunto de alfanuméricos   | Opcionais da corrida                                                                                                       | não                                                    | -            | -                                         |
+  | receiver.name    | conjunto de alfanuméricos   | Nome do destinatário da corrida do tipo Entrega99                                                                          | apenas quando a corrida for da categoria delivery99    | -            | João da Silva                           |
+  | receiver.phone   | conjunto de alfanuméricos   | Número de telefone do destinatário da corrida do tipo Entrega99                                                            | apenas quando a corrida for da categoria delivery99    | -            | 11999999999                             |
     
 
  *  **Exemplo de envio**
@@ -3011,6 +3047,10 @@ Os status marcados como **final** significam que não sofrerão alterações fut
         "number": "0",
         "reference": ""
       },
+      "stops": [
+        { "latitude": -23.5728, "longitude": -46.6578, "street": "Rua Augusta, 500" },
+        { "latitude": -23.5935, "longitude": -46.6502 }
+      ],
       "notes": "",
       "projectID": 394932,
       "optionals": [
@@ -3033,6 +3073,127 @@ Os status marcados como **final** significam que não sofrerão alterações fut
     }
     ```
     
+-----
+
+#### Alterar uma corrida em andamento
+
+Permite alterar o destino e/ou os pontos de parada de uma corrida que já está em andamento.
+
+> Uma mesma corrida permite no máximo **5 alterações** por este endpoint, independentemente de a alteração ser de destino, de pontos de parada ou de ambos. Após atingir esse limite, novas alterações são recusadas.
+
+* **URL**
+
+  `/rides/{rideId}`
+
+* **Method**
+
+  `PATCH`
+
+* **Parâmetros via body**
+
+  | Atributo          | Tipo do dado        | Descrição | Obrigatório | Valor padrão | Exemplo |
+  |-------------------|---------------------|-----------|-------------|--------------|---------|
+  | to.latitude       | alfanumérico        | Latitude do novo destino  | não (informe `to` e/ou `stops`) | - | -23.6261 |
+  | to.longitude      | alfanumérico        | Longitude do novo destino | não (informe `to` e/ou `stops`) | - | -46.6566 |
+  | to.street         | alfanumérico        | Endereço do novo destino  | não | - | Rua Augusta, 500 |
+  | stops             | conjunto de objetos | Lista **completa e ordenada** de pontos de parada desejada (substituição total, não incremental). Mesma estrutura de `from`/`to`. Máximo de 2 pontos. | não | - | - |
+  | stops[].latitude  | alfanumérico        | Latitude do ponto de parada  | sim (quando `stops` for informado) | - | -23.5728 |
+  | stops[].longitude | alfanumérico        | Longitude do ponto de parada | sim (quando `stops` for informado) | - | -46.6578 |
+  | stops[].street    | alfanumérico        | Endereço do ponto de parada  | não | - | Rua Augusta, 500 |
+
+* **Semântica de `stops`**
+
+  - Envie sempre a **lista completa e ordenada** desejada — a atualização é total, não incremental.
+  - **Omitir** o campo `stops` (ou enviar `null`): mantém os pontos de parada atuais **inalterados**.
+  - Enviar `[]` (lista vazia): **remove** todos os pontos de parada ainda não alcançados.
+  - Pontos já alcançados (`status = 1`) devem ser mantidos na **mesma posição e com as mesmas coordenadas**; caso contrário a alteração é recusada.
+  - O campo `to` é **opcional**: é possível alterar apenas os pontos de parada. Informe **ao menos um** entre `to` e `stops`.
+
+* **Exemplo de envio**
+
+  ```json
+  {
+    "to": {
+      "latitude": -23.6261,
+      "longitude": -46.6566,
+      "street": "Rua Augusta, 500"
+    },
+    "stops": [
+      { "latitude": -23.5728, "longitude": -46.6578, "street": "Rua Augusta, 500" },
+      { "latitude": -23.5935, "longitude": -46.6502 }
+    ]
+  }
+  ```
+
+* **Retorno**
+
+  **Status Code:** 200
+
+  ```json
+  {
+    "price": "R$47.70",
+    "to": {
+      "latitude": -23.6261,
+      "longitude": -46.6566,
+      "street": "Rua Augusta, 500"
+    },
+    "stops": [
+      { "latitude": -23.5728, "longitude": -46.6578, "street": "Rua Augusta, 500", "status": 1 },
+      { "latitude": -23.5935, "longitude": -46.6502, "street": "Av. Brasil, 200", "status": 0 }
+    ]
+  }
+  ```
+
+-----
+
+#### Estimativa de valor para alteração de corrida
+
+Retorna o novo valor estimado ao alterar destino e/ou pontos de parada de uma corrida em
+andamento. Útil para exibir o preço ao usuário **antes** de confirmar a alteração
+(`PATCH /rides/{rideId}`).
+
+* **URL**
+
+  `/rides/update/estimate/{rideId}`
+
+* **Method**
+
+  `GET`
+
+* **Parâmetros via url**
+
+  | Atributo | Tipo do dado        | Descrição | Obrigatório | Valor padrão | Exemplo |
+  |----------|---------------------|-----------|-------------|--------------|---------|
+  | rideId   | alfanumérico        | Identificador da corrida | sim | - | 12219921932 |
+  | toLat    | alfanumérico        | Latitude do novo destino  | não (informe destino e/ou `stops`) | - | -23.6261 |
+  | toLng    | alfanumérico        | Longitude do novo destino | não (informe destino e/ou `stops`) | - | -46.6566 |
+  | stops    | alfanumérico (JSON) | Lista completa e ordenada de pontos de parada desejada, como string JSON (codificada na URL). Mesma semântica de substituição total do `PATCH /rides/{rideId}`. Máximo de 2 pontos. | não | - | [{"latitude":-23.5728,"longitude":-46.6578}] |
+
+  > Informe **ao menos um** entre destino (`toLat`/`toLng`) e `stops`.
+
+* **Exemplo de chamada**
+
+  `/rides/update/estimate/12219921932?stops=[{"latitude":-23.5728,"longitude":-46.6578},{"latitude":-23.5935,"longitude":-46.6502}]`
+
+* **Retorno**
+
+  **Status Code:** 200
+
+  ```json
+  {
+    "price": "R$47.70",
+    "to": {
+      "latitude": -23.6261,
+      "longitude": -46.6566,
+      "street": "Rua Augusta, 500"
+    },
+    "stops": [
+      { "latitude": -23.5728, "longitude": -46.6578, "street": "Rua Augusta, 500", "status": 0 },
+      { "latitude": -23.5935, "longitude": -46.6502, "street": "Av. Brasil, 200", "status": 0 }
+    ]
+  }
+  ```
+
 -----
 
 #### Cancelar uma corrida em andamento
